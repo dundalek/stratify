@@ -5,10 +5,10 @@ Discover bits of Stratified Design that are hiding in your code.
 Gain big picture understanding to make better decisions how to grow your system.
 
 It leverages the [code map](https://learn.microsoft.com/en-us/visualstudio/modeling/browse-and-rearrange-code-maps?view=vs-2022) tool from Visual Studio,
-which is designed for hiearachical graphs,
+which is designed for hierarchical graphs,
 and allows to interactively collapse or expand the amount of shown information.
 
-This is an advantage over static graph renderint tools like Graphviz 
+This is an advantage over static graph rendering tools like Graphviz 
 which only work for trivial sized graphs,
 because for a size of systems encountered in practice it becomes a tangle of lines.
 That is overwhelming and does not aid much in understanding the structure.
