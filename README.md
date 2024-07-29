@@ -31,6 +31,8 @@ Watch the [demo video](https://www.youtube.com/watch?v=8LMrIpxxpDw) which shows 
 - Local understanding - Navigate and traverse the call graph to learn details about implementation.
 - Refactoring simulation - Improve structure of a codebase by previewing results of refactoring.
 
+[![stratify-asami](doc/img/demo-thumbnail.png)](https://www.youtube.com/watch?v=8LMrIpxxpDw)
+
 ## Usage
 
 First extract DGML graph from source code.
