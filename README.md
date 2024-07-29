@@ -38,7 +38,7 @@ First extract DGML graph from source code.
 #### Use without installing
 
 ```
-clojure -Sdeps '{:deps{io.github.dundalek/stratify{:git/tag"v0.1.0":git/sha"f2c76ca"}}}' \
+clojure -Sdeps '{:deps{io.github.dundalek/stratify{:git/tag"v0.1.0":git/sha"e3d2c3f"}}}' \
         -M -m stratify.main
 ```
 
@@ -49,7 +49,7 @@ clojure -Sdeps '{:deps{io.github.dundalek/stratify{:git/tag"v0.1.0":git/sha"f2c7
 ```clojure
 {:aliases
  {:stratify
-  {:extra-deps {io.github.dundalek/stratify {:git/tag "v0.1.0" :git/sha "f2c76ca"}}
+  {:extra-deps {io.github.dundalek/stratify {:git/tag "v0.1.0" :git/sha "e3d2c3f"}}
    :main-opts ["-m" "stratify.main"]
 ```
 
