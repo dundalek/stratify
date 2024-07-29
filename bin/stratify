@@ -1,0 +1,18 @@
+#!/usr/bin/env bb
+;; -*- clojure -*-
+;; vim: set filetype=clojure:
+(ns stratify
+  (:require
+   [babashka.fs :as fs]
+   [babashka.process :refer [process]]))
+
+(defn -main [& args]
+  (let [project-path (-> (fs/real-path *file*) fs/parent fs/parent)
+        deps (pr-str {:deps {'io.github.dundalek/stratify {:local/root (str project-path)}}})
+        proc (apply process {:inherit true}
+                    "clojure" "-Sdeps" deps
+                    "-M" "-m" "stratify.main" args)]
+    (System/exit (:exit @proc))))
+
+(when (= *file* (System/getProperty "babashka.file"))
+  (apply -main *command-line-args*))

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="example.main" Label="main" Category="Namespace" Name="example.main" Group="Collapsed"/>
+    <Node Id="example" Label="example" Category="Namespace" Name="example" Group="Expanded"/>
+    <Node Id="example.main/def-fn" Label="def-fn" Category="Macro" Name="example.main/def-fn" Access="Public" DefinedBy="clojure.core/defmacro"/>
+    <Node Id="example.main/a-var" Label="a-var" Category="Var" Name="example.main/a-var" Access="Public" DefinedBy="clojure.core/def"/>
+    <Node Id="example.main/bar" Label="bar" Category="Function" Name="example.main/bar" Access="Public" DefinedBy="clojure.core/defn"/>
+    <Node Id="example.main/a-private-macro" Label="a-private-macro" Category="Macro" Name="example.main/a-private-macro" Access="Private" DefinedBy="clojure.core/defmacro"/>
+    <Node Id="example.main/a-private-var" Label="a-private-var" Category="Var" Name="example.main/a-private-var" Access="Private" DefinedBy="clojure.core/def"/>
+    <Node Id="example.main/a-private-fn" Label="a-private-fn" Category="Function" Name="example.main/a-private-fn" Access="Private" DefinedBy="clojure.core/defn-"/>
+    <Node Id="example.main/foo" Label="foo" Category="Function" Name="example.main/foo" Access="Public" DefinedBy="clojure.core/defn"/>
+  </Nodes>
+  <Links>
+    <Link Source="example.main" Target="example.main/def-fn"/>
+    <Link Source="example.main/foo" Target="example.main/bar"/>
+    <Link Source="example" Target="example.main" Category="Contains"/>
+    <Link Source="example.main" Target="example.main/def-fn" Category="Contains"/>
+    <Link Source="example.main" Target="example.main/a-var" Category="Contains"/>
+    <Link Source="example.main" Target="example.main/bar" Category="Contains"/>
+    <Link Source="example.main" Target="example.main/a-private-macro" Category="Contains"/>
+    <Link Source="example.main" Target="example.main/a-private-var" Category="Contains"/>
+    <Link Source="example.main" Target="example.main/a-private-fn" Category="Contains"/>
+    <Link Source="example.main" Target="example.main/foo" Category="Contains"/>
+  </Links>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Namespace" ValueLabel="True">
+      <Condition Expression="HasCategory('Namespace')"/>
+      <Setter Property="Background" Value="#295B71"/>
+      <Setter Property="Stroke" Value="#34749A"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Function" ValueLabel="Public">
+      <Condition Expression="HasCategory('Function') and Access = 'Public'"/>
+      <Setter Property="Background" Value="#A75529"/>
+      <Setter Property="Stroke" Value="#C4632F"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Function" ValueLabel="Private">
+      <Condition Expression="HasCategory('Function') and  Access = 'Private'"/>
+      <Setter Property="Background" Value="#66A75529"/>
+      <Setter Property="Stroke" Value="#C4632F"/>
+      <Setter Property="StrokeDashArray" Value="3,6"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Macro" ValueLabel="Public">
+      <Condition Expression="HasCategory('Macro') and Access = 'Public'"/>
+      <Setter Property="Background" Value="#714164"/>
+      <Setter Property="Stroke" Value="#874381"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Macro" ValueLabel="Private">
+      <Condition Expression="HasCategory('Macro') and Access = 'Private'"/>
+      <Setter Property="Background" Value="#66714164"/>
+      <Setter Property="Stroke" Value="#874381"/>
+      <Setter Property="StrokeDashArray" Value="3,6"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Var" ValueLabel="Public">
+      <Condition Expression="HasCategory('Var') and Access = 'Public'"/>
+      <Setter Property="Background" Value="#3A6C5F"/>
+      <Setter Property="Stroke" Value="#2A8469"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Var" ValueLabel="Private">
+      <Condition Expression="HasCategory('Var') and Access = 'Private'"/>
+      <Setter Property="Background" Value="#663A6C5F"/>
+      <Setter Property="Stroke" Value="#2A8469"/>
+      <Setter Property="StrokeDashArray" Value="3,6"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Link" GroupLabel="Link" ValueLabel="Private Reference">
+      <Condition Expression="Target.Access = 'Private'"/>
+      <Setter Property="StrokeDashArray" Value="4,2"/>
+    </Style>
+  </Styles>
+</DirectedGraph>

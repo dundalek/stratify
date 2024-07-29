@@ -1,0 +1,3 @@
+{:tasks {test (clojure "-M:test --plugin notifier --watch")
+         test:once (clojure "-M:test")
+         test:coverage (clojure "-M:test:coverage")}}

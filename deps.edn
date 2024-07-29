@@ -1,0 +1,13 @@
+{:deps {clj-kondo/clj-kondo {:mvn/version "2024.05.24"}
+        org.clojure/data.xml {:mvn/version "0.2.0-alpha9"}
+        aysylu/loom {:mvn/version "1.0.2"}
+        org.babashka/cli {:mvn/version "0.8.59"}}
+
+ :aliases
+ {:test
+  {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}}
+   :main-opts ["-m" "kaocha.runner"]}
+
+  :coverage
+  {:extra-deps {lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}}
+   :main-opts ["-m" "kaocha.runner" "--plugin" "cloverage"]}}}
