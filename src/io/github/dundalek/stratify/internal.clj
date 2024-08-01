@@ -7,7 +7,8 @@
    [loom.attr :as la]
    [loom.graph :as lg]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]
-   [io.github.dundalek.stratify.style :as style :refer [theme]]))
+   [io.github.dundalek.stratify.style :as style :refer [theme]])
+  (:import (java.util.regex Pattern)))
 
 (defn run-kondo [paths]
   (clj-kondo/run!
@@ -22,16 +23,14 @@
                (= (count alpha) 2)))
   (str "#" alpha (subs color 1)))
 
-(defn- add-clustered-namespace-node [g node-id]
+(defn- add-clustered-namespace-node [{:keys [split join]} g node-id]
   (loop [g g
          node-id node-id
-         ;; slash separator for experimenting with graphing vars inside namespaces,
-         ;; but will need additional handling to preserver name when joining segments
-         segments (str/split node-id #"\.|/")]
+         segments (split node-id)]
     (if (empty? segments)
       g
       (let [cluster-label (last segments)
-            cluster-id (str/join "." segments)
+            cluster-id (join segments)
             attrs {:label cluster-label}]
         (recur (-> g
                    (lg/add-nodes cluster-id)
@@ -40,10 +39,13 @@
                cluster-id
                (butlast segments))))))
 
-(defn add-clustered-namespace-hierarchy [g]
-  (reduce add-clustered-namespace-node
-          g
-          (lg/nodes g)))
+(defn add-clustered-namespace-hierarchy [g separator]
+  (let [split-pattern (re-pattern (Pattern/quote separator))
+        opts {:split #(str/split % split-pattern)
+              :join #(str/join separator %)}]
+    (reduce (partial add-clustered-namespace-node opts)
+            g
+            (lg/nodes g))))
 
 (defn property-setter-elements [properties]
   (for [[k v] properties]
@@ -100,7 +102,7 @@
                                        concat (when include-dependencies
                                                 (->> var-usages (map (fn [{:keys [to]}] {:name to})))))))
         g (cond-> g
-            (not flat-namespaces) add-clustered-namespace-hierarchy)
+            (not flat-namespaces) (add-clustered-namespace-hierarchy "."))
         g (reduce
            (fn [g node-id]
              (cond-> (la/add-attr g node-id :category "Namespace")
