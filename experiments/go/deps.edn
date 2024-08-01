@@ -1,0 +1,2 @@
+{:deps {io.github.dundalek/theodora {:local/root "../graphviz"}
+        io.github.dundalek/stratify {:local/root "../.."}}}
