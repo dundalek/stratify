@@ -5,6 +5,8 @@
                      :exclusions [tailrecursion/cljs-priority-map]}
         org.babashka/cli {:mvn/version "0.8.59"}}
 
+ :paths ["src" "notebooks"]
+
  :aliases
  {:metrics
   {:extra-deps {org.jgrapht/jgrapht-core {:mvn/version "1.5.2"}
