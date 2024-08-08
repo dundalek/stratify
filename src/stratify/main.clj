@@ -2,7 +2,8 @@
   (:require
    [babashka.cli :as cli]
    [io.github.dundalek.stratify.internal :as stratify]
-   [io.github.dundalek.stratify.metrics :as metrics]))
+   [io.github.dundalek.stratify.metrics :as-alias metrics]
+   [clojure.repl.deps :as deps]))
 
 (def cli-spec
   {:out {:alias :o
@@ -26,6 +27,11 @@
   (println "Options:")
   (println (cli/format-opts {:spec cli-spec})))
 
+(defn ensure-dynamic-context-classloader! []
+  (let [cl (.getContextClassLoader (Thread/currentThread))]
+    (when-not (instance? clojure.lang.DynamicClassLoader cl)
+      (.setContextClassLoader (Thread/currentThread) (clojure.lang.DynamicClassLoader. cl)))))
+
 (defn -main [& args]
   (let [parsed (cli/parse-args args {:spec cli-spec})
         {:keys [opts args]} parsed]
@@ -33,8 +39,12 @@
       (print-help)
       (let [{:keys [out metrics]} opts]
         (if metrics
-          (metrics/report! {:source-paths args
-                            :output-path (when (not= out "-") out)})
+          (binding [*repl* true]
+            (ensure-dynamic-context-classloader!)
+            (deps/sync-deps {:aliases [:metrics]})
+            ((requiring-resolve `metrics/report!)
+             {:source-paths args
+              :output-path (when (not= out "-") out)}))
           (let [output-file (if (= out "-") *out* out)]
             (stratify/extract (merge opts {:source-paths args
                                            :output-file output-file}))))))))

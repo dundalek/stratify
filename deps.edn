@@ -1,13 +1,16 @@
-{:deps {clj-kondo/clj-kondo {:mvn/version "2024.05.24"}
+{:deps {org.clojure/clojure {:mvn/version "1.12.0-rc1"}
+        clj-kondo/clj-kondo {:mvn/version "2024.05.24"}
         org.clojure/data.xml {:mvn/version "0.2.0-alpha9"}
         aysylu/loom {:mvn/version "1.0.2"}
-        org.babashka/cli {:mvn/version "0.8.59"}
+        org.babashka/cli {:mvn/version "0.8.59"}}
 
-        org.jgrapht/jgrapht-core {:mvn/version "1.5.2"}
-        io.github.nextjournal/clerk {:mvn/version "0.16.1016"}
-        generateme/fastmath {:mvn/version "2.4.0"}}
  :aliases
- {:test
+ {:metrics
+  {:extra-deps {org.jgrapht/jgrapht-core {:mvn/version "1.5.2"}
+                io.github.nextjournal/clerk {:mvn/version "0.16.1016"}
+                generateme/fastmath {:mvn/version "2.4.0"}}}
+
+  :test
   {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}}
    :main-opts ["-m" "kaocha.runner"]}
 
