@@ -1,15 +1,20 @@
 (ns io.github.dundalek.stratify.metrics
   (:require
+   [clojure.java.io :as io]
    [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.metrics-lakos :as lakos]
    [loom.alg :as alg]
-   [loom.graph :as lg])
+   [loom.alg-generic :as algg]
+   [loom.graph :as lg]
+   [nextjournal.clerk :as clerk])
   (:import
    (org.jgrapht.alg.scoring
     ApBetweennessCentrality
     BetweennessCentrality
     ClosenessCentrality
     ClusteringCoefficient
+    EdgeBetweennessCentrality
+    EigenvectorCentrality
     HarmonicCentrality
     KatzCentrality
     PageRank)
@@ -23,6 +28,21 @@
       (.addEdge g from to))
     g))
 
+(defn count-transitive-dependents [g node]
+  (count (algg/post-traverse #(lg/predecessors g %) node)))
+
+(defn longest-shortest-path [g node]
+  (count (alg/longest-shortest-path g node)))
+
+(def graph-metrics
+  {:in-degree lg/in-degree
+   :out-degree lg/out-degree
+   ;; aka "height"
+   ;; it would probably be more efficient to use all pairs traversing instead traversing for each node separately
+   :longest-shortest-path longest-shortest-path
+   :transitive-dependencies lakos/count-transitive-dependencies
+   :transitive-dependents count-transitive-dependents})
+
 (def score-metrics
   ;; https://jgrapht.org/javadoc/org.jgrapht.core/org/jgrapht/alg/scoring/package-summary.html
   {:ap-betweenness-centrality #(new ApBetweennessCentrality %)
@@ -31,40 +51,72 @@
    :clustering-coefficient #(new ClusteringCoefficient %)
    :harmonic-centrality #(new HarmonicCentrality %)
    :katz-centrality #(new KatzCentrality %)
-   :page-rank #(new PageRank %)})
-
+   :page-rank #(new PageRank %)
+   :edge-betweenness-centrality #(new EdgeBetweennessCentrality %)
+   :eigenvector-centrality #(new EigenvectorCentrality %)})
    ;; coreness works only on undirected graphs
    ; :coreness #(new Coreness %)
 
-   ; :edge-betweenness-centrality #(new EdgeBetweennessCentrality %)
-   ; :eigenvector-centrality #(new EigenvectorCentrality %)
+(def all-metrics
+  (concat (keys graph-metrics)
+          (keys score-metrics)))
+
+(defn wrap-score-metric [f jg]
+  (let [scores (.getScores (f jg))]
+    #(get scores %)))
+
+(defn wrap-graph-metric [f g]
+  #(f g %))
+
+(defn metrics
+  ([g] (metrics g {:metrics all-metrics}))
+  ([g {:keys [metrics]}]
+   (let [jg (->jgraph g)
+         calculate (reduce (fn [m metric-kw]
+                             (cond
+                               (contains? score-metrics metric-kw)
+                               (assoc m metric-kw (wrap-score-metric (get score-metrics metric-kw) jg))
+
+                               (contains? graph-metrics metric-kw)
+                               (assoc m metric-kw (wrap-graph-metric (get graph-metrics metric-kw) g))
+
+                               :else
+                               (do (println "Warning: Unknown metric" metric-kw)
+                                   m)))
+                           {}
+                           metrics)]
+     (->> (lg/nodes g)
+          (map (fn [node]
+                 (reduce
+                  (fn [m [metric calc]]
+                    (assoc m metric (calc node)))
+                  {:id node}
+                  calculate)))))))
+
+;; Atom to pass paths from args to the notebook
+(defonce *source-paths (atom []))
+
+(defn serve! [{:keys [source-paths]}]
+  (let [notebook-path (.getCanonicalPath (io/file (io/resource "io/github/dundalek/stratify/notebook.clj")))]
+    (reset! *source-paths source-paths)
+    (clerk/serve! {:index notebook-path
+                   :browse true})))
 
 (comment
-  (def result (internal/run-kondo ["src"]))
-  (def result (internal/run-kondo ["target/projects/HumbleUI/src"]))
+  (reset! *source-paths ["src"])
+  (reset! *source-paths ["target/projects/asami/src"])
+  (reset! *source-paths ["target/projects/HumbleUI/src"])
 
+  (def result (internal/run-kondo @*source-paths))
   (def g (lg/digraph (internal/->graph (:analysis result))))
 
-  (def per-node-stats
-    (let [jg (->jgraph g)
-          scores (update-vals score-metrics
-                              (fn [f] (.getScores (f jg))))]
-      (->> (lg/nodes g)
-           (map (fn [node]
-                  [node (merge {:in-degree (lg/in-degree g node)
-                                :out-degree (lg/out-degree g node)
-                                ;; aka "height"
-                                ;; this is likely inefficient to traverse for each node separately
-                                :longest-shortest-path (count (alg/longest-shortest-path g node))
-                                :transitive-dependencies (lakos/count-transitive-dependencies g node)}
-                               (update-vals scores (fn [s] (get s node))))]))
-           (into {}))))
+  (metrics g)
 
-  (->> (alg/topsort g)
-       (map (fn [node]
-              [node (get per-node-stats node)])))
+  (->> (metrics g)
+       ; (sort-by :in-degree)
+       (sort-by :out-degree)
+       (reverse))
 
-  (->> per-node-stats
-       ; (sort-by (comp :in-degree val))
-       (sort-by (comp :out-degree val))
-       (reverse)))
+  (clerk/serve! {:browse true
+                 :port 7788
+                 :watch-paths ["notebooks" "src"]}))

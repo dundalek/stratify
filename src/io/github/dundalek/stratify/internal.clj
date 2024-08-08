@@ -4,11 +4,12 @@
    [clojure.data.xml :as xml]
    [clojure.java.io :as io]
    [clojure.string :as str]
+   [io.github.dundalek.stratify.style :as style :refer [theme]]
    [loom.attr :as la]
    [loom.graph :as lg]
-   [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]
-   [io.github.dundalek.stratify.style :as style :refer [theme]])
-  (:import (java.util.regex Pattern)))
+   [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml])
+  (:import
+   (java.util.regex Pattern)))
 
 (defn run-kondo [paths]
   (clj-kondo/run!

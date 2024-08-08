@@ -117,6 +117,11 @@
       (println "Extracting:" (.getName project-dir))
       (extract-project project-dir)))
 
+  (->> (for [project-dir (.listFiles (io/file projects-dir))]
+         [(.getName project-dir)
+          (set (project-sources project-dir))])
+       (into {}))
+
   (stratify/extract
    {:source-paths ["/home/me/code/dinodoc/dinodoc/components/antora/src"
                    "/home/me/code/dinodoc/dinodoc/components/dokka/src"

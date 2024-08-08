@@ -3,7 +3,9 @@
         aysylu/loom {:mvn/version "1.0.2"}
         org.babashka/cli {:mvn/version "0.8.59"}
 
-        org.jgrapht/jgrapht-core {:mvn/version "1.5.2"}}
+        org.jgrapht/jgrapht-core {:mvn/version "1.5.2"}
+        io.github.nextjournal/clerk {:mvn/version "0.16.1016"}
+        generateme/fastmath {:mvn/version "2.4.0"}}
  :aliases
  {:test
   {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}}

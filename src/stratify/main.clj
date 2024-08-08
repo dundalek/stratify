@@ -1,7 +1,8 @@
 (ns stratify.main
   (:require
    [babashka.cli :as cli]
-   [io.github.dundalek.stratify.internal :as stratify]))
+   [io.github.dundalek.stratify.internal :as stratify]
+   [io.github.dundalek.stratify.metrics :as metrics]))
 
 (def cli-spec
   {:out {:alias :o
@@ -12,6 +13,8 @@
                      :desc "Render flat namespaces instead of a nested hierarchy"}
    :include-dependencies {:coerce :boolean
                           :desc "Include links to library dependencies"}
+   :metrics {:coerce :boolean
+             :desc "Calculate and serve namespace metrics report"}
    :help {:alias :h
           :desc "Print this help message and exit"}})
 
@@ -31,7 +34,10 @@
       (let [{:keys [out]} opts
             output-file (if (= out "-") *out* out)]
         (stratify/extract (merge opts {:source-paths args
-                                       :output-file output-file}))))))
+                                       :output-file output-file}))
+        ;; TODO: optimize to reuse analysis
+        (when (:metrics opts)
+          (metrics/serve! {:source-paths args}))))))
 
 (comment
   (-main "--help")
