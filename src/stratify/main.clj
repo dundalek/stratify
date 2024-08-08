@@ -31,13 +31,13 @@
         {:keys [opts args]} parsed]
     (if (or (:help opts) (:h opts) (empty? args))
       (print-help)
-      (let [{:keys [out]} opts
-            output-file (if (= out "-") *out* out)]
-        (stratify/extract (merge opts {:source-paths args
-                                       :output-file output-file}))
-        ;; TODO: optimize to reuse analysis
-        (when (:metrics opts)
-          (metrics/serve! {:source-paths args}))))))
+      (let [{:keys [out metrics]} opts]
+        (if metrics
+          (metrics/report! {:source-paths args
+                            :output-path (when (not= out "-") out)})
+          (let [output-file (if (= out "-") *out* out)]
+            (stratify/extract (merge opts {:source-paths args
+                                           :output-file output-file}))))))))
 
 (comment
   (-main "--help")

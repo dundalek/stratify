@@ -96,11 +96,15 @@
 ;; Atom to pass paths from args to the notebook
 (defonce *source-paths (atom []))
 
-(defn serve! [{:keys [source-paths]}]
+(defn report! [{:keys [source-paths output-path]}]
   (let [notebook-path (.getCanonicalPath (io/file (io/resource "io/github/dundalek/stratify/notebook.clj")))]
     (reset! *source-paths source-paths)
-    (clerk/serve! {:index notebook-path
-                   :browse true})))
+    (if output-path
+      (clerk/build! {:index notebook-path
+                     :package :single-file
+                     :out-path output-path})
+      (clerk/serve! {:index notebook-path
+                     :browse true}))))
 
 (comment
   (reset! *source-paths ["src"])
@@ -119,4 +123,4 @@
 
   (clerk/serve! {:browse true
                  :port 7788
-                 :watch-paths ["notebooks" "src"]}))
+                 :watch-paths ["src"]}))
