@@ -141,12 +141,24 @@
 
 (clerk/col
  (for [metric selected-metrics]
-   (clerk/vl
-    {:description ""
-     :data {:values metrics}
-     :mark "bar"
-     :encoding {:x {:field "id" :type "nominal" :axis {:labelAngle 35}
-                    :sort "-y"}
-                :y {:field (name metric) :type "quantitative"}
-                ;; first color of https://vega.github.io/vega/docs/schemes/#observable10
-                :fill {:value "#4269D0"}}})))
+   (clerk/col
+    (clerk/vl
+     {:description ""
+      :data {:values metrics}
+      :mark "bar"
+      :encoding {:x {:field (name metric)
+                     ; :type "ordinal"
+                     ; :bin true
+                     :bin (contains? #{:betweenness-centrality :page-rank} metric)}
+                 :y {:aggregate "count"}
+                  ;; first color of https://vega.github.io/vega/docs/schemes/#observable10
+                 :fill {:value "#4269D0"}}})
+    (clerk/vl
+     {:description ""
+      :data {:values metrics}
+      :mark "bar"
+      :encoding {:x {:field "id" :type "nominal" :axis {:labelAngle 35}
+                     :sort "-y"}
+                 :y {:field (name metric) :type "quantitative"}
+                  ;; first color of https://vega.github.io/vega/docs/schemes/#observable10
+                 :fill {:value "#4269D0"}}}))))
