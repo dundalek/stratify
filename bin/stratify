@@ -8,7 +8,8 @@
 
 (defn -main [& args]
   (let [project-path (-> (fs/real-path *file*) fs/parent fs/parent)
-        deps (pr-str {:deps {'io.github.dundalek/stratify {:local/root (str project-path)}}})
+        deps (pr-str {:deps {'org.clojure/clojure {:mvn/version "1.12.0-rc1"}
+                             'io.github.dundalek/stratify {:local/root (str project-path)}}})
         proc (apply process {:inherit true}
                     "clojure" "-Sdeps" deps
                     "-M" "-m" "stratify.main" args)]

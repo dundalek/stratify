@@ -27,6 +27,8 @@
                                                   org.bytedeco/openblas-platform
                                                   #_org.clojure/data.int-map
                                                   org.clojure/math.combinatorics]}}}
+  :overarch
+  {:extra-deps {org.soulspace.clj/overarch {:mvn/version "0.29.1"}}}
 
   :test
   {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}}
