@@ -1,4 +1,4 @@
-{:tasks {dev (clojure "-M:metrics:overarch:nrepl")
+{:tasks {dev (clojure "-M:optional-deps:nrepl")
          test (clojure "-M:test --watch") #_(clojure "-M:test --plugin notifier --watch")
          test:once (clojure "-M:test")
-         test:coverage (clojure "-M:metrics:overarch:test:coverage")}}
+         test:coverage (clojure "-M:optional-deps:test:coverage")}}

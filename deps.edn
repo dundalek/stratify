@@ -3,37 +3,20 @@
         org.clojure/data.xml {:mvn/version "0.2.0-alpha9"}
         aysylu/loom {:mvn/version "1.0.2"
                      :exclusions [tailrecursion/cljs-priority-map]}
-        org.babashka/cli {:mvn/version "0.8.59"}}
+        org.babashka/cli {:mvn/version "0.8.59"}
 
- :paths ["src" "notebooks"]
+        datascript/datascript {:mvn/version "1.7.3"}}
+
+ :paths ["src" "resources"]
 
  :aliases
- {:metrics
-  {:extra-deps {org.jgrapht/jgrapht-core {:mvn/version "1.5.2"}
-                io.github.nextjournal/clerk {:mvn/version "0.16.1016"}
-                generateme/fastmath {:mvn/version "2.4.0"
-                                     ;; Slim down dependencies that we don't need for statistic functions
-                                     :exclusions [#_ca.umontreal.iro.simul/ssj
-                                                  #_com.github.haifengl/smile-core
-                                                  #_com.github.haifengl/smile-interpolation
-                                                  com.github.haifengl/smile-mkl
-                                                  de.sciss/jwave
-                                                  #_net.jafama/jafama
-                                                  #_org.apache.commons/commons-math3
-                                                  org.bytedeco/arpack-ng
-                                                  org.bytedeco/arpack-ng-platform
-                                                  org.bytedeco/javacpp
-                                                  org.bytedeco/openblas
-                                                  org.bytedeco/openblas-platform
-                                                  #_org.clojure/data.int-map
-                                                  org.clojure/math.combinatorics]}}}
-  :overarch
-  {:extra-deps {org.soulspace.clj/overarch {:mvn/version "0.29.1"}}}
-
-  :test
+ {:test
   {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}}
    :main-opts ["-m" "kaocha.runner"]}
 
   :coverage
   {:extra-deps {lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}}
-   :main-opts ["-m" "kaocha.runner" "--plugin" "cloverage"]}}}
+   :main-opts ["-m" "kaocha.runner" "--plugin" "cloverage"]}
+
+  :optional-deps {:extra-deps {stratify/metrics {:local/root "resources/io/github/dundalek/stratify/optional-deps/metrics"}
+                               stratify/overarch {:local/root "resources/io/github/dundalek/stratify/optional-deps/overarch"}}}}}

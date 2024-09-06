@@ -123,5 +123,5 @@
 
   (clerk/serve! {:browse true
                  :port 7788
-                 :index "notebooks/io/github/dundalek/stratify/notebook.clj"
-                 :watch-paths ["src" "notebooks"]}))
+                 :index "resources/io/github/dundalek/stratify/notebook.clj"
+                 :watch-paths ["src" "resources"]}))

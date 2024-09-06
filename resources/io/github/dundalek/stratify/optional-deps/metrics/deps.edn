@@ -1,0 +1,18 @@
+{:deps {org.jgrapht/jgrapht-core {:mvn/version "1.5.2"}
+        io.github.nextjournal/clerk {:mvn/version "0.16.1016"}
+        generateme/fastmath {:mvn/version "2.4.0"
+                             ;; Slim down dependencies that we don't need for statistic functions
+                             :exclusions [#_ca.umontreal.iro.simul/ssj
+                                          #_com.github.haifengl/smile-core
+                                          #_com.github.haifengl/smile-interpolation
+                                          com.github.haifengl/smile-mkl
+                                          de.sciss/jwave
+                                          #_net.jafama/jafama
+                                          #_org.apache.commons/commons-math3
+                                          org.bytedeco/arpack-ng
+                                          org.bytedeco/arpack-ng-platform
+                                          org.bytedeco/javacpp
+                                          org.bytedeco/openblas
+                                          org.bytedeco/openblas-platform
+                                          #_org.clojure/data.int-map
+                                          org.clojure/math.combinatorics]}}}

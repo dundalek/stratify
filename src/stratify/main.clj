@@ -1,9 +1,11 @@
 (ns stratify.main
   (:require
    [babashka.cli :as cli]
+   [clojure.edn :as edn]
+   [clojure.java.io :as io]
+   [clojure.repl.deps :as deps]
    [io.github.dundalek.stratify.internal :as stratify]
-   [io.github.dundalek.stratify.metrics :as-alias metrics]
-   [clojure.repl.deps :as deps]))
+   [io.github.dundalek.stratify.metrics :as-alias metrics]))
 
 (def cli-spec
   {:out {:alias :o
@@ -32,6 +34,15 @@
     (when-not (instance? clojure.lang.DynamicClassLoader cl)
       (.setContextClassLoader (Thread/currentThread) (clojure.lang.DynamicClassLoader. cl)))))
 
+(defn add-deps [feature]
+  (let [deps (-> (io/resource (str "io/github/dundalek/stratify/optional-deps/" feature "/deps.edn"))
+                 slurp
+                 (edn/read-string)
+                 :deps)]
+    (binding [*repl* true]
+      (ensure-dynamic-context-classloader!)
+      (deps/add-libs deps))))
+
 (defn -main [& args]
   (let [parsed (cli/parse-args args {:spec cli-spec})
         {:keys [opts args]} parsed]
@@ -39,9 +50,8 @@
       (print-help)
       (let [{:keys [out metrics]} opts]
         (if metrics
-          (binding [*repl* true]
-            (ensure-dynamic-context-classloader!)
-            (deps/sync-deps {:aliases [:metrics]})
+          (do
+            (add-deps "metrics")
             ((requiring-resolve `metrics/report!)
              {:source-paths args
               :output-path (when (not= out "-") out)}))
