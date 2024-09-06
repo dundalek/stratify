@@ -76,6 +76,15 @@
                                            (xml/element ::dgml/Condition {:Expression "HasCategory('use-case')"})
                                            (property-setter-elements  {:Background "#B9BAFB"}))))))
 
+(defn extract [{:keys [model-file output-file]}]
+  (let [input-data (edn/read-string (slurp model-file))
+        model (build-model input-data)
+        data (->dgml model)]
+    (if (instance? java.io.Writer output-file)
+      (xml/indent data output-file)
+      (with-open [out (io/writer output-file)]
+        (xml/indent data out)))))
+
 (comment
 
   (def input-data (edn/read-string (slurp "target/projects/overarch/models/banking/model.edn")))
@@ -100,9 +109,5 @@
        :nodes
        (map #(dissoc % :ct)))
 
-  (let [input-data (edn/read-string (slurp "target/projects/overarch/models/banking/model.edn"))
-        model (build-model input-data)
-        output-file "../../shared/overarch-banking.dgml"
-        data (->dgml model)]
-    (with-open [out (io/writer output-file)]
-      (xml/indent data out))))
+  (extract {:model-file "target/projects/overarch/models/banking/model.edn"
+            :output-file "../../shared/overarch-banking.dgml"}))

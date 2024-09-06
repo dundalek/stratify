@@ -4,14 +4,27 @@
    [clojure.edn :as edn]
    [clojure.java.io :as io]
    [clojure.repl.deps :as deps]
+   [clojure.string :as str]
    [io.github.dundalek.stratify.internal :as stratify]
-   [io.github.dundalek.stratify.metrics :as-alias metrics]))
+   [io.github.dundalek.stratify.metrics :as-alias metrics]
+   [io.github.dundalek.stratify.overarch :as-alias overarch]))
+
+(def available-formats #{"clj" "overarch"})
 
 (def cli-spec
   {:out {:alias :o
          :ref "<file>"
          :desc "Output file, default \"-\" standard output"
          :default "-"}
+   :from {:alias :f
+          :ref "<format>"
+          :desc (str "Source format, choices: "
+                     (->> available-formats
+                          sort
+                          (map #(str "\"" % "\""))
+                          (str/join ", ")))
+          :validate available-formats
+          :default "clj"}
    :flat-namespaces {:coerce :boolean
                      :desc "Render flat namespaces instead of a nested hierarchy"}
    :include-dependencies {:coerce :boolean
@@ -48,20 +61,36 @@
         {:keys [opts args]} parsed]
     (if (or (:help opts) (:h opts) (empty? args))
       (print-help)
-      (let [{:keys [out metrics]} opts]
-        (if metrics
+      (let [{:keys [out metrics from]} opts
+            output-file (if (= out "-") *out* out)]
+        (cond
+          metrics
           (do
             (add-deps "metrics")
             ((requiring-resolve `metrics/report!)
              {:source-paths args
               :output-path (when (not= out "-") out)}))
-          (let [output-file (if (= out "-") *out* out)]
-            (stratify/extract (merge opts {:source-paths args
-                                           :output-file output-file}))))))))
+
+          (= from "overarch")
+          (do
+            (add-deps "overarch")
+            ((requiring-resolve `overarch/extract)
+             {:model-file (first args)
+              :output-file output-file}))
+
+          :else
+          (stratify/extract (merge opts {:source-paths args
+                                         :output-file output-file})))))))
 
 (comment
   (-main "--help")
 
   (-main "src")
   (-main "--out" "out.dgml" "src")
-  (-main "--flat-namespaces" "src"))
+  (-main "--flat-namespaces" "src")
+
+  (-main "-f" "overarch" "-o" "banking.dgml" "target/projects/overarch/models/banking/model.edn")
+
+  (-main "-f" "bla")
+
+  (cli/parse-args [] {:spec cli-spec}))
