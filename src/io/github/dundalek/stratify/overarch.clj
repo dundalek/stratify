@@ -1,17 +1,16 @@
 (ns io.github.dundalek.stratify.overarch
   (:require
    [clojure.data.xml :as xml]
-   [clojure.edn :as edn]
    [clojure.java.io :as io]
    [org.soulspace.overarch.domain.model :as model]
-   [org.soulspace.overarch.domain.spec :as spec]
+   [org.soulspace.overarch.adapter.repository.file-model-repository :as repository]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]
    [io.github.dundalek.stratify.internal :refer [property-setter-elements]]))
 
-(defn build-model [coll]
-  (-> coll
-      (spec/check-input-model)
-      (model/build-model)))
+(defn read-model [source-paths]
+  (->> source-paths
+       (mapcat repository/read-model)
+       (model/build-model)))
 
 (defn ->dgml [model]
   (let [parent? (->> model
@@ -76,9 +75,8 @@
                                            (xml/element ::dgml/Condition {:Expression "HasCategory('use-case')"})
                                            (property-setter-elements  {:Background "#B9BAFB"}))))))
 
-(defn extract [{:keys [model-file output-file]}]
-  (let [input-data (edn/read-string (slurp model-file))
-        model (build-model input-data)
+(defn extract [{:keys [source-paths output-file]}]
+  (let [model (read-model source-paths)
         data (->dgml model)]
     (if (instance? java.io.Writer output-file)
       (xml/indent data output-file)
@@ -87,19 +85,17 @@
 
 (comment
 
-  (def input-data (edn/read-string (slurp "target/projects/overarch/models/banking/model.edn")))
-  (def input-data (edn/read-string (slurp "target/projects/overarch/models/big-bank/model.edn")))
+  (def source-paths ["target/projects/overarch/models/banking"])
+  (def source-paths ["target/projects/overarch/models/big-bank"])
 
-  (def model (build-model input-data))
+  (def model (read-model source-paths))
 
   (->> model
+       :nodes
        (map :el)
        frequencies)
 
-  (tap> input-data)
   (tap> model)
-
-  (= input-data (:input-elements model))
 
   (->> model
        :relations
@@ -109,5 +105,5 @@
        :nodes
        (map #(dissoc % :ct)))
 
-  (extract {:model-file "target/projects/overarch/models/banking/model.edn"
-            :output-file "../../shared/overarch-banking.dgml"}))
+  (extract {:source-paths ["target/projects/overarch/models/banking"]
+            :output-file "banking.dgml" #_"../../shared/overarch-banking.dgml"}))

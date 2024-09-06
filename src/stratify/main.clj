@@ -75,7 +75,7 @@
           (do
             (add-deps "overarch")
             ((requiring-resolve `overarch/extract)
-             {:model-file (first args)
+             {:source-paths args
               :output-file output-file}))
 
           :else
@@ -89,7 +89,7 @@
   (-main "--out" "out.dgml" "src")
   (-main "--flat-namespaces" "src")
 
-  (-main "-f" "overarch" "-o" "banking.dgml" "target/projects/overarch/models/banking/model.edn")
+  (-main "-f" "overarch" "-o" "banking.dgml" "target/projects/overarch/models/banking")
 
   (-main "-f" "bla")
 
