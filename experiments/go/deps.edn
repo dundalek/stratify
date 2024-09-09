@@ -1,2 +1,0 @@
-{:deps {io.github.dundalek/theodora {:local/root "../graphviz"}
-        stratify/internal {:local/root "../.."}}}
