@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="project/server/x" Label="x" Name="project/server/x"/>
+    <Node Id="project/client/a" Label="a" Name="project/client/a"/>
+    <Node Id="project/client" Label="client" Name="project/client" Group="Expanded"/>
+    <Node Id="project" Label="project" Name="project" Group="Expanded"/>
+    <Node Id="project/server" Label="server" Name="project/server" Group="Expanded"/>
+    <Node Id="project/client/b" Label="b" Name="project/client/b"/>
+    <Node Id="project/server/y" Label="y" Name="project/server/y"/>
+  </Nodes>
+  <Links>
+    <Link Source="project/client/a" Target="project/client/b"/>
+    <Link Source="project/client/b" Target="project/server/y"/>
+    <Link Source="project/server/y" Target="project/server/x"/>
+    <Link Source="project/server" Target="project/server/x" Category="Contains"/>
+    <Link Source="project/client" Target="project/client/a" Category="Contains"/>
+    <Link Source="project" Target="project/client" Category="Contains"/>
+    <Link Source="project" Target="project/server" Category="Contains"/>
+    <Link Source="project/client" Target="project/client/b" Category="Contains"/>
+    <Link Source="project/server" Target="project/server/y" Category="Contains"/>
+  </Links>
+  <Styles>
+    <Style TargetType="Node">
+      <Setter Property="Background" Value="#295B71"/>
+      <Setter Property="Stroke" Value="#34749A"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+  </Styles>
+</DirectedGraph>

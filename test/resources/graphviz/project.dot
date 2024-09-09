@@ -1,0 +1,5 @@
+digraph {
+  "project/client/a" -> "project/client/b";
+  "project/client/b" -> "project/server/y";
+  "project/server/y" -> "project/server/x";
+}

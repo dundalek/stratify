@@ -39,7 +39,8 @@
                               (for [node (lg/nodes g)]
                                 (xml/element ::dgml/Node
                                              (cond-> {:Id node
-                                                      :Label (la/attr g node :label)
+                                                      :Label (or (la/attr g node :label)
+                                                                 node)
                                                       :Name node}
                                                       ;; add href, color?
 
