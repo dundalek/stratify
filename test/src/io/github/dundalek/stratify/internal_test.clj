@@ -1,16 +1,8 @@
 (ns io.github.dundalek.stratify.internal-test
   (:require
-   [clojure.java.shell :refer [sh]]
-   [clojure.string :as str]
-   [clojure.test :refer [deftest is testing]]
-   [io.github.dundalek.stratify.internal :as stratify]))
-
-(defn is-same? [path]
-  (let [result (sh "git" "status" "--porcelain" path)]
-    (testing path
-      (is (= 0 (:exit result)))
-      (is (= "" (:err result)))
-      (is (= [""] (str/split-lines (:out result)))))))
+   [clojure.test :refer [deftest is]]
+   [io.github.dundalek.stratify.internal :as stratify]
+   [io.github.dundalek.stratify.test-utils :refer [is-same?]]))
 
 (deftest extract-default-grouped-namespaces
   (let [output-file "test/resources/sample/output.dgml"]
