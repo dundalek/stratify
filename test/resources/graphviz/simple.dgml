@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
+    <Node Id="isolated" Label="isolated" Name="isolated"/>
     <Node Id="a" Label="a" Name="a"/>
     <Node Id="b" Label="b" Name="b"/>
     <Node Id="c" Label="c" Name="c"/>

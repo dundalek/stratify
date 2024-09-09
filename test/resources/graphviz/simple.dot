@@ -1,4 +1,5 @@
 digraph {
   a -> b;
   a -> c;
+  isolated;
 }
