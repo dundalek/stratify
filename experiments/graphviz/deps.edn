@@ -1,10 +1,7 @@
-{:deps {clj-antlr/clj-antlr {:mvn/version "0.2.12"}
-        org.antlr/antlr4-runtime {:mvn/version "4.9.3"}
-        org.antlr/antlr4 {:mvn/version "4.9.3"}}
-
- :paths ["src" "resources"]
+{:paths ["src" "resources"]
 
  :aliases
- {:test {:extra-deps {lambdaisland/kaocha {:mvn/version "1.77.1236"}
+ {:test {:extra-deps {stratify/graphviz {:local/root "../../resources/io/github/dundalek/stratify/optional-deps/graphviz"}
+                      lambdaisland/kaocha {:mvn/version "1.77.1236"}
                       dorothy/dorothy {:mvn/version "0.0.7"}}
          :main-opts ["-m" "kaocha.runner"]}}}

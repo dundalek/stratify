@@ -81,7 +81,7 @@
 
           (= from "dot")
           (do
-            ; (add-deps "graphviz") ; FIXME
+            (add-deps "graphviz")
             ((requiring-resolve `graphviz/extract)
              {:input-file (first args)
               :output-file output-file}))
