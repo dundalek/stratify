@@ -1,8 +1,16 @@
 (ns io.github.dundalek.stratify.graphviz-test
   (:require
-   [clojure.test :refer [deftest]]
+   [clojure.test :refer [deftest is]]
    [io.github.dundalek.stratify.graphviz :as graphviz]
-   [io.github.dundalek.stratify.test-utils :refer [is-same?]]))
+   [io.github.dundalek.stratify.test-utils :refer [is-same?]]
+   [stratify.main :as main]))
+
+(deftest simple-via-cli
+  (let [file-prefix "test/resources/graphviz/simple"
+        output-file (str file-prefix ".dgml")]
+    (is (= (slurp output-file)
+           (with-out-str
+             (main/-main "-f" "dot" (str file-prefix ".dot")))))))
 
 (deftest simple
   (let [file-prefix "test/resources/graphviz/simple"

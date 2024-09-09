@@ -5,11 +5,12 @@
    [clojure.java.io :as io]
    [clojure.repl.deps :as deps]
    [clojure.string :as str]
+   [io.github.dundalek.stratify.graphviz :as-alias graphviz]
    [io.github.dundalek.stratify.internal :as stratify]
    [io.github.dundalek.stratify.metrics :as-alias metrics]
    [io.github.dundalek.stratify.overarch :as-alias overarch]))
 
-(def available-formats #{"clj" "overarch"})
+(def available-formats #{"clj" "dot" "overarch"})
 
 (def cli-spec
   {:out {:alias :o
@@ -76,6 +77,13 @@
             (add-deps "overarch")
             ((requiring-resolve `overarch/extract)
              {:source-paths args
+              :output-file output-file}))
+
+          (= from "dot")
+          (do
+            ; (add-deps "graphviz") ; FIXME
+            ((requiring-resolve `graphviz/extract)
+             {:input-file (first args)
               :output-file output-file}))
 
           :else
