@@ -84,7 +84,8 @@
             (add-deps "graphviz")
             ((requiring-resolve `graphviz/extract)
              {:input-file (first args)
-              :output-file output-file}))
+              :output-file output-file
+              :flat-namespaces (:flat-namespaces opts)}))
 
           :else
           (stratify/extract (merge opts {:source-paths args

@@ -12,6 +12,13 @@
            (with-out-str
              (main/-main "-f" "dot" (str file-prefix ".dot")))))))
 
+(deftest nested-flat-via-cli
+  (let [file-prefix "test/resources/graphviz/project"
+        output-file (str file-prefix "-flat.dgml")]
+    (is (= (slurp output-file)
+           (with-out-str
+             (main/-main "--flat-namespaces" "-f" "dot" (str file-prefix ".dot")))))))
+
 (deftest simple
   (let [file-prefix "test/resources/graphviz/simple"
         output-file (str file-prefix ".dgml")]
