@@ -2,7 +2,14 @@
   (:require
    [clojure.test :refer [deftest is]]
    [io.github.dundalek.stratify.internal :as stratify]
-   [io.github.dundalek.stratify.test-utils :refer [is-same?]]))
+   [io.github.dundalek.stratify.test-utils :refer [is-same?]]
+   [stratify.main :as main]))
+
+(deftest extract-default-grouped-namespaces-via-cli
+  (let [output-file "test/resources/sample/output.dgml"]
+    (is (= (slurp output-file)
+           (with-out-str
+             (main/-main "test/resources/sample/src"))))))
 
 (deftest extract-default-grouped-namespaces
   (let [output-file "test/resources/sample/output.dgml"]
