@@ -1,0 +1,19 @@
+digraph {
+  subgraph cluster_project {
+    label = "Project";
+    subgraph cluster_client {
+      label = "Client";
+      a;
+      b;
+    }
+
+    subgraph cluster_server {
+      label = "Server";
+      y;
+      x;
+    }
+  }
+  a -> b;
+  b -> y;
+  y -> x;
+}

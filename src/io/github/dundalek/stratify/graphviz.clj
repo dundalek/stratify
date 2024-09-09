@@ -71,5 +71,7 @@
         (xml/indent data out)))))
 
 (comment
-  (let [digraph (parser/parse (slurp "test/resources/graphviz/simple.dot"))]
-    (graphviz->dgml {:digraph digraph})))
+  (def digraph (parser/parse (slurp "test/resources/graphviz/simple.dot")))
+  (def digraph (parser/parse (slurp "test/resources/graphviz/clusters.dot")))
+
+  (graphviz->dgml {:digraph digraph}))

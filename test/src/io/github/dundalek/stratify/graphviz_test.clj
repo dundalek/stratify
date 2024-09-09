@@ -25,3 +25,11 @@
                        :output-file output-file
                        :flat-namespaces true})
     (is-same? output-file)))
+
+(deftest clusters
+  ;; asserting current behavior but the result is wrong because graphviz cluster support is not yet implemented
+  (let [file-prefix "test/resources/graphviz/clusters"
+        output-file (str file-prefix ".dgml")]
+    (graphviz/extract {:input-file (str file-prefix ".dot")
+                       :output-file output-file})
+    (is-same? output-file)))
