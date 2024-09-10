@@ -1,0 +1,1 @@
+(ns example.persistence.foo)

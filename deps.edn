@@ -4,9 +4,7 @@
         aysylu/loom {:mvn/version "1.0.2"
                      :exclusions [tailrecursion/cljs-priority-map]}
         org.babashka/cli {:mvn/version "0.8.59"}
-        stratify/theodora {:local/root "experiments/graphviz"}
-
-        datascript/datascript {:mvn/version "1.7.3"}}
+        stratify/theodora {:local/root "experiments/graphviz"}}
 
  :paths ["src" "resources"]
 
@@ -21,4 +19,7 @@
 
   :optional-deps {:extra-deps {stratify/metrics {:local/root "resources/io/github/dundalek/stratify/optional-deps/metrics"}
                                stratify/overarch {:local/root "resources/io/github/dundalek/stratify/optional-deps/overarch"}
-                               stratify/graphviz {:local/root "resources/io/github/dundalek/stratify/optional-deps/graphviz"}}}}}
+                               stratify/graphviz {:local/root "resources/io/github/dundalek/stratify/optional-deps/graphviz"}
+
+                               ;; for queries experiment
+                               datascript/datascript {:mvn/version "1.7.3"}}}}}
