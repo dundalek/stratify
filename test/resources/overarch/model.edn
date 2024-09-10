@@ -1,0 +1,16 @@
+#{{:el :person
+   :id :example/user
+   :name "User"
+   :desc "A user of my software system."}
+  {:el :system
+   :id :example/software-system
+   :name "Software System"
+   :desc "My software system."
+   :ct #{{:el :container
+          :id :example/app
+          :name "Application"}}}
+  {:el :uses
+   :id :example/user-uses-application
+   :from :example/user
+   :to :example/app
+   :name "uses"}}
