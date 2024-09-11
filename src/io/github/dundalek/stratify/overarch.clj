@@ -15,8 +15,8 @@
 (defn ->dgml [model]
   (let [parent? (->> model
                      :relations
-                     (filter (comp #{:contains} :el))
-                     (map :from)
+                     (filter (comp #{:contained-in} :el))
+                     (map :to)
                      (into #{}))]
     (xml/element ::dgml/DirectedGraph
                  {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
@@ -32,14 +32,22 @@
                  (xml/element ::dgml/Links {}
                               (concat
                                (for [link (->> model :relations)]
-                                 (let [{:keys [from to el] link-name :name} link]
-                                   (xml/element ::dgml/Link (merge {:Source (str from)
-                                                                    :Target (str to)
-                                                                    :Category (if (= :contains el)
-                                                                                "Contains"
-                                                                                (name el))
-                                                                    :Label link-name}
-                                                                   (update-vals (dissoc link :id :el :from :to) str)))))))
+                                 (let [{:keys [from to el] link-name :name} link
+                                       attrs (update-vals (dissoc link :id :el :from :to :name) str)]
+                                   (if (= :contained-in el)
+                                     ;; Source and Target are flipped because we are reversing the direction
+                                     ;; from "contained-in" relation to "Contains" link category
+                                     ;; so that DGML will treat it as expandable/collapsible hierarchy.
+                                     (xml/element ::dgml/Link (merge {:Source (str to)
+                                                                      :Target (str from)
+                                                                      :Category "Contains"
+                                                                      :Label "contains"}
+                                                                     attrs))
+                                     (xml/element ::dgml/Link (merge {:Source (str from)
+                                                                      :Target (str to)
+                                                                      :Category (name el)
+                                                                      :Label link-name}
+                                                                     attrs)))))))
                  (xml/element ::dgml/Styles {}
                               (xml/element ::dgml/Style
                                            {:TargetType "Node" :GroupLabel "Person" :ValueLabel "External"}
@@ -91,7 +99,7 @@
   (def model (read-model source-paths))
 
   (->> model
-       :nodes
+       :relations
        (map :el)
        frequencies)
 
@@ -99,7 +107,7 @@
 
   (->> model
        :relations
-       (filter (comp #{:contains} :el)))
+       (filter (comp #{:contained-in} :el)))
 
   (->> model
        :nodes

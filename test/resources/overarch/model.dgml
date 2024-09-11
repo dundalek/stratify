@@ -6,8 +6,8 @@
     <Node Id=":example/app" Label="Application" Category="container" name="Application"/>
   </Nodes>
   <Links>
-    <Link Source=":example/software-system" Target=":example/app" Category="Contains" Label="contains" name="contains" synthetic="true"/>
-    <Link Source=":example/user" Target=":example/app" Category="uses" Label="uses" name="uses"/>
+    <Link Source=":example/software-system" Target=":example/app" Category="Contains" Label="contains" synthetic="true"/>
+    <Link Source=":example/user" Target=":example/app" Category="uses" Label="uses"/>
   </Links>
   <Styles>
     <Style TargetType="Node" GroupLabel="Person" ValueLabel="External">
