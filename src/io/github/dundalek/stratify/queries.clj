@@ -165,7 +165,7 @@
          [?e :name ?name]
          [(matches? ?name)]]
        @conn
-       (namespace-matcher ".*example.*")) ; "..durable.."
+       (namespace-matcher ".*example.*")) ; "..example.."
 
   ;; quey functions
   (d/q '[:find ?name

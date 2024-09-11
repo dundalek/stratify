@@ -1,10 +1,18 @@
 # Stratify
 
-Stratify is a tool to visualize structure and dependencies of Clojure codebases.
+Stratify is a tool for exploring and improving architecture of software.
 Discover bits of Stratified Design that are hiding in your code.
 Gain big picture understanding to make better decisions how to grow your system.
 
-It leverages the [code map](https://learn.microsoft.com/en-us/visualstudio/modeling/browse-and-rearrange-code-maps?view=vs-2022) tool from Visual Studio,
+- Code maps - Visualize structure and dependencies of codebases, supports following sources:
+  - [Clojure/Script](#usage) code
+  - [Graphviz](#graphviz-visualization) - Interactive visualization of outputs produced by other tools  
+    (e.g. Go, JavaSript/TypeScript dependencies or others)
+  - [Architecture maps](#architecture-maps) -  Explore C4 models
+- [Metrics reports](#metrics-reports) -  Calculate code metrics and generate visual reports
+- [Architecture checks](#architecture-checks) - Enforce architectural constrains, dependency rules, layer violations
+
+For visualization it leverages the [code map](https://learn.microsoft.com/en-us/visualstudio/modeling/browse-and-rearrange-code-maps?view=vs-2022) tool from Visual Studio,
 which is designed for hierarchical graphs,
 and allows to interactively collapse or expand the amount of shown information.
 
@@ -60,6 +68,20 @@ Then run:
 clojure -M:stratify path/to/src -o graph.dgml
 ```
 
+#### Options
+
+```
+Usage: stratify <options> <src-paths>
+
+Options:
+  -o, --out                  <file>   -   Output file, default "-" standard output
+  -f, --from                 <format> clj Source format, choices: "clj", "dot", "overarch"
+      --flat-namespaces                   Render flat namespaces instead of a nested hierarchy
+      --include-dependencies              Include links to library dependencies
+      --metrics                           Calculate and serve namespace metrics report
+  -h, --help                              Print this help message and exit
+```
+
 ### Using Visual Studio DGML Editor
 
 Once you extracted the graph use [Visual Studio](https://visualstudio.microsoft.com/) to visualize it.
@@ -76,6 +98,102 @@ It is [sufficient](https://learn.microsoft.com/en-us/visualstudio/modeling/analy
 - Install [DgmlPowerTools 2022](https://marketplace.visualstudio.com/items?itemName=ChrisLovett.DgmlPowerTools2022) extension ([source](https://github.com/clovett/DgmlPowerTools), optional)
   - provides extra features like neighborhood and butterfly exploration modes
   - menu Extensions -> Manage Extensions
+
+### Graphviz visualization
+
+To convert Graphviz `.dot` format to DGML pass the `-f dot` option:
+
+```
+clojure -M:stratify graph.dot -f dot -o graph.dgml
+```
+
+By default nested hierarchy is created based on segments using `/` as separator.  
+Pass the `--flat-namespaces` option for flat nodes without nesting.
+
+##### Extract Go dependencies as Graphviz dot file
+
+Use [goda](https://github.com/loov/goda) to extract dependency graph,
+which is then converted to DGML.
+
+```
+go install github.com/loov/goda@latest
+```
+
+From within a Go project:
+
+```
+goda graph "./..." > graph.dot
+```
+
+Or to also include dependencies:
+
+```
+goda graph "./:all" > graph-all.dot
+```
+
+##### JavaScript/TypeScript dependencies visualization
+
+Use [Dependency cruiser](https://github.com/sverweij/dependency-cruiser) to extract JS/TS dependencies as Graphviz dot file:
+
+```
+bunx depcruise src --include-only "^src" --output-type dot > graph.dot
+```
+
+To also include dependencies:
+
+```
+bunx depcruise src --output-type dot > graph.dot
+```
+
+### Architecture maps
+
+View [C4](https://c4model.com) architecture models expressed in [Overarch](https://github.com/soulspace-org/overarch) format.
+
+When a model becomes large it can end up overwhelming.
+Overarch lets you choose upfront which parts of your model to render as static diagrams.
+However, it can be useful to see the entire model at once,
+explore it interactively, and drill down to areas of interest as needed.
+
+To convert an architecture model to DGML use the `-f overarch` option and pass the model directory:
+
+```
+clojure -M:stratify models/banking -f overarch -o banking.dgml
+```
+
+Here is a rendering of the example [banking model](https://github.com/soulspace-org/overarch/blob/0551900472757ca1cf5973f5e598da534d49367e/models/banking/model.edn):
+
+![Overarch Banking model](doc/img/overarch-banking.png)
+
+### Metrics reports
+
+Use the  `--metrics` option to calculate code metrics for given source paths and generate a report.
+[Clerk](https://github.com/nextjournal/clerk) is used to start a local web server which renders a notebook as a web page.
+Metrics and charts can be adapted by customizing the [notebook.clj](resources/io/github/dundalek/stratify/notebook.clj).
+
+```
+clojure -M:stratify src --metrics
+```
+
+Use the `-o` / `--out` to generate the report as a HTML file.
+It can be useful to run periodically on CI and upload the HTML report to a static hosting server.
+
+```
+clojure -M:stratify src --metrics -o report.html
+```
+
+| | |
+| - | - |
+| ![Metrics](doc/img/metrics-table.png) | ![Charts](doc/img/metrics-chart-degrees.png) |
+
+### Architecture checks
+
+The goal is to be able to define rules for code like architectural constraints, dependency rules, and layer violations.
+It is inspired by [ArchUnit](https://www.archunit.org) with a difference of using graph queries ([Datalog](https://www.learndatalogtoday.org)) aiming to be mostly programming language agnostic and only needing thin adapters.
+
+Currently, the feature is not ready yet.
+There is a work-in-progress namespace [queries.clj](src/io/github/dundalek/stratify/queries.clj) used for experiments in the REPL to demonstrate the approach.
+The result from code analysis is loaded into in-memory [DataScript](https://github.com/tonsky/datascript) database and queries to check code rules run against it.
+Future work will be to try to express various rules, identify common patterns, and create more concise helpers.
 
 ## About DGML
 
