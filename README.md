@@ -68,6 +68,35 @@ Then run:
 clojure -M:stratify path/to/src -o graph.dgml
 ```
 
+#### Troubleshooting
+
+Stratify needs Clojure 1.12.
+In case you get an error `Could not locate clojure/repl/deps__init.class`:
+- Make sure to update Clojure CLI tools to latest version (`clojure --version` should print `Clojure CLI version 1.12.0.1479` or later).
+- Alternatively add `org.clojure/clojure {:mvn/version "1.12.0"}`  to `:deps` map explicitly.
+
+<details>
+<summary>Details</summary>
+
+Full error message:
+
+```
+Execution error (FileNotFoundException) at stratify.main/eval138$loading (main.clj:1).
+Could not locate clojure/repl/deps__init.class, clojure/repl/deps.clj or clojure/repl/deps.cljc on classpath.
+```
+
+`~/.clojure/deps.edn` `:aliases` section with added Clojure 1.12:
+
+```clojure
+{:aliases
+ {:stratify
+  {:extra-deps {io.github.dundalek/stratify {:git/tag "v0.2.0" :git/sha "85fcdee"}
+                org.clojure/clojure {:mvn/version "1.12.0"}}
+   :main-opts ["-m" "stratify.main"]
+```
+
+</details>
+
 #### Options
 
 ```
