@@ -160,6 +160,11 @@ Or to also include dependencies:
 goda graph "./:all" > graph-all.dot
 ```
 
+Compare the legibility of a typical graphviz dependency graph to the same graph displayed as hierarchical on the right.
+Note that groups can be further collapsed using the interactive viewer.
+
+![Graphviz vs. layered graph of Lazygit codebase extracted using Goda](doc/img/lazygit-graphviz-vs-layered.avif)
+
 ##### JavaScript/TypeScript dependencies visualization
 
 Use [Dependency cruiser](https://github.com/sverweij/dependency-cruiser) to extract JS/TS dependencies as Graphviz dot file:
