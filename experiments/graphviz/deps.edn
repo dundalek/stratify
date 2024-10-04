@@ -1,7 +1,0 @@
-{:paths ["src" "resources"]
-
- :aliases
- {:test {:extra-deps {stratify/graphviz {:local/root "../../resources/io/github/dundalek/stratify/optional-deps/graphviz"}
-                      lambdaisland/kaocha {:mvn/version "1.77.1236"}
-                      dorothy/dorothy {:mvn/version "0.0.7"}}
-         :main-opts ["-m" "kaocha.runner"]}}}

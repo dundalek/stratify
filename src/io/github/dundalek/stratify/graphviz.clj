@@ -2,13 +2,13 @@
   (:require
    [clojure.data.xml :as xml]
    [clojure.java.io :as io]
+   [dorothy.core :as-alias dc]
+   [io.github.dundalek.stratify.internal :as stratify]
+   [io.github.dundalek.stratify.style :as style :refer [theme]]
    [loom.attr :as la]
    [loom.graph :as lg]
-   [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]
-   [io.github.dundalek.stratify.style :as style :refer [theme]]
-   [io.github.dundalek.theodora.parser :as parser]
-   [dorothy.core :as-alias dc]
-   [io.github.dundalek.stratify.internal :as stratify]))
+   [theodora.core :as theodora]
+   [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]))
 
 (defn graphviz->dgml [{:keys [digraph flat-namespaces]}]
   (let [{:keys [statements]} digraph
@@ -62,7 +62,7 @@
                                                                                 :Foreground (::style/node-text-color theme)}))))))
 
 (defn extract [{:keys [input-file output-file flat-namespaces]}]
-  (let [digraph (parser/parse (slurp input-file))
+  (let [digraph (theodora/parse (slurp input-file))
         data (graphviz->dgml {:digraph digraph
                               :flat-namespaces (boolean flat-namespaces)})]
     (if (instance? java.io.Writer output-file)
@@ -71,7 +71,7 @@
         (xml/indent data out)))))
 
 (comment
-  (def digraph (parser/parse (slurp "test/resources/graphviz/simple.dot")))
-  (def digraph (parser/parse (slurp "test/resources/graphviz/clusters.dot")))
+  (def digraph (theodora/parse (slurp "test/resources/graphviz/simple.dot")))
+  (def digraph (theodora/parse (slurp "test/resources/graphviz/clusters.dot")))
 
   (graphviz->dgml {:digraph digraph}))

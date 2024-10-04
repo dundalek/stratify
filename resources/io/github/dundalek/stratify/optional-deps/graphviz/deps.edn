@@ -1,3 +1,1 @@
-{:deps {clj-antlr/clj-antlr {:mvn/version "0.2.12"}
-        org.antlr/antlr4-runtime {:mvn/version "4.9.3"}
-        org.antlr/antlr4 {:mvn/version "4.9.3"}}}
+{:deps {io.github.dundalek/theodora {:git/tag "v0.1.0" :git/sha "21f3de0"}}}

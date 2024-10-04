@@ -3,8 +3,7 @@
         org.clojure/data.xml {:mvn/version "0.2.0-alpha9"}
         aysylu/loom {:mvn/version "1.0.2"
                      :exclusions [tailrecursion/cljs-priority-map]}
-        org.babashka/cli {:mvn/version "0.8.59"}
-        stratify/theodora {:local/root "experiments/graphviz"}}
+        org.babashka/cli {:mvn/version "0.8.59"}}
 
  :paths ["src" "resources"]
 
