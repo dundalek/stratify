@@ -39,5 +39,18 @@
                        :flat-namespaces true})
     (is-same? output-file)))
 
+(deftest extract-nested-default
+  (let [output-file "test/resources/nested/output-default.dgml"]
+    (stratify/extract {:source-paths ["test/resources/nested/src"]
+                       :output-file output-file})
+    (is-same? output-file)))
+
+(deftest extract-nested-extra-node
+  (let [output-file "test/resources/nested/output-extra-node.dgml"]
+    (stratify/extract {:source-paths ["test/resources/nested/src"]
+                       :output-file output-file
+                       :insert-namespace-node "SELF"})
+    (is-same? output-file)))
+
 (deftest color-add-alpha
   (is (= "#EF123456" (stratify/color-add-alpha "#123456" "EF"))))
