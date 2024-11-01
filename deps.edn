@@ -21,4 +21,11 @@
                                stratify/graphviz {:local/root "resources/io/github/dundalek/stratify/optional-deps/graphviz"}
 
                                ;; for queries experiment
-                               datascript/datascript {:mvn/version "1.7.3"}}}}}
+                               datascript/datascript {:mvn/version "1.7.3"}
+
+                               ; polylith/workspace {:git/url "https://github.com/polyfy/polylith"
+                               ;                     :git/tag "v0.2.21"
+                               ;                     :git/sha "44f5ecb"}
+                               ;                     ; :deps/root "components/workspace"}}
+
+                               polylith/clj-poly {:mvn/version "0.2.21"}}}}}
