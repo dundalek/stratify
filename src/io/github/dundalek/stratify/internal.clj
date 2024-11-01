@@ -94,57 +94,56 @@
     ;; All others in the same category for now: def, defonce, defprotocol, defrecord, deftype, deftest
     "Var"))
 
-(def styles-element
-  (xml/element ::dgml/Styles {}
-               (xml/element ::dgml/Style
-                            {:TargetType "Node" :GroupLabel "Namespace" :ValueLabel "True"}
-                            (xml/element ::dgml/Condition {:Expression "HasCategory('Namespace')"})
-                            (property-setter-elements  {:Background (::style/namespace-color theme)
-                                                        :Stroke (::style/namespace-stroke-color theme)
-                                                        :Foreground (::style/node-text-color theme)}))
-               (xml/element ::dgml/Style
-                            {:TargetType "Node" :GroupLabel "Function" :ValueLabel "Public"}
-                            (xml/element ::dgml/Condition {:Expression "HasCategory('Function') and Access = 'Public'"})
-                            (property-setter-elements {:Background (::style/function-color theme)
-                                                       :Stroke (::style/function-stroke-color theme)
-                                                       :Foreground (::style/node-text-color theme)}))
-               (xml/element ::dgml/Style
-                            {:TargetType "Node" :GroupLabel "Function" :ValueLabel "Private"}
-                            (xml/element ::dgml/Condition {:Expression "HasCategory('Function') and  Access = 'Private'"})
-                            (property-setter-elements {:Background (color-add-alpha (::style/function-color theme) "66")
-                                                       :Stroke (::style/function-stroke-color theme)
-                                                       :StrokeDashArray "3,6"
-                                                       :Foreground (::style/node-text-color theme)}))
-               (xml/element ::dgml/Style
-                            {:TargetType "Node" :GroupLabel "Macro" :ValueLabel "Public"}
-                            (xml/element ::dgml/Condition {:Expression "HasCategory('Macro') and Access = 'Public'"})
-                            (property-setter-elements {:Background (::style/macro-color theme)
-                                                       :Stroke (::style/macro-stroke-color theme)
-                                                       :Foreground (::style/node-text-color theme)}))
-               (xml/element ::dgml/Style
-                            {:TargetType "Node" :GroupLabel "Macro" :ValueLabel "Private"}
-                            (xml/element ::dgml/Condition {:Expression "HasCategory('Macro') and Access = 'Private'"})
-                            (property-setter-elements {:Background (color-add-alpha (::style/macro-color theme) "66")
-                                                       :Stroke (::style/macro-stroke-color theme)
-                                                       :StrokeDashArray "3,6"
-                                                       :Foreground (::style/node-text-color theme)}))
-               (xml/element ::dgml/Style
-                            {:TargetType "Node" :GroupLabel "Var" :ValueLabel "Public"}
-                            (xml/element ::dgml/Condition {:Expression "HasCategory('Var') and Access = 'Public'"})
-                            (property-setter-elements {:Background (::style/var-color theme)
-                                                       :Stroke (::style/var-stroke-color theme)
-                                                       :Foreground (::style/node-text-color theme)}))
-               (xml/element ::dgml/Style
-                            {:TargetType "Node" :GroupLabel "Var" :ValueLabel "Private"}
-                            (xml/element ::dgml/Condition {:Expression "HasCategory('Var') and Access = 'Private'"})
-                            (property-setter-elements {:Background (color-add-alpha (::style/var-color theme) "66")
-                                                       :Stroke (::style/var-stroke-color theme)
-                                                       :StrokeDashArray "3,6"
-                                                       :Foreground (::style/node-text-color theme)}))
-               (xml/element ::dgml/Style
-                            {:TargetType "Link" :GroupLabel "Link" :ValueLabel "Private Reference"}
-                            (xml/element ::dgml/Condition {:Expression "Target.Access = 'Private'"})
-                            (property-setter-elements {:StrokeDashArray "4,2"}))))
+(def styles
+  [(xml/element ::dgml/Style
+                {:TargetType "Node" :GroupLabel "Namespace" :ValueLabel "True"}
+                (xml/element ::dgml/Condition {:Expression "HasCategory('Namespace')"})
+                (property-setter-elements  {:Background (::style/namespace-color theme)
+                                            :Stroke (::style/namespace-stroke-color theme)
+                                            :Foreground (::style/node-text-color theme)}))
+   (xml/element ::dgml/Style
+                {:TargetType "Node" :GroupLabel "Function" :ValueLabel "Public"}
+                (xml/element ::dgml/Condition {:Expression "HasCategory('Function') and Access = 'Public'"})
+                (property-setter-elements {:Background (::style/function-color theme)
+                                           :Stroke (::style/function-stroke-color theme)
+                                           :Foreground (::style/node-text-color theme)}))
+   (xml/element ::dgml/Style
+                {:TargetType "Node" :GroupLabel "Function" :ValueLabel "Private"}
+                (xml/element ::dgml/Condition {:Expression "HasCategory('Function') and  Access = 'Private'"})
+                (property-setter-elements {:Background (color-add-alpha (::style/function-color theme) "66")
+                                           :Stroke (::style/function-stroke-color theme)
+                                           :StrokeDashArray "3,6"
+                                           :Foreground (::style/node-text-color theme)}))
+   (xml/element ::dgml/Style
+                {:TargetType "Node" :GroupLabel "Macro" :ValueLabel "Public"}
+                (xml/element ::dgml/Condition {:Expression "HasCategory('Macro') and Access = 'Public'"})
+                (property-setter-elements {:Background (::style/macro-color theme)
+                                           :Stroke (::style/macro-stroke-color theme)
+                                           :Foreground (::style/node-text-color theme)}))
+   (xml/element ::dgml/Style
+                {:TargetType "Node" :GroupLabel "Macro" :ValueLabel "Private"}
+                (xml/element ::dgml/Condition {:Expression "HasCategory('Macro') and Access = 'Private'"})
+                (property-setter-elements {:Background (color-add-alpha (::style/macro-color theme) "66")
+                                           :Stroke (::style/macro-stroke-color theme)
+                                           :StrokeDashArray "3,6"
+                                           :Foreground (::style/node-text-color theme)}))
+   (xml/element ::dgml/Style
+                {:TargetType "Node" :GroupLabel "Var" :ValueLabel "Public"}
+                (xml/element ::dgml/Condition {:Expression "HasCategory('Var') and Access = 'Public'"})
+                (property-setter-elements {:Background (::style/var-color theme)
+                                           :Stroke (::style/var-stroke-color theme)
+                                           :Foreground (::style/node-text-color theme)}))
+   (xml/element ::dgml/Style
+                {:TargetType "Node" :GroupLabel "Var" :ValueLabel "Private"}
+                (xml/element ::dgml/Condition {:Expression "HasCategory('Var') and Access = 'Private'"})
+                (property-setter-elements {:Background (color-add-alpha (::style/var-color theme) "66")
+                                           :Stroke (::style/var-stroke-color theme)
+                                           :StrokeDashArray "3,6"
+                                           :Foreground (::style/node-text-color theme)}))
+   (xml/element ::dgml/Style
+                {:TargetType "Link" :GroupLabel "Link" :ValueLabel "Private Reference"}
+                (xml/element ::dgml/Condition {:Expression "Target.Access = 'Private'"})
+                (property-setter-elements {:StrokeDashArray "4,2"}))])
 
 (defn analysis->graph [{:keys [analysis flat-namespaces include-dependencies insert-namespace-node]}]
   (let [var-usages (->> (if include-dependencies
@@ -224,42 +223,50 @@
     {:g g
      :namespace-with-nested-namespace? namespace-with-nested-namespace?}))
 
-(defn analysis->dgml [{:keys [analysis flat-namespaces include-dependencies insert-namespace-node]}]
+(defn analysis->nodes-links [{:keys [analysis flat-namespaces include-dependencies insert-namespace-node]}]
   (let [{:keys [g namespace-with-nested-namespace?]} (analysis->graph {:analysis analysis
                                                                        :flat-namespaces flat-namespaces
                                                                        :include-dependencies include-dependencies
                                                                        :insert-namespace-node insert-namespace-node})]
 
-    (xml/element ::dgml/DirectedGraph
-                 {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
-                 (xml/element ::dgml/Nodes {}
-                              (for [node (lg/nodes g)]
-                                (xml/element ::dgml/Node
-                                             (cond-> {:Id node
-                                                      :Label (la/attr g node :label)
-                                                      :Category (la/attr g node :category)
+    {:nodes
+     (for [node (lg/nodes g)]
+       (xml/element ::dgml/Node
+                    (cond-> {:Id node
+                             :Label (la/attr g node :label)
+                             :Category (la/attr g node :category)
 
                                                       ;; Custom non-DGML attributes
                                                       ;; Need to aware of not conflicting with bultins since VS Editor does not support xml-namespaced attributes
-                                                      :Name (or (la/attr g node :name) node)}
+                             :Name (or (la/attr g node :name) node)}
 
-                                               (= (la/attr g node :category) "Namespace")
-                                               (assoc :Group (if (namespace-with-nested-namespace? node) "Expanded" "Collapsed"))
+                      (= (la/attr g node :category) "Namespace")
+                      (assoc :Group (if (namespace-with-nested-namespace? node) "Expanded" "Collapsed"))
 
-                                               (la/attr g node :access)
-                                               (assoc :Access (la/attr g node :access))
+                      (la/attr g node :access)
+                      (assoc :Access (la/attr g node :access))
 
-                                               (la/attr g node :defined-by)
-                                               (assoc :DefinedBy (la/attr g node :defined-by))))))
-                 (xml/element ::dgml/Links {}
-                              (concat
-                               (for [[source target] (lg/edges g)]
-                                 (xml/element ::dgml/Link {:Source source :Target target}))
-                               (->> (lg/nodes g)
-                                    (keep (fn [node-id]
-                                            (when-some [parent (la/attr g node-id :parent)]
-                                              (xml/element ::dgml/Link {:Source parent :Target node-id :Category "Contains"})))))))
-                 styles-element)))
+                      (la/attr g node :defined-by)
+                      (assoc :DefinedBy (la/attr g node :defined-by)))))
+     :links
+     (concat
+      (for [[source target] (lg/edges g)]
+        (xml/element ::dgml/Link {:Source source :Target target}))
+      (->> (lg/nodes g)
+           (keep (fn [node-id]
+                   (when-some [parent (la/attr g node-id :parent)]
+                     (xml/element ::dgml/Link {:Source parent :Target node-id :Category "Contains"}))))))}))
+
+(defn analysis->dgml [{:keys [analysis flat-namespaces include-dependencies insert-namespace-node]}]
+  (let [{:keys [nodes links]} (analysis->nodes-links {:analysis analysis
+                                                      :flat-namespaces flat-namespaces
+                                                      :include-dependencies include-dependencies
+                                                      :insert-namespace-node insert-namespace-node})]
+    (xml/element ::dgml/DirectedGraph
+                 {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
+                 (xml/element ::dgml/Nodes {} nodes)
+                 (xml/element ::dgml/Links {} links)
+                 (xml/element ::dgml/Styles {} styles))))
 
 (defn extract [{:keys [source-paths output-file flat-namespaces include-dependencies insert-namespace-node]}]
   (let [{:keys [analysis]} (run-kondo source-paths)
