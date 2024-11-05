@@ -39,7 +39,11 @@ Watch the [demo video](https://www.youtube.com/watch?v=8LMrIpxxpDw) which shows 
 - Local understanding - Navigate and traverse the call graph to learn details about implementation.
 - Refactoring simulation - Improve structure of a codebase by previewing results of refactoring.
 
-[![stratify-asami](doc/img/demo-thumbnail.png)](https://www.youtube.com/watch?v=8LMrIpxxpDw)
+[![Stratify Demo](doc/img/demo-thumbnail.png)](https://www.youtube.com/watch?v=8LMrIpxxpDw)
+
+Watch the [London Clojurians talk](https://www.youtube.com/watch?v=olTNZeKpc2M) that goes into depth and also dicusses software architecture in general:
+
+[![Stratify Clojurians talk](doc/img/london-clj-talk-thumbnail.avif)](https://www.youtube.com/watch?v=olTNZeKpc2M)
 
 ## Usage
 
