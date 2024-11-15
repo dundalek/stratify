@@ -1,0 +1,2 @@
+{:deps {metosin/jsonista {:mvn/version "0.3.12"}
+        org.clojure/data.xml {:mvn/version "0.2.0-alpha9"}}}
