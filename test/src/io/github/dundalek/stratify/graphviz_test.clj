@@ -48,3 +48,10 @@
     (graphviz/extract {:input-file (str file-prefix ".dot")
                        :output-file output-file})
     (is-same? output-file)))
+
+(deftest labels
+  (let [file-prefix "test/resources/graphviz/labels"
+        output-file (str file-prefix ".dgml")]
+    (graphviz/extract {:input-file (str file-prefix ".dot")
+                       :output-file output-file})
+    (is-same? output-file)))

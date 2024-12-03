@@ -30,6 +30,12 @@
                          adj))
         g (cond-> (lg/digraph adj)
             (not flat-namespaces) (stratify/add-clustered-namespace-hierarchy "/"))
+        g (reduce (fn [g {:keys [id attrs]}]
+                    (let [label (get attrs "label")]
+                      (cond-> g
+                        label (la/add-attr (:id id) :label label))))
+                  g
+                  nodes)
         node-with-children? (->> (lg/nodes g)
                                  (map #(la/attr g % :parent))
                                  set)]
@@ -72,6 +78,8 @@
 
 (comment
   (def digraph (theodora/parse (slurp "test/resources/graphviz/simple.dot")))
-  (def digraph (theodora/parse (slurp "test/resources/graphviz/clusters.dot")))
+  (def digraph (theodora/parse (slurp "test/resources/graphviz/labels.dot")))
+
+  digraph
 
   (graphviz->dgml {:digraph digraph}))
