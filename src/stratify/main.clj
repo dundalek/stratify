@@ -8,9 +8,10 @@
    [io.github.dundalek.stratify.graphviz :as-alias graphviz]
    [io.github.dundalek.stratify.internal :as stratify]
    [io.github.dundalek.stratify.metrics :as-alias metrics]
-   [io.github.dundalek.stratify.overarch :as-alias overarch]))
+   [io.github.dundalek.stratify.overarch :as-alias overarch]
+   [io.github.dundalek.stratify.pulumi :as-alias pulumi]))
 
-(def available-formats #{"clj" "dot" "overarch"})
+(def available-formats #{"clj" "dot" "overarch" "pulumi"})
 
 (def cli-spec
   {:out {:alias :o
@@ -86,6 +87,13 @@
              {:input-file (first args)
               :output-file output-file
               :flat-namespaces (:flat-namespaces opts)}))
+
+          (= from "pulumi")
+          (do
+            (add-deps "pulumi")
+            ((requiring-resolve `pulumi/extract)
+             {:input-file (first args)
+              :output-file output-file}))
 
           :else
           (stratify/extract (merge opts {:source-paths args

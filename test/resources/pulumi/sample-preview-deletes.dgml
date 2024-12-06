@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="urn:pulumi:dev::sample::pulumi:pulumi:Stack::sample-dev" Label="sample-dev" Urn="urn:pulumi:dev::sample::pulumi:pulumi:Stack::sample-dev" Custom="False" Group="Expanded"/>
+    <Node Id="urn:pulumi:dev::sample::aws:s3/bucket:Bucket::docs" Label="docs" Urn="urn:pulumi:dev::sample::aws:s3/bucket:Bucket::docs" Custom="True"/>
+  </Nodes>
+  <Links>
+    <Link Source="urn:pulumi:dev::sample::pulumi:pulumi:Stack::sample-dev" Target="urn:pulumi:dev::sample::aws:s3/bucket:Bucket::docs" Category="Contains"/>
+  </Links>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Custom" ValueLabel="False">
+      <Condition Expression="Custom = 'False'"/>
+      <Setter Property="Background" Value="#295B71"/>
+      <Setter Property="Stroke" Value="#34749A"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Custom" ValueLabel="True">
+      <Condition Expression="Custom = 'True'"/>
+      <Setter Property="Background" Value="#A75529"/>
+      <Setter Property="Stroke" Value="#C4632F"/>
+    </Style>
+  </Styles>
+</DirectedGraph>

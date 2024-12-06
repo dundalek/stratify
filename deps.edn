@@ -19,6 +19,7 @@
   :optional-deps {:extra-deps {stratify/metrics {:local/root "resources/io/github/dundalek/stratify/optional-deps/metrics"}
                                stratify/overarch {:local/root "resources/io/github/dundalek/stratify/optional-deps/overarch"}
                                stratify/graphviz {:local/root "resources/io/github/dundalek/stratify/optional-deps/graphviz"}
+                               stratify/pulumi {:local/root "resources/io/github/dundalek/stratify/optional-deps/pulumi"}
 
                                ;; for queries experiment
                                datascript/datascript {:mvn/version "1.7.3"}

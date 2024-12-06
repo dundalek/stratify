@@ -1,0 +1,478 @@
+{
+    "config": {
+        "pulumi:tags": "{\"pulumi:template\":\"aws-typescript\"}"
+    },
+    "steps": [
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::pulumi:pulumi:Stack::sample-dev",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::pulumi:pulumi:Stack::sample-dev",
+                "custom": false,
+                "type": "pulumi:pulumi:Stack",
+                "sourcePosition": "project:///node_modules/@pulumi/runtime/stack.ts#38,23"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket::docs",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket::docs",
+                "custom": true,
+                "type": "aws:s3/bucket:Bucket",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "bucket",
+                        "forceDestroy"
+                    ],
+                    "acl": "private",
+                    "bucket": "docs-32c8f2c",
+                    "forceDestroy": false
+                },
+                "parent": "urn:pulumi:dev::sample::pulumi:pulumi:Stack::sample-dev",
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "sourcePosition": "project:///index.ts#5,20"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "custom": false,
+                "type": "aws:s3:BucketEventSubscription",
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket::docs",
+                "sourcePosition": "project:///node_modules/@pulumi/s3/s3Mixins.ts#137,9"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler",
+                "custom": true,
+                "type": "aws:iam/role:Role",
+                "inputs": {
+                    "__defaults": [
+                        "forceDetachPolicies",
+                        "maxSessionDuration",
+                        "name",
+                        "path"
+                    ],
+                    "assumeRolePolicy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Action\":\"sts:AssumeRole\",\"Principal\":{\"Service\":\"lambda.amazonaws.com\"},\"Effect\":\"Allow\",\"Sid\":\"\"}]}",
+                    "forceDetachPolicies": false,
+                    "maxSessionDuration": 3600,
+                    "name": "docsHandler-ae85f73",
+                    "path": "/"
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "assumeRolePolicy": []
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/lambda/lambdaMixins.ts#339,20"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-a1de8170",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-a1de8170",
+                "custom": true,
+                "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
+                "inputs": {
+                    "__defaults": [],
+                    "policyArn": "arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess",
+                    "role": "04da6b54-80e4-46f7-96ec-b56ff0331ba9"
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "dependencies": [
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                ],
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "policyArn": [],
+                    "role": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                    ]
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/lambda/lambdaMixins.ts#353,40"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-7cd09230",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-7cd09230",
+                "custom": true,
+                "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
+                "inputs": {
+                    "__defaults": [],
+                    "policyArn": "arn:aws:iam::aws:policy/AmazonSQSFullAccess",
+                    "role": "04da6b54-80e4-46f7-96ec-b56ff0331ba9"
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "dependencies": [
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                ],
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "policyArn": [],
+                    "role": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                    ]
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/lambda/lambdaMixins.ts#353,40"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-e1a3786d",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-e1a3786d",
+                "custom": true,
+                "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
+                "inputs": {
+                    "__defaults": [],
+                    "policyArn": "arn:aws:iam::aws:policy/AmazonKinesisFullAccess",
+                    "role": "04da6b54-80e4-46f7-96ec-b56ff0331ba9"
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "dependencies": [
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                ],
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "policyArn": [],
+                    "role": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                    ]
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/lambda/lambdaMixins.ts#353,40"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-1b4caae3",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-1b4caae3",
+                "custom": true,
+                "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
+                "inputs": {
+                    "__defaults": [],
+                    "policyArn": "arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess",
+                    "role": "04da6b54-80e4-46f7-96ec-b56ff0331ba9"
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "dependencies": [
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                ],
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "policyArn": [],
+                    "role": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                    ]
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/lambda/lambdaMixins.ts#353,40"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-019020e7",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-019020e7",
+                "custom": true,
+                "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
+                "inputs": {
+                    "__defaults": [],
+                    "policyArn": "arn:aws:iam::aws:policy/AmazonCognitoPowerUser",
+                    "role": "04da6b54-80e4-46f7-96ec-b56ff0331ba9"
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "dependencies": [
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                ],
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "policyArn": [],
+                    "role": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                    ]
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/lambda/lambdaMixins.ts#353,40"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-b5aeb6b6",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-b5aeb6b6",
+                "custom": true,
+                "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
+                "inputs": {
+                    "__defaults": [],
+                    "policyArn": "arn:aws:iam::aws:policy/AWSLambda_FullAccess",
+                    "role": "04da6b54-80e4-46f7-96ec-b56ff0331ba9"
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "dependencies": [
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                ],
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "policyArn": [],
+                    "role": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                    ]
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/lambda/lambdaMixins.ts#353,40"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-d32a66fa",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-d32a66fa",
+                "custom": true,
+                "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
+                "inputs": {
+                    "__defaults": [],
+                    "policyArn": "arn:aws:iam::aws:policy/CloudWatchFullAccessV2",
+                    "role": "04da6b54-80e4-46f7-96ec-b56ff0331ba9"
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "dependencies": [
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                ],
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "policyArn": [],
+                    "role": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                    ]
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/lambda/lambdaMixins.ts#353,40"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-4aaabb8e",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-4aaabb8e",
+                "custom": true,
+                "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
+                "inputs": {
+                    "__defaults": [],
+                    "policyArn": "arn:aws:iam::aws:policy/AmazonS3FullAccess",
+                    "role": "04da6b54-80e4-46f7-96ec-b56ff0331ba9"
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "dependencies": [
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                ],
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "policyArn": [],
+                    "role": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                    ]
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/lambda/lambdaMixins.ts#353,40"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-74d12784",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/rolePolicyAttachment:RolePolicyAttachment::docsHandler-74d12784",
+                "custom": true,
+                "type": "aws:iam/rolePolicyAttachment:RolePolicyAttachment",
+                "inputs": {
+                    "__defaults": [],
+                    "policyArn": "arn:aws:iam::aws:policy/CloudWatchEventsFullAccess",
+                    "role": "04da6b54-80e4-46f7-96ec-b56ff0331ba9"
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "dependencies": [
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                ],
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "policyArn": [],
+                    "role": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                    ]
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/lambda/lambdaMixins.ts#353,40"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:lambda/function:Function::docsHandler",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:lambda/function:Function::docsHandler",
+                "custom": true,
+                "type": "aws:lambda/function:Function",
+                "inputs": {
+                    "__defaults": [
+                        "memorySize",
+                        "name",
+                        "packageType",
+                        "publish",
+                        "reservedConcurrentExecutions",
+                        "skipDestroy"
+                    ],
+                    "code": {
+                        "4dabf18193072939515e22adb298388d": "0def7320c3a5731c473e5ecbe6d01bc7",
+                        "assets": {
+                            "__index.js": {
+                                "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                                "hash": "268098b9c94fa2231623915fe84c5b895b44e6c81bc6fdc98e0cb5ac1836e867",
+                                "text": "exports.handler = __f0;\n\nfunction __f0(__0) {\n  return (function() {\n    with({ this: undefined, arguments: undefined }) {\n\nreturn (event) =\u003e {\n    // Your Lambda code here.\n};\n\n    }\n  }).apply(undefined, undefined).apply(this, arguments);\n}\n"
+                            }
+                        },
+                        "hash": "4fababcf7ea9c00e4bd4263bf3ac3d1fece41b318a892f4a4b864bc3fd65c84d"
+                    },
+                    "handler": "__index.handler",
+                    "memorySize": 128,
+                    "name": "docsHandler-99fde95",
+                    "packageType": "Zip",
+                    "publish": false,
+                    "reservedConcurrentExecutions": -1,
+                    "role": "04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                    "runtime": "nodejs20.x",
+                    "skipDestroy": false,
+                    "timeout": 180
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "dependencies": [
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                ],
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "code": [],
+                    "handler": [],
+                    "role": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:iam/role:Role::docsHandler"
+                    ],
+                    "runtime": [],
+                    "timeout": []
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/lambda/lambdaMixins.ts#426,9"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:lambda/permission:Permission::docsHandler",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:lambda/permission:Permission::docsHandler",
+                "custom": true,
+                "type": "aws:lambda/permission:Permission",
+                "inputs": {
+                    "__defaults": [
+                        "statementId"
+                    ],
+                    "action": "lambda:InvokeFunction",
+                    "function": "04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                    "principal": "s3.amazonaws.com",
+                    "sourceArn": "04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                    "statementId": "docsHandler-1d9c53a"
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription::docsHandler",
+                "dependencies": [
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:lambda/function:Function::docsHandler",
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket::docs"
+                ],
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "action": [],
+                    "function": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:lambda/function:Function::docsHandler"
+                    ],
+                    "principal": [],
+                    "sourceArn": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket::docs"
+                    ]
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/s3/s3Mixins.ts#145,27"
+            },
+            "detailedDiff": null
+        },
+        {
+            "op": "create",
+            "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3/bucketNotification:BucketNotification::docsHandler",
+            "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+            "newState": {
+                "urn": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3/bucketNotification:BucketNotification::docsHandler",
+                "custom": true,
+                "type": "aws:s3/bucketNotification:BucketNotification",
+                "inputs": {
+                    "__defaults": [
+                        "eventbridge"
+                    ],
+                    "bucket": "04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                    "eventbridge": false,
+                    "lambdaFunctions": [
+                        {
+                            "__defaults": [],
+                            "events": [
+                                "s3:ObjectCreated:*"
+                            ],
+                            "lambdaFunctionArn": "04da6b54-80e4-46f7-96ec-b56ff0331ba9"
+                        }
+                    ]
+                },
+                "parent": "urn:pulumi:dev::sample::aws:s3/bucket:Bucket::docs",
+                "dependencies": [
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:lambda/permission:Permission::docsHandler",
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket::docs",
+                    "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:lambda/function:Function::docsHandler"
+                ],
+                "provider": "urn:pulumi:dev::sample::pulumi:providers:aws::default_6_63_0::04da6b54-80e4-46f7-96ec-b56ff0331ba9",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket::docs"
+                    ],
+                    "lambdaFunctions": [
+                        "urn:pulumi:dev::sample::aws:s3/bucket:Bucket$aws:s3:BucketEventSubscription$aws:lambda/function:Function::docsHandler"
+                    ]
+                },
+                "sourcePosition": "project:///node_modules/@pulumi/s3/s3Mixins.ts#203,19"
+            },
+            "detailedDiff": null
+        }
+    ],
+    "duration": 4648932611,
+    "changeSummary": {
+        "create": 16
+    }
+}
