@@ -33,34 +33,28 @@
 (defn build-tree [file-map]
   (transform-tree ["root" (build-hierarchy file-map)]))
 
-(def ^:private selected-metrics
-  [:out-degree
-   :in-degree
-   :longest-shortest-path
-   :transitive-dependencies
-   :transitive-dependents
-   :betweenness-centrality
-   :page-rank])
-
 (def ^:private attributes
-  {"out-degree" {:title "Out Degree" :description ""}
-   "in-degree" {:title "In Degree" :description ""}
-   "longest-shortest-path" {:title "Longest Shortest Path" :description ""}
-   "transitive-dependencies" {:title "Transitive Dependencies" :description ""}
-   "transitive-dependents" {:title "Transitive Dependents" :description ""}
-   "betweenness-centrality" {:title "Betweenness Centrality" :description ""}
-   "page-rank" {:title "Page Rank" :description ""}})
+  {:out-degree {:title "Out Degree" :description ""}
+   :in-degree {:title "In Degree" :description ""}
+   :longest-shortest-path {:title "Longest Shortest Path" :description ""}
+   :transitive-dependencies {:title "Transitive Dependencies" :description ""}
+   :transitive-dependents {:title "Transitive Dependents" :description ""}
+   :betweenness-centrality {:title "Betweenness Centrality" :description ""}
+   :page-rank {:title "Page Rank" :description ""}})
 
+;; The difference between types is how aggregates get shown when hovering over a folder:
+;; - "absolute" as sum
+;; - "relative" as median
 (def ^:private attribute-types
-  (->> (keys attributes)
-       (map (fn [k]
-              [k "absolute"]))
-       (into {})))
+  (merge
+   (update-vals attributes (constantly "absolute"))
+   {:betweenness-centrality "relative"
+    :page-rank "relative"}))
 
 (defn ->codecharta [{:keys [analysis transform-filename]
                      :or {transform-filename identity}}]
   (let [g (lg/digraph (internal/->graph analysis))
-        metrics (metrics/metrics g {:metrics selected-metrics})
+        metrics (metrics/metrics g {:metrics (keys attributes)})
         ns->file (->> analysis
                       :namespace-definitions
                       (map (fn [{:keys [name filename]}]
