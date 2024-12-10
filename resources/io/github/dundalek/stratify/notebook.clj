@@ -1,11 +1,12 @@
 {:nextjournal.clerk/visibility {:code :hide :result :hide}}
 (ns io.github.dundalek.stratify.notebook
   (:require
+   [fastmath.stats :as stats]
    [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.metrics :as metrics]
+   [io.github.dundalek.stratify.report :as report]
    [loom.graph :as lg]
-   [nextjournal.clerk :as clerk]
-   [fastmath.stats :as stats]))
+   [nextjournal.clerk :as clerk]))
 
 (defn table-with-colums [data columns]
   (clerk/table
@@ -18,11 +19,11 @@
 ;; Project sources
 
 ^{::clerk/visibility {:code :hide :result :show}}
-@metrics/*source-paths
+@report/*source-paths
 
 ;; ## Metrics
 
-(def result (internal/run-kondo @metrics/*source-paths))
+(def result (internal/run-kondo @report/*source-paths))
 (def g (lg/digraph (internal/->graph (:analysis result))))
 
 (def selected-metrics

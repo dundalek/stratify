@@ -1,12 +1,10 @@
 (ns io.github.dundalek.stratify.metrics
   (:require
-   [clojure.java.io :as io]
    [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.metrics-lakos :as lakos]
    [loom.alg :as alg]
    [loom.alg-generic :as algg]
-   [loom.graph :as lg]
-   [nextjournal.clerk :as clerk])
+   [loom.graph :as lg])
   (:import
    (org.jgrapht.alg.scoring
     ApBetweennessCentrality
@@ -93,25 +91,11 @@
                   {:id node}
                   calculate)))))))
 
-;; Atom to pass paths from args to the notebook
-(defonce *source-paths (atom []))
-
-(defn report! [{:keys [source-paths output-path]}]
-  (let [notebook-path (.getCanonicalPath (io/file (io/resource "io/github/dundalek/stratify/notebook.clj")))]
-    (reset! *source-paths source-paths)
-    (if output-path
-      (clerk/build! {:index notebook-path
-                     :package :single-file
-                     :out-path output-path})
-      (clerk/serve! {:index notebook-path
-                     :browse true}))))
-
 (comment
-  (reset! *source-paths ["src"])
-  (reset! *source-paths ["target/projects/asami/src"])
-  (reset! *source-paths ["target/projects/HumbleUI/src"])
+  (def result (internal/run-kondo ["src"]))
+  (def result (internal/run-kondo ["target/projects/asami/src"]))
+  (def result (internal/run-kondo ["target/projects/HumbleUI/src"]))
 
-  (def result (internal/run-kondo @*source-paths))
   (def g (lg/digraph (internal/->graph (:analysis result))))
 
   (metrics g)
@@ -119,9 +103,4 @@
   (->> (metrics g)
        ; (sort-by :in-degree)
        (sort-by :out-degree)
-       (reverse))
-
-  (clerk/serve! {:browse true
-                 :port 7788
-                 :index "resources/io/github/dundalek/stratify/notebook.clj"
-                 :watch-paths ["src" "resources"]}))
+       (reverse)))

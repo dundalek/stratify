@@ -5,12 +5,13 @@
    [clojure.java.io :as io]
    [clojure.repl.deps :as deps]
    [clojure.string :as str]
+   [io.github.dundalek.stratify.codecharta :as-alias codecharta]
    [io.github.dundalek.stratify.graphviz :as-alias graphviz]
    [io.github.dundalek.stratify.internal :as stratify]
    [io.github.dundalek.stratify.metrics :as-alias metrics]
    [io.github.dundalek.stratify.overarch :as-alias overarch]
    [io.github.dundalek.stratify.pulumi :as-alias pulumi]
-   [io.github.dundalek.stratify.codecharta :as-alias codecharta]))
+   [io.github.dundalek.stratify.report :as-alias report]))
 
 (def ^:private source-formats #{"clj" "dot" "overarch" "pulumi"})
 
@@ -78,8 +79,8 @@
         (cond
           (= to "codecharta")
           (do
-            (add-deps "codecharta")
             (add-deps "metrics")
+            (add-deps "codecharta")
             ((requiring-resolve `codecharta/extract)
              {:repo-path "."
               :source-paths args
@@ -88,7 +89,8 @@
           metrics
           (do
             (add-deps "metrics")
-            ((requiring-resolve `metrics/report!)
+            (add-deps "report")
+            ((requiring-resolve `report/report!)
              {:source-paths args
               :output-path (when (not= out "-") out)}))
 
