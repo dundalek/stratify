@@ -1,8 +1,10 @@
 (ns projects
   (:require
-   [io.github.dundalek.stratify.internal :as stratify]
    [clojure.java.io :as io]
-   [clojure.java.shell :refer [sh]]))
+   [clojure.java.shell :refer [sh]]
+   [clojure.string :as str]
+   [io.github.dundalek.stratify.codecharta :as codecharta]
+   [io.github.dundalek.stratify.internal :as stratify]))
 
 (def projects-dir "target/projects")
 
@@ -80,6 +82,7 @@
                                                           (map #(subpath % "src"))))
     "frontend" (set (map (partial subpath project-dir) ["src-cljs/frontend"]))
     "jepsen" (set (map (partial subpath project-dir) ["jepsen/src"]))
+    "logseq" (set (map (partial subpath project-dir) ["src/main"]))
     "penpot" (set (map (partial subpath project-dir) ["backend/src" "common/src" "exporter/src" "frontend/src"]))
     "reitit" (->> (.listFiles (io/file project-dir "modules"))
                   (map #(subpath % "src"))
@@ -106,6 +109,18 @@
       :output-file (str "target/dgml/" project-name ".dgml")})))
       ; :flat-namespaces true})))
 
+(defn extract-project-codecharta [project-name-or-dir]
+  (let [[project-name project-dir]
+        (if (string? project-name-or-dir)
+          [project-name-or-dir (io/file projects-dir project-name-or-dir)]
+          [(.getName project-name-or-dir) project-name-or-dir])
+        repo-prefix (str project-dir "/")]
+    (codecharta/extract
+     {:repo-path (str project-dir)
+      :source-paths (->> (project-sources project-dir)
+                         (map #(str/replace-first % repo-prefix "")))
+      :output-prefix (str "target/codecharta/" project-name)})))
+
 (comment
   (clone-projects)
 
@@ -114,8 +129,13 @@
 
   (doseq [project-dir (.listFiles (io/file projects-dir))]
     (when (not= (.getName project-dir) "penpot")
-      (println "Extracting:" (.getName project-dir))
+      (println "Extracting DGML:" (.getName project-dir))
       (extract-project project-dir)))
+
+  (doseq [project-dir (.listFiles (io/file projects-dir))]
+    (when-not (#{"penpot" "sci"} (.getName project-dir))
+      (println "Extracting Codecharta:" (.getName project-dir))
+      (extract-project-codecharta project-dir)))
 
   (->> (for [project-dir (.listFiles (io/file projects-dir))]
          [(.getName project-dir)

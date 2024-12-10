@@ -1,13 +1,13 @@
 (ns io.github.dundalek.stratify.codecharta
   (:require
+   [babashka.fs :as fs]
+   [babashka.process :as ps :refer [shell]]
    [clojure.java.io :as io]
    [clojure.string :as str]
    [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.metrics :as metrics]
    [jsonista.core :as j]
-   [loom.graph :as lg]
-   [babashka.process :as ps :refer [shell]]
-   [babashka.fs :as fs]))
+   [loom.graph :as lg]))
 
 (defn- build-hierarchy [file-map]
   (->> file-map
@@ -57,13 +57,14 @@
               [k "absolute"]))
        (into {})))
 
-(defn ->codecharta [analysis]
+(defn ->codecharta [{:keys [analysis transform-filename]
+                     :or {transform-filename identity}}]
   (let [g (lg/digraph (internal/->graph analysis))
         metrics (metrics/metrics g {:metrics selected-metrics})
         ns->file (->> analysis
                       :namespace-definitions
                       (map (fn [{:keys [name filename]}]
-                             [(str name) filename]))
+                             [(str name) (transform-filename filename)]))
                       (into {}))
         root (->> metrics
                   (map (fn [{:keys [id] :as attrs}]
@@ -89,11 +90,13 @@
           gitlog-file (str gitlog-prefix suffix-compressed)
           kondo-prefix (str tmp-dir "/kondo")
           kondo-file (str kondo-prefix suffix-uncompressed)
+          repo-source-paths (->> source-paths (map #(str repo-path "/" %)))
+          repo-prefix (str repo-path "/")
           ccsh-bin "ccsh"]
 
       (try
         (run! ps/check (ps/pipeline
-                        (apply ps/pb "tokei -o json" (->> source-paths (map #(str repo-path "/" %))))
+                        (apply ps/pb "tokei -o json" repo-source-paths)
                         (ps/pb ccsh-bin "tokeiimporter" "-r" repo-path "-o" tokei-prefix)))
         (catch Exception e
           (println "Failed to run tokei:" (ex-message e))))
@@ -105,7 +108,8 @@
 
       (try
         (j/write-value (io/file kondo-file)
-                       (->codecharta (:analysis (internal/run-kondo source-paths))))
+                       (->codecharta {:analysis (:analysis (internal/run-kondo repo-source-paths))
+                                      :transform-filename #(str/replace-first % repo-prefix "")}))
         (catch Exception e
           (println "Failed to run kondo:" (ex-message e))))
 
@@ -114,14 +118,14 @@
                                  ["kondo" kondo-file]]
                                 (filter (comp fs/exists? second)))]
         (println "Merging sources:" (->> files-to-merge (map first) (str/join ", ")))
-        (apply shell ccsh-bin "merge" "--leaf" "-o" output-prefix (map second files-to-merge))))))
+        (apply shell ccsh-bin "merge" "--leaf" "-f" "-o" output-prefix (map second files-to-merge))))))
 
 (comment
   (def result (internal/run-kondo ["test/resources/nested/src"]))
   (def result (internal/run-kondo ["src"]))
 
   (j/write-value (io/file "metrics.cc.json")
-                 (->codecharta (:analysis result)))
+                 (->codecharta {:analysis (:analysis result)}))
 
   (extract {:repo-path "."
             :source-paths ["src"]
