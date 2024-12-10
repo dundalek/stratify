@@ -3,7 +3,9 @@
         org.clojure/data.xml {:mvn/version "0.2.0-alpha9"}
         aysylu/loom {:mvn/version "1.0.2"
                      :exclusions [tailrecursion/cljs-priority-map]}
-        org.babashka/cli {:mvn/version "0.8.59"}}
+        org.babashka/cli {:mvn/version "0.8.59"}
+        babashka/process {:mvn/version "0.5.22"}
+        babashka/fs {:mvn/version "0.5.23"}}
 
  :paths ["src" "resources"]
 
