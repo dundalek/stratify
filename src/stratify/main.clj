@@ -82,7 +82,6 @@
           (= to "codecharta")
           (do
             (add-deps "metrics")
-            (add-deps "codecharta")
             ((requiring-resolve `codecharta/extract)
              {:repo-path "."
               :source-paths args
@@ -112,11 +111,9 @@
               :flat-namespaces (:flat-namespaces opts)}))
 
           (= from "pulumi")
-          (do
-            (add-deps "pulumi")
-            ((requiring-resolve `pulumi/extract)
-             {:input-file (first args)
-              :output-file output-file}))
+          ((requiring-resolve `pulumi/extract)
+           {:input-file (first args)
+            :output-file output-file})
 
           (= from "clj")
           (stratify/extract (merge opts {:source-paths args

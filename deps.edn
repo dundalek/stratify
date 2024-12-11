@@ -6,7 +6,8 @@
         org.babashka/cli {:mvn/version "0.8.59"}
         babashka/process {:mvn/version "0.5.22"}
         babashka/fs {:mvn/version "0.5.23"}
-        metosin/malli {:mvn/version "0.17.0"}}
+        metosin/malli {:mvn/version "0.17.0"}
+        metosin/jsonista {:mvn/version "0.3.12"}}
 
  :paths ["src" "resources"]
 
@@ -22,8 +23,7 @@
   :optional-deps {:extra-deps {stratify/metrics {:local/root "resources/io/github/dundalek/stratify/optional-deps/metrics"}
                                stratify/overarch {:local/root "resources/io/github/dundalek/stratify/optional-deps/overarch"}
                                stratify/graphviz {:local/root "resources/io/github/dundalek/stratify/optional-deps/graphviz"}
-                               stratify/pulumi {:local/root "resources/io/github/dundalek/stratify/optional-deps/pulumi"}
-                               stratify/codecharta {:local/root "resources/io/github/dundalek/stratify/optional-deps/codecharta"}
+                               stratify/report {:local/root "resources/io/github/dundalek/stratify/optional-deps/report"}
 
                                ;; for queries experiment
                                datascript/datascript {:mvn/version "1.7.3"}
