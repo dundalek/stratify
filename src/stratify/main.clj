@@ -3,6 +3,7 @@
    [babashka.cli :as cli]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
+   [clojure.main :as main]
    [clojure.repl.deps :as deps]
    [clojure.string :as str]
    [io.github.dundalek.stratify.codecharta :as-alias codecharta]
@@ -11,7 +12,8 @@
    [io.github.dundalek.stratify.metrics :as-alias metrics]
    [io.github.dundalek.stratify.overarch :as-alias overarch]
    [io.github.dundalek.stratify.pulumi :as-alias pulumi]
-   [io.github.dundalek.stratify.report :as-alias report]))
+   [io.github.dundalek.stratify.report :as-alias report]
+   [malli.error :as me]))
 
 (def ^:private source-formats #{"clj" "dot" "overarch" "pulumi"})
 
@@ -69,7 +71,7 @@
       (ensure-dynamic-context-classloader!)
       (deps/add-libs deps))))
 
-(defn -main [& args]
+(defn- main* [args]
   (let [parsed (cli/parse-args args {:spec cli-spec})
         {:keys [opts args]} parsed]
     (if (or (:help opts) (:h opts) (empty? args))
@@ -122,6 +124,34 @@
 
           :else
           (print-help))))))
+
+(defn- print-full-error-report [e]
+  ;; Reusing the full report file generation, but stripping other error messages so we can print more human-friendly ones.
+  (let [message (with-out-str
+                  (binding [*err* *out*]
+                    (main/report-error e :target (System/getProperty "clojure.main.report" "file"))))
+        stripped-message (->> (str/split message #"\n")
+                              (take-last 2)
+                              (str/join "\n"))]
+    (if (str/starts-with? stripped-message "Full report at:")
+      (println stripped-message)
+      (println message))))
+
+(defn- handle-validation-error [e]
+  (binding [*out* *err*]
+    (print "Invalid input: ")
+    (prn (-> e ex-data :data :explain me/humanize))
+    (println)
+    (print-full-error-report e))
+  (System/exit 1))
+
+(defn -main [& args]
+  (try
+    (main* args)
+    (catch Throwable t
+      (if (= (:type (ex-data t)) :malli.core/coercion)
+        (handle-validation-error t)
+        (throw t)))))
 
 (comment
   (-main "--help")

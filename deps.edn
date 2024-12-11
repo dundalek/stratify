@@ -5,7 +5,8 @@
                      :exclusions [tailrecursion/cljs-priority-map]}
         org.babashka/cli {:mvn/version "0.8.59"}
         babashka/process {:mvn/version "0.5.22"}
-        babashka/fs {:mvn/version "0.5.23"}}
+        babashka/fs {:mvn/version "0.5.23"}
+        metosin/malli {:mvn/version "0.17.0"}}
 
  :paths ["src" "resources"]
 

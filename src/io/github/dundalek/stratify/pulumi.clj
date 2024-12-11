@@ -3,13 +3,62 @@
    [clojure.data.xml :as xml]
    [clojure.java.io :as io]
    [clojure.string :as str]
-   [dorothy.core :as-alias dc]
    [io.github.dundalek.stratify.internal :refer [property-setter-elements]]
    [io.github.dundalek.stratify.style :as style :refer [theme]]
    [jsonista.core :as j]
    [loom.attr :as la]
    [loom.graph :as lg]
+   [malli.core :as m]
+   [malli.transform :as mt]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]))
+
+(def Urn :string)
+(def Resource [:map
+               [:urn #'Urn]
+               [:parent {:optional true} #'Urn]
+               [:custom {:optional true} :boolean]
+               [:dependencies {:optional true}
+                [:sequential #'Urn]]
+               [:propertyDependencies {:optional true}
+                [:map-of :keyword [:sequential #'Urn]]]])
+(def Step
+  [:map
+   [:op [:enum "create" "delete" "same" "update"]]
+   [:newState {:optional true} #'Resource]])
+(def State
+  [:orn
+   ;; `pulumi stack export`
+   [:deployment [:map
+                 [:deployment
+                  [:map
+                   [:resources [:sequential #'Resource]]]]]]
+   ;; SST report outputs state as checkpoint
+   [:checkpoint [:map
+                 [:deployment
+                  [:map
+                   [:latest
+                    [:map
+                     [:resources [:sequential #'Resource]]]]]]]]
+   ;; steps are from `pulumi preview --json`
+   [:steps [:map
+            [:steps [:sequential #'Step]]]]])
+
+(def ^:private strict-json-transformer
+  (mt/transformer
+   mt/strip-extra-keys-transformer
+   mt/json-transformer))
+
+(def ^:private parse-and-coerce-state
+  (comp
+   (m/parser State)
+   (m/coercer State strict-json-transformer)))
+
+(defn- parse-resources [data]
+  (let [[tag value] (parse-and-coerce-state data)]
+    (case tag
+      :deployment (-> value :deployment :resources)
+      :checkpoint (-> value :checkpoint :latest :resources)
+      :steps (->> value :steps (keep :newState)))))
 
 (def ^:private styles
   [(xml/element ::dgml/Style
@@ -34,17 +83,6 @@
 
 (defn- urn->resource-name [s]
   (last (str/split s #"::")))
-
-(defn- parse-resources [data]
-  (cond
-    (:deployment data) (-> data :deployment :resources) ; `pulumi stack export`
-    (:checkpoint data) (-> data :checkpoint :latest :resources) ; SST report outputs state as checkpoint
-    ;; steps are from `pulumi preview --json`
-    (:steps data) (->> data :steps
-                       (keep (fn [{:keys [op newState]}]
-                               (assert (#{"create" "delete" "same" "update"} op)
-                                       (str "Unknown op: " op))
-                               newState)))))
 
 (defn- ->dgml [input]
   (let [resources (parse-resources input)
