@@ -2,7 +2,9 @@
   (:require
    [clojure.test :refer [deftest is]]
    [clojure.walk :as walk]
-   [io.github.dundalek.stratify.codecharta :as cc]))
+   [io.github.dundalek.stratify.codecharta :as cc]
+   [io.github.dundalek.stratify.internal :as internal]
+   [snap.core :as snap]))
 
 (deftest build-tree
   (is (=
@@ -33,3 +35,8 @@
          {"src/example/a.clj" {:id :a}
           "src/example/b.clj" {:id :b}
           "src/c.clj" {:id :c}})))))
+
+(deftest codecharta
+  (is (snap/match-snapshot
+       ::codecharta
+       (cc/->codecharta {:analysis (:analysis (internal/run-kondo ["test/resources/nested/src"]))}))))

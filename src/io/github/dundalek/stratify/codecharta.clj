@@ -33,6 +33,13 @@
 (defn build-tree [file-map]
   (transform-tree ["root" (build-hierarchy file-map)]))
 
+(defn- naive-snake-case [s]
+  (assert (re-matches #"[-a-z]+" s))
+  (str/replace s #"-" "_"))
+
+(def ^:private attribute-key->str
+  (memoize (fn [kw] (naive-snake-case (name kw)))))
+
 (def ^:private attributes
   {:out-degree {:title "Out Degree" :description ""}
    :in-degree {:title "In Degree" :description ""}
@@ -62,16 +69,18 @@
                       (into {}))
         root (->> metrics
                   (map (fn [{:keys [id] :as attrs}]
-                         [(ns->file id) (dissoc attrs :id)]))
+                         [(ns->file id) (-> attrs
+                                            (dissoc :id)
+                                            (update-keys attribute-key->str))]))
                   (into {})
                   (build-tree))]
     {:checksum ""
      :data {:nodes [root]
             :edges []
             :projectName ""
-            :attributeDescriptors attributes
+            :attributeDescriptors (update-keys attributes attribute-key->str)
             :attributeTypes {:edges {}
-                             :nodes attribute-types}
+                             :nodes (update-keys attribute-types attribute-key->str)}
             :apiVersion "1.3"}}))
 
 (defn extract [{:keys [repo-path source-paths output-prefix]}]

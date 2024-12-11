@@ -1,0 +1,76 @@
+{:checksum "",
+ :data
+ {:nodes
+  [{:type "Folder",
+    :name "root",
+    :attributes {},
+    :children
+    [{:type "Folder",
+      :name "test",
+      :attributes {},
+      :children
+      [{:type "Folder",
+        :name "resources",
+        :attributes {},
+        :children
+        [{:type "Folder",
+          :name "nested",
+          :attributes {},
+          :children
+          [{:type "Folder",
+            :name "src",
+            :attributes {},
+            :children
+            [{:type "Folder",
+              :name "example",
+              :attributes {},
+              :children
+              [{:type "Folder",
+                :name "foo",
+                :attributes {},
+                :children
+                [{:name "bar.clj",
+                  :type "File",
+                  :attributes
+                  {"out_degree" 0,
+                   "in_degree" 1,
+                   "longest_shortest_path" 1,
+                   "transitive_dependencies" 1,
+                   "transitive_dependents" 2,
+                   "betweenness_centrality" 0.0,
+                   "page_rank" 0.6490941366427341}}]}
+               {:name "foo.clj",
+                :type "File",
+                :attributes
+                {"out_degree" 1,
+                 "in_degree" 0,
+                 "longest_shortest_path" 2,
+                 "transitive_dependencies" 2,
+                 "transitive_dependents" 1,
+                 "betweenness_centrality" 0.0,
+                 "page_rank" 0.35090586335726587}}]}]}]}]}]}]}],
+  :edges [],
+  :projectName "",
+  :attributeDescriptors
+  {"out_degree" {:title "Out Degree", :description ""},
+   "in_degree" {:title "In Degree", :description ""},
+   "longest_shortest_path"
+   {:title "Longest Shortest Path", :description ""},
+   "transitive_dependencies"
+   {:title "Transitive Dependencies", :description ""},
+   "transitive_dependents"
+   {:title "Transitive Dependents", :description ""},
+   "betweenness_centrality"
+   {:title "Betweenness Centrality", :description ""},
+   "page_rank" {:title "Page Rank", :description ""}},
+  :attributeTypes
+  {:edges {},
+   :nodes
+   {"out_degree" "absolute",
+    "in_degree" "absolute",
+    "longest_shortest_path" "absolute",
+    "transitive_dependencies" "absolute",
+    "transitive_dependents" "absolute",
+    "betweenness_centrality" "relative",
+    "page_rank" "relative"}},
+  :apiVersion "1.3"}}
