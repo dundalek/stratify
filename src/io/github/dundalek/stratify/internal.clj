@@ -5,6 +5,7 @@
    [clojure.java.io :as io]
    [clojure.set :as set]
    [clojure.string :as str]
+   [io.github.dundalek.stratify.codecov :as codecov]
    [io.github.dundalek.stratify.style :as style :refer [theme]]
    [loom.attr :as la]
    [loom.graph :as lg]
@@ -145,7 +146,24 @@
                 (xml/element ::dgml/Condition {:Expression "Target.Access = 'Private'"})
                 (property-setter-elements {:StrokeDashArray "4,2"}))])
 
-(defn analysis->graph [{:keys [analysis flat-namespaces include-dependencies insert-namespace-node]}]
+(def coverage-styles
+  [(xml/element ::dgml/Style {:TargetType "Node" :GroupLabel "Coverage" :ValueLabel "Good"}
+                (xml/element ::dgml/Condition {:Expression "HasValue('Coverage') and Coverage > 80"})
+                (xml/element ::dgml/Setter {:Property "Background" :Value "Green"}))
+
+   (xml/element ::dgml/Style {:TargetType "Node" :GroupLabel "Coverage" :ValueLabel "Ok"}
+                (xml/element ::dgml/Condition {:Expression "HasValue('Coverage') and Coverage > 50"})
+                (xml/element ::dgml/Setter {:Property "Background"
+                                            :Expression "Color.FromRgb(180 * Math.Max(1, (80 - Coverage) / 30), 180, 0)"}))
+   (xml/element ::dgml/Style {:TargetType "Node" :GroupLabel "Coverage" :ValueLabel "Bad"}
+                (xml/element ::dgml/Condition {:Expression "HasValue('Coverage')"})
+                (xml/element ::dgml/Setter {:Property "Background"
+                                            :Expression "Color.FromRgb(180, 180 * Coverage / 50, 0)"}))
+   (xml/element ::dgml/Style {:TargetType "Node" :GroupLabel "Coverage" :ValueLabel "Unknown"}
+                (property-setter-elements  {:Background "#686868"
+                                            :Foreground "#FFFFFF"}))])
+
+(defn analysis->graph [{:keys [analysis flat-namespaces include-dependencies insert-namespace-node line-coverage]}]
   (let [var-usages (->> (if include-dependencies
                           (:var-usages analysis)
                           (analysis->own-var-usages analysis))
@@ -156,6 +174,13 @@
                                                 (->> var-usages (map (fn [{:keys [to]}] {:name to})))))))
         g (cond-> g
             (not flat-namespaces) (add-clustered-namespace-hierarchy "."))
+        g (if-not line-coverage
+            g
+            (reduce (fn [g {:keys [name filename]}]
+                      (la/add-attr g (str name)
+                                   :line-coverage (line-coverage filename)))
+                    g
+                    (:namespace-definitions analysis)))
         g (reduce
            (fn [g node-id]
              (cond-> (la/add-attr g node-id :category "Namespace")
@@ -223,11 +248,12 @@
     {:g g
      :namespace-with-nested-namespace? namespace-with-nested-namespace?}))
 
-(defn analysis->nodes-links [{:keys [analysis flat-namespaces include-dependencies insert-namespace-node]}]
+(defn analysis->nodes-links [{:keys [analysis flat-namespaces include-dependencies insert-namespace-node line-coverage]}]
   (let [{:keys [g namespace-with-nested-namespace?]} (analysis->graph {:analysis analysis
                                                                        :flat-namespaces flat-namespaces
                                                                        :include-dependencies include-dependencies
-                                                                       :insert-namespace-node insert-namespace-node})]
+                                                                       :insert-namespace-node insert-namespace-node
+                                                                       :line-coverage line-coverage})]
 
     {:nodes
      (for [node (lg/nodes g)]
@@ -247,7 +273,10 @@
                       (assoc :Access (la/attr g node :access))
 
                       (la/attr g node :defined-by)
-                      (assoc :DefinedBy (la/attr g node :defined-by)))))
+                      (assoc :DefinedBy (la/attr g node :defined-by))
+
+                      (la/attr g node :line-coverage)
+                      (assoc :Coverage (-> (la/attr g node :line-coverage) (* 100))))))
      :links
      (concat
       (for [[source target] (lg/edges g)]
@@ -257,23 +286,29 @@
                    (when-some [parent (la/attr g node-id :parent)]
                      (xml/element ::dgml/Link {:Source parent :Target node-id :Category "Contains"}))))))}))
 
-(defn analysis->dgml [{:keys [analysis flat-namespaces include-dependencies insert-namespace-node]}]
+(defn analysis->dgml [{:keys [analysis flat-namespaces include-dependencies insert-namespace-node line-coverage]}]
   (let [{:keys [nodes links]} (analysis->nodes-links {:analysis analysis
                                                       :flat-namespaces flat-namespaces
                                                       :include-dependencies include-dependencies
-                                                      :insert-namespace-node insert-namespace-node})]
+                                                      :insert-namespace-node insert-namespace-node
+                                                      :line-coverage line-coverage})]
     (xml/element ::dgml/DirectedGraph
                  {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
                  (xml/element ::dgml/Nodes {} nodes)
                  (xml/element ::dgml/Links {} links)
-                 (xml/element ::dgml/Styles {} styles))))
+                 (xml/element ::dgml/Styles {} (if line-coverage
+                                                 coverage-styles
+                                                 styles)))))
 
-(defn extract [{:keys [source-paths output-file flat-namespaces include-dependencies insert-namespace-node]}]
+(defn extract [{:keys [source-paths output-file flat-namespaces include-dependencies insert-namespace-node coverage-file]}]
   (let [{:keys [analysis]} (run-kondo source-paths)
         data (analysis->dgml {:analysis analysis
                               :flat-namespaces (boolean flat-namespaces)
                               :include-dependencies (boolean include-dependencies)
-                              :insert-namespace-node insert-namespace-node})]
+                              :insert-namespace-node insert-namespace-node
+                              ;; FIXME: replace source-paths in generic way
+                              :line-coverage (when coverage-file (comp (codecov/make-line-coverage-lookup coverage-file)
+                                                                       #(str/replace-first % "src/" "")))})]
     (if (instance? java.io.Writer output-file)
       (xml/indent data output-file)
       (with-open [out (io/writer output-file)]
@@ -284,7 +319,13 @@
    {:source-paths ["src"]
     :output-file "target/out.dgml"})
 
+  (extract
+   {:source-paths ["src"]
+    :output-file "../../shared/coverage.dgml"
+    :coverage-file "target/coverage/codecov.json"})
+
   (def result (run-kondo ["test/resources/nested/src"]))
+  (def result (run-kondo ["src"]))
 
   (->> result
        :analysis
@@ -298,4 +339,7 @@
       lg/digraph
       (add-clustered-namespace-hierarchy "."))
 
-  (:g (analysis->graph {:analysis (:analysis result)})))
+  (def coverage-file "target/coverage/codecov.json")
+  (:g (analysis->graph {:analysis (:analysis result)
+                        :line-coverage (comp (some-> coverage-file codecov/make-line-coverage-lookup)
+                                             #(str/replace-first % "src/" ""))})))
