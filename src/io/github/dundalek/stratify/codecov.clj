@@ -33,8 +33,13 @@
 
 (defn make-line-coverage-lookup [filename]
   (let [coverage (load-coverage filename)]
-    (fn [filename]
-      (some-> (get coverage filename) line-coverage))))
+    (fn
+      ([filename]
+       (some-> (get coverage filename) line-coverage))
+      ([filename start end]
+       (some-> (get coverage filename)
+               (subvec start end)
+               line-coverage)))))
 
 (comment
   (def lookup (make-line-coverage-lookup "target/coverage/codecov.json"))

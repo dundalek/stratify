@@ -232,16 +232,20 @@
            var-usages)
         g (reduce
            (fn [g definition]
-             (let [ns-str (ns->str (:ns definition))
+             (let [{:keys [filename row end-row]} definition
+                   ns-str (ns->str (:ns definition))
                    id (str ns-str "/" (:name definition))]
-               (-> g
-                   (lg/add-nodes id)
-                   (la/add-attr id :label (str (:name definition)))
-                   (la/add-attr id :parent ns-str)
-                   (la/add-attr id :category (var->category definition))
-                   (la/add-attr id :defined-by (some-> (:defined-by->lint-as definition) str))
-                   (la/add-attr id :access (if (:private definition) "Private" "Public"))
-                   (la/add-attr id :name (str (:ns definition) "/" (:name definition))))))
+               (cond-> (-> g
+                           (lg/add-nodes id)
+                           (la/add-attr id :label (str (:name definition)))
+                           (la/add-attr id :parent ns-str)
+                           (la/add-attr id :category (var->category definition))
+                           (la/add-attr id :defined-by (some-> (:defined-by->lint-as definition) str))
+                           (la/add-attr id :access (if (:private definition) "Private" "Public"))
+                           (la/add-attr id :name (str (:ns definition) "/" (:name definition))))
+                 line-coverage
+                 ;; 1-indexed, inclusive end
+                 (la/add-attr id :line-coverage (line-coverage filename (dec row) end-row)))))
            g
            (:var-definitions analysis))
         g (lg/add-edges* g (var-edges var-usages ns->str))]
@@ -307,8 +311,10 @@
                               :include-dependencies (boolean include-dependencies)
                               :insert-namespace-node insert-namespace-node
                               ;; FIXME: replace source-paths in generic way
-                              :line-coverage (when coverage-file (comp (codecov/make-line-coverage-lookup coverage-file)
-                                                                       #(str/replace-first % "src/" "")))})]
+                              :line-coverage (when coverage-file
+                                               (let [lookup (codecov/make-line-coverage-lookup coverage-file)]
+                                                 (fn [filename & args]
+                                                   (apply lookup (str/replace-first filename "src/" "") args))))})]
     (if (instance? java.io.Writer output-file)
       (xml/indent data output-file)
       (with-open [out (io/writer output-file)]
@@ -333,13 +339,15 @@
 
   (->> result
        :analysis
-       :var-definitions)
+       :var-definitions
+       first)
 
   (-> (->graph (:analysis result))
       lg/digraph
       (add-clustered-namespace-hierarchy "."))
 
   (def coverage-file "target/coverage/codecov.json")
+  (def lookup (some-> coverage-file codecov/make-line-coverage-lookup))
   (:g (analysis->graph {:analysis (:analysis result)
-                        :line-coverage (comp (some-> coverage-file codecov/make-line-coverage-lookup)
-                                             #(str/replace-first % "src/" ""))})))
+                        :line-coverage (fn [filename & args]
+                                         (apply lookup (str/replace-first filename "src/" "") args))})))
