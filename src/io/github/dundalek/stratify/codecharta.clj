@@ -4,6 +4,7 @@
    [babashka.process :as ps :refer [shell]]
    [clojure.java.io :as io]
    [clojure.string :as str]
+   [io.github.dundalek.stratify.codecov :as codecov]
    [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.metrics :as metrics]
    [jsonista.core :as j]
@@ -40,7 +41,7 @@
 (def ^:private attribute-key->str
   (memoize (fn [kw] (naive-snake-case (name kw)))))
 
-(def ^:private attributes
+(def ^:private metrics-attributes
   {:out-degree {:title "Out Degree" :description ""}
    :in-degree {:title "In Degree" :description ""}
    :longest-shortest-path {:title "Longest Shortest Path" :description ""}
@@ -49,6 +50,14 @@
    :betweenness-centrality {:title "Betweenness Centrality" :description ""}
    :page-rank {:title "Page Rank" :description ""}})
 
+;; `direction` property specifies whether higher or lower attribute values indicate better code quality:
+;; - `-1` lower is better
+;; - `1`  higher is better
+(def ^:private attributes
+  (-> metrics-attributes
+      (update-vals #(assoc % :direction -1))
+      (assoc :line-coverage {:title "Line Coverage" :description "" :direction 1})))
+
 ;; The difference between types is how aggregates get shown when hovering over a folder:
 ;; - "absolute" as sum
 ;; - "relative" as median
@@ -56,34 +65,38 @@
   (merge
    (update-vals attributes (constantly "absolute"))
    {:betweenness-centrality "relative"
-    :page-rank "relative"}))
+    :page-rank "relative"
+    :line-coverage "relative"}))
 
-(defn ->codecharta [{:keys [analysis transform-filename]
-                     :or {transform-filename identity}}]
+(defn- calculate-metrics [{:keys [analysis transform-filename line-coverage]
+                           :or {transform-filename identity}}]
   (let [g (lg/digraph (internal/->graph analysis))
-        metrics (metrics/metrics g {:metrics (keys attributes)})
+        metrics (metrics/metrics g {:metrics (keys metrics-attributes)})
         ns->file (->> analysis
                       :namespace-definitions
                       (map (fn [{:keys [name filename]}]
                              [(str name) (transform-filename filename)]))
-                      (into {}))
-        root (->> metrics
-                  (map (fn [{:keys [id] :as attrs}]
-                         [(ns->file id) (-> attrs
-                                            (dissoc :id)
-                                            (update-keys attribute-key->str))]))
-                  (into {})
-                  (build-tree))]
-    {:checksum ""
-     :data {:nodes [root]
-            :edges []
-            :projectName ""
-            :attributeDescriptors (update-keys attributes attribute-key->str)
-            :attributeTypes {:edges {}
-                             :nodes (update-keys attribute-types attribute-key->str)}
-            :apiVersion "1.3"}}))
+                      (into {}))]
+    (->> metrics
+         (map (fn [{:keys [id] :as attrs}]
+                (let [filename (ns->file id)
+                      attrs (cond-> (dissoc attrs :id)
+                              line-coverage (assoc :line-coverage (some-> (line-coverage filename)
+                                                                          (* 100))))]
+                  [filename (update-keys attrs attribute-key->str)])))
+         (into {}))))
 
-(defn extract [{:keys [repo-path source-paths output-prefix]}]
+(defn ->codecharta [opts]
+  {:checksum ""
+   :data {:nodes [(build-tree (calculate-metrics opts))]
+          :edges []
+          :projectName ""
+          :attributeDescriptors (update-keys attributes attribute-key->str)
+          :attributeTypes {:edges {}
+                           :nodes (update-keys attribute-types attribute-key->str)}
+          :apiVersion "1.3"}})
+
+(defn extract [{:keys [repo-path source-paths output-prefix coverage-file]}]
   (fs/with-temp-dir [tmp-dir {}]
     (let [suffix-uncompressed ".cc.json"
           suffix-compressed ".cc.json.gz"
@@ -95,7 +108,11 @@
           kondo-file (str kondo-prefix suffix-uncompressed)
           repo-source-paths (->> source-paths (map #(str repo-path "/" %)))
           repo-prefix (str repo-path "/")
-          ccsh-bin "ccsh"]
+          ccsh-bin "ccsh"
+          line-coverage-lookup (some-> coverage-file codecov/make-line-coverage-lookup)
+          line-coverage (when line-coverage-lookup
+                          ;; FIXME: replace source-paths in generic way
+                          (fn [filename] (line-coverage-lookup (str/replace-first filename "src/" ""))))]
 
       (try
         (run! ps/check (ps/pipeline
@@ -112,7 +129,8 @@
       (try
         (j/write-value (io/file kondo-file)
                        (->codecharta {:analysis (:analysis (internal/run-kondo repo-source-paths))
-                                      :transform-filename #(str/replace-first % repo-prefix "")}))
+                                      :transform-filename #(str/replace-first % repo-prefix "")
+                                      :line-coverage line-coverage}))
         (catch Exception e
           (println "Failed to run kondo:" (ex-message e))))
 
@@ -132,4 +150,17 @@
 
   (extract {:repo-path "."
             :source-paths ["src"]
-            :output-prefix "stratify"}))
+            :output-prefix "stratify"})
+
+  (extract {:repo-path "."
+            :source-paths ["src"]
+            :output-prefix "stratify"
+            :coverage-file "target/coverage/codecov.json"})
+
+  (def coverage-file "target/coverage/codecov.json")
+
+  (->codecharta {:analysis (:analysis result)})
+
+  (calculate-metrics
+   {:analysis (:analysis result)
+    :line-coverage (some-> coverage-file codecov/make-line-coverage-lookup)}))

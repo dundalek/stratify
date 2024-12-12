@@ -52,17 +52,19 @@
   :edges [],
   :projectName "",
   :attributeDescriptors
-  {"out_degree" {:title "Out Degree", :description ""},
-   "in_degree" {:title "In Degree", :description ""},
+  {"out_degree" {:title "Out Degree", :description "", :direction -1},
+   "in_degree" {:title "In Degree", :description "", :direction -1},
    "longest_shortest_path"
-   {:title "Longest Shortest Path", :description ""},
+   {:title "Longest Shortest Path", :description "", :direction -1},
    "transitive_dependencies"
-   {:title "Transitive Dependencies", :description ""},
+   {:title "Transitive Dependencies", :description "", :direction -1},
    "transitive_dependents"
-   {:title "Transitive Dependents", :description ""},
+   {:title "Transitive Dependents", :description "", :direction -1},
    "betweenness_centrality"
-   {:title "Betweenness Centrality", :description ""},
-   "page_rank" {:title "Page Rank", :description ""}},
+   {:title "Betweenness Centrality", :description "", :direction -1},
+   "page_rank" {:title "Page Rank", :description "", :direction -1},
+   "line_coverage"
+   {:title "Line Coverage", :description "", :direction 1}},
   :attributeTypes
   {:edges {},
    :nodes
@@ -72,5 +74,6 @@
     "transitive_dependencies" "absolute",
     "transitive_dependents" "absolute",
     "betweenness_centrality" "relative",
-    "page_rank" "relative"}},
+    "page_rank" "relative",
+    "line_coverage" "relative"}},
   :apiVersion "1.3"}}
