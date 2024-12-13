@@ -40,6 +40,8 @@
         :desc (str "Target format, choices: " (format-choice-list target-formats))
         :validate target-formats
         :default "dgml"}
+   :coverage-file {:desc "Include line coverage metric from given Codecov file"
+                   :ref "<file>"}
    :flat-namespaces {:coerce :boolean
                      :desc "Render flat namespaces instead of a nested hierarchy"}
    :include-dependencies {:coerce :boolean
