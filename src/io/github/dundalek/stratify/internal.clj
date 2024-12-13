@@ -280,7 +280,7 @@
                       (assoc :DefinedBy (la/attr g node :defined-by))
 
                       (la/attr g node :line-coverage)
-                      (assoc :Coverage (-> (la/attr g node :line-coverage) (* 100))))))
+                      (assoc :Coverage (la/attr g node :line-coverage)))))
      :links
      (concat
       (for [[source target] (lg/edges g)]
@@ -346,7 +346,7 @@
       (add-clustered-namespace-hierarchy "."))
 
   (def coverage-file "target/coverage/codecov.json")
-  (def lookup (some-> coverage-file codecov/make-line-coverage-lookup))
+  (def lookup (some-> coverage-file codecov/make-line-coverage-raw-lookup))
   (:g (analysis->graph {:analysis (:analysis result)
                         :line-coverage (fn [filename & args]
                                          (apply lookup (str/replace-first filename "src/" "") args))})))

@@ -12,7 +12,7 @@
         uncovered (->> lines (filter #(and (number? %) (zero? %))) count)
         partially (->> lines (filter true?) count)
         coverage (when (pos? instrumented)
-                   (double (/ (+ covered partially) instrumented)))]
+                   (/ (+ covered partially) instrumented))]
     (assert (= instrumented (+ covered uncovered partially)))
     (if coverage-only?
       coverage
@@ -33,7 +33,7 @@
       ;; remove the first padded values to make it 0-based indexed
       (update-vals #(subvec % 1))))
 
-(defn make-line-coverage-lookup [{:keys [coverage-file strip-prefixes]}]
+(defn make-line-coverage-raw-lookup [{:keys [coverage-file strip-prefixes]}]
   (let [coverage (load-coverage coverage-file)
         transform-filename (if strip-prefixes
                              (let [prefix-pattern (re-pattern (str "^" (str/join "|" (map Pattern/quote strip-prefixes)) "/"))]
@@ -44,12 +44,23 @@
        (some-> (get coverage (transform-filename filename))
                line-coverage))
       ([filename start end]
-       (some-> (get coverage (transform-filename filename))
-               (subvec start end)
-               line-coverage)))))
+       (try
+         (some-> (get coverage (transform-filename filename))
+                 (subvec start end)
+                 line-coverage)
+         (catch IndexOutOfBoundsException _
+           (throw (ex-info (str "Coverage line range is out of bounds. "
+                                "Please make sure the coverage file is up-to-date with the source code.")
+                           {:filename filename :start start :end end}))))))))
+
+(defn make-line-coverage-lookup [opts]
+  (comp
+   ;; Maybe warn if the coverage cannot be looked up?
+   #(some-> % (* 100.0))
+   (make-line-coverage-raw-lookup opts)))
 
 (comment
-  (def lookup (make-line-coverage-lookup "target/coverage/codecov.json"))
+  (def lookup (make-line-coverage-raw-lookup "target/coverage/codecov.json"))
   (lookup "io/github/dundalek/stratify/metrics.clj")
 
   (def coverage (load-coverage "target/coverage/codecov.json"))

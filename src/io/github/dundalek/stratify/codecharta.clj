@@ -81,8 +81,7 @@
          (map (fn [{:keys [id] :as attrs}]
                 (let [filename (ns->file id)
                       attrs (cond-> (dissoc attrs :id)
-                              line-coverage (assoc :line-coverage (some-> (line-coverage filename)
-                                                                          (* 100))))]
+                              line-coverage (assoc :line-coverage (line-coverage filename)))]
                   [filename (update-keys attrs attribute-key->str)])))
          (into {}))))
 
@@ -170,4 +169,4 @@
 
   (calculate-metrics
    {:analysis (:analysis result)
-    :line-coverage (some-> coverage-file codecov/make-line-coverage-lookup)}))
+    :line-coverage (some-> coverage-file codecov/make-line-coverage-raw-lookup)}))
