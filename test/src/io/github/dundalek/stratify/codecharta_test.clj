@@ -4,6 +4,7 @@
    [clojure.walk :as walk]
    [io.github.dundalek.stratify.codecharta :as cc]
    [io.github.dundalek.stratify.internal :as internal]
+   [io.github.dundalek.stratify.test-utils :refer [is-same?]]
    [snap.core :as snap]))
 
 (deftest build-tree
@@ -40,3 +41,11 @@
   (is (snap/match-snapshot
        ::codecharta
        (cc/->codecharta {:analysis (:analysis (internal/run-kondo ["test/resources/nested/src"]))}))))
+
+(deftest with-coverage
+  (let [output-file "test/resources/coverage/coverage.cc.json"]
+    (cc/extract-clj {:repo-path "test/resources/coverage"
+                     :source-paths ["src"]
+                     :coverage-file "test/resources/coverage/target/coverage/codecov.json"
+                     :output-file output-file})
+    (is-same? output-file)))

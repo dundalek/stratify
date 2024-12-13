@@ -96,6 +96,18 @@
                            :nodes (update-keys attribute-types attribute-key->str)}
           :apiVersion "1.3"}})
 
+(defn extract-clj [{:keys [repo-path source-paths coverage-file output-file]}]
+  (let [repo-prefix (str repo-path "/")
+        repo-source-paths (->> source-paths (map #(str repo-prefix %)))
+        line-coverage (when coverage-file
+                        (codecov/make-line-coverage-lookup {:coverage-file coverage-file
+                                                            :strip-prefixes source-paths}))]
+
+    (j/write-value (io/file output-file)
+                   (->codecharta {:analysis (:analysis (internal/run-kondo repo-source-paths))
+                                  :transform-filename #(str/replace-first % repo-prefix "")
+                                  :line-coverage line-coverage}))))
+
 (defn extract [{:keys [repo-path source-paths output-prefix coverage-file]}]
   (fs/with-temp-dir [tmp-dir {}]
     (let [suffix-uncompressed ".cc.json"
@@ -107,12 +119,7 @@
           kondo-prefix (str tmp-dir "/kondo")
           kondo-file (str kondo-prefix suffix-uncompressed)
           repo-source-paths (->> source-paths (map #(str repo-path "/" %)))
-          repo-prefix (str repo-path "/")
-          ccsh-bin "ccsh"
-          line-coverage-lookup (some-> coverage-file codecov/make-line-coverage-lookup)
-          line-coverage (when line-coverage-lookup
-                          ;; FIXME: replace source-paths in generic way
-                          (fn [filename] (line-coverage-lookup (str/replace-first filename "src/" ""))))]
+          ccsh-bin "ccsh"]
 
       (try
         (run! ps/check (ps/pipeline
@@ -127,10 +134,10 @@
           (println "Failed to run gitlogparser:" (ex-message e))))
 
       (try
-        (j/write-value (io/file kondo-file)
-                       (->codecharta {:analysis (:analysis (internal/run-kondo repo-source-paths))
-                                      :transform-filename #(str/replace-first % repo-prefix "")
-                                      :line-coverage line-coverage}))
+        (extract-clj {:repo-path repo-path
+                      :source-paths source-paths
+                      :coverage-file coverage-file
+                      :output-file kondo-file})
         (catch Exception e
           (println "Failed to run kondo:" (ex-message e))))
 

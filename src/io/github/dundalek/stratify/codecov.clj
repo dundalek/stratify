@@ -1,14 +1,10 @@
 (ns io.github.dundalek.stratify.codecov
   (:require
    [clojure.java.io :as io]
-   [jsonista.core :as json]))
-
-(defn load-coverage [filename]
-  (-> (json/read-value (io/file filename) json/default-object-mapper)
-      (get "coverage")
-      ;; codecov uses 1-based indexing
-      ;; remove the first padded values to make it 0-based indexed
-      (update-vals #(subvec % 1))))
+   [clojure.string :as str]
+   [jsonista.core :as json])
+  (:import
+   [java.util.regex Pattern]))
 
 (defn- coverage-summary [lines coverage-only?]
   (let [instrumented (->> lines (remove nil?) count)
@@ -27,16 +23,28 @@
        :partially partially
        :coverage coverage})))
 
-(defn line-coverage [lines]
+(defn- line-coverage [lines]
   (coverage-summary lines true))
 
-(defn make-line-coverage-lookup [filename]
-  (let [coverage (load-coverage filename)]
+(defn load-coverage [filename]
+  (-> (json/read-value (io/file filename) json/default-object-mapper)
+      (get "coverage")
+      ;; codecov uses 1-based indexing
+      ;; remove the first padded values to make it 0-based indexed
+      (update-vals #(subvec % 1))))
+
+(defn make-line-coverage-lookup [{:keys [coverage-file strip-prefixes]}]
+  (let [coverage (load-coverage coverage-file)
+        transform-filename (if strip-prefixes
+                             (let [prefix-pattern (re-pattern (str "^" (str/join "|" (map Pattern/quote strip-prefixes)) "/"))]
+                               #(str/replace-first % prefix-pattern ""))
+                             identity)]
     (fn
       ([filename]
-       (some-> (get coverage filename) line-coverage))
+       (some-> (get coverage (transform-filename filename))
+               line-coverage))
       ([filename start end]
-       (some-> (get coverage filename)
+       (some-> (get coverage (transform-filename filename))
                (subvec start end)
                line-coverage)))))
 

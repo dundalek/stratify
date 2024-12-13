@@ -52,5 +52,12 @@
                        :insert-namespace-node "SELF"})
     (is-same? output-file)))
 
+(deftest extract-with-coverage
+  (let [output-file "test/resources/coverage/output-coverage.dgml"]
+    (stratify/extract {:source-paths ["test/resources/coverage/src"]
+                       :output-file output-file
+                       :coverage-file "test/resources/coverage/target/coverage/codecov.json"})
+    (is-same? output-file)))
+
 (deftest color-add-alpha
   (is (= "#EF123456" (stratify/color-add-alpha "#123456" "EF"))))

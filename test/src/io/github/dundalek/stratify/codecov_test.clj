@@ -38,10 +38,9 @@
 
          (-> (:g (internal/analysis->graph
                   {:analysis (:analysis (internal/run-kondo ["test/resources/coverage/src"]))
-                   :line-coverage
-                   (let [lookup (codecov/make-line-coverage-lookup sample-coverage-file)]
-                     (fn [filename & args]
-                       (apply lookup (str/replace-first filename "test/resources/coverage/src/" "") args)))}))
+                   :line-coverage (codecov/make-line-coverage-lookup
+                                   {:coverage-file sample-coverage-file
+                                    :strip-prefixes ["test/resources/coverage/src"]})}))
              :attrs
              (update-vals #(some-> % :line-coverage (* 10000.0) (Math/round) (/ 100.0)))))))
 

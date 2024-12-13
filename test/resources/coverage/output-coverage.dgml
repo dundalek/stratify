@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="example.partial/uncovered" Label="uncovered" Category="Function" Name="example.partial/uncovered" Access="Public" DefinedBy="clojure.core/defn" Coverage="50.0"/>
+    <Node Id="example" Label="example" Category="Namespace" Name="example" Group="Expanded"/>
+    <Node Id="example.partial/yellow" Label="yellow" Category="Function" Name="example.partial/yellow" Access="Public" DefinedBy="clojure.core/defn" Coverage="100.0"/>
+    <Node Id="example.uncovered/uncovered" Label="uncovered" Category="Function" Name="example.uncovered/uncovered" Access="Public" DefinedBy="clojure.core/defn" Coverage="50.0"/>
+    <Node Id="example.partial/part" Label="part" Category="Function" Name="example.partial/part" Access="Public" DefinedBy="clojure.core/defn" Coverage="75.0"/>
+    <Node Id="example.uncovered" Label="uncovered" Category="Namespace" Name="example.uncovered" Group="Collapsed" Coverage="66.66666666666667"/>
+    <Node Id="example.covered/covered" Label="covered" Category="Function" Name="example.covered/covered" Access="Public" DefinedBy="clojure.core/defn" Coverage="100.0"/>
+    <Node Id="example.partial" Label="partial" Category="Namespace" Name="example.partial" Group="Collapsed" Coverage="81.81818181818183"/>
+    <Node Id="example.covered" Label="covered" Category="Namespace" Name="example.covered" Group="Collapsed" Coverage="100.0"/>
+    <Node Id="example.partial/covered" Label="covered" Category="Function" Name="example.partial/covered" Access="Public" DefinedBy="clojure.core/defn" Coverage="100.0"/>
+  </Nodes>
+  <Links>
+    <Link Source="example.partial" Target="example.partial/uncovered" Category="Contains"/>
+    <Link Source="example.partial" Target="example.partial/yellow" Category="Contains"/>
+    <Link Source="example.uncovered" Target="example.uncovered/uncovered" Category="Contains"/>
+    <Link Source="example.partial" Target="example.partial/part" Category="Contains"/>
+    <Link Source="example" Target="example.uncovered" Category="Contains"/>
+    <Link Source="example.covered" Target="example.covered/covered" Category="Contains"/>
+    <Link Source="example" Target="example.partial" Category="Contains"/>
+    <Link Source="example" Target="example.covered" Category="Contains"/>
+    <Link Source="example.partial" Target="example.partial/covered" Category="Contains"/>
+  </Links>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Coverage" ValueLabel="Good">
+      <Condition Expression="HasValue('Coverage') and Coverage &gt; 80"/>
+      <Setter Property="Background" Value="Green"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Coverage" ValueLabel="Ok">
+      <Condition Expression="HasValue('Coverage') and Coverage &gt; 50"/>
+      <Setter Property="Background" Expression="Color.FromRgb(180 * Math.Max(1, (80 - Coverage) / 30), 180, 0)"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Coverage" ValueLabel="Bad">
+      <Condition Expression="HasValue('Coverage')"/>
+      <Setter Property="Background" Expression="Color.FromRgb(180, 180 * Coverage / 50, 0)"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Coverage" ValueLabel="Unknown">
+      <Setter Property="Background" Value="#686868"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+  </Styles>
+</DirectedGraph>

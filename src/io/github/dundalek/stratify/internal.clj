@@ -310,11 +310,10 @@
                               :flat-namespaces (boolean flat-namespaces)
                               :include-dependencies (boolean include-dependencies)
                               :insert-namespace-node insert-namespace-node
-                              ;; FIXME: replace source-paths in generic way
                               :line-coverage (when coverage-file
-                                               (let [lookup (codecov/make-line-coverage-lookup coverage-file)]
-                                                 (fn [filename & args]
-                                                   (apply lookup (str/replace-first filename "src/" "") args))))})]
+                                               (codecov/make-line-coverage-lookup
+                                                {:coverage-file coverage-file
+                                                 :strip-prefixes source-paths}))})]
     (if (instance? java.io.Writer output-file)
       (xml/indent data output-file)
       (with-open [out (io/writer output-file)]
