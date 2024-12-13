@@ -1,0 +1,5 @@
+{"coverage":
+ {"example/covered.clj":[null, 1, null, 1, 1],
+  "example/partial.clj":
+  [null, 1, null, 1, 1, null, 1, 0, null, 1, 1, 1, 0, null, 1, true],
+  "example/uncovered.clj":[null, 1, null, 1, 0]}}

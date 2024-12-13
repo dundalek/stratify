@@ -10,9 +10,8 @@
       ;; remove the first padded values to make it 0-based indexed
       (update-vals #(subvec % 1))))
 
-(defn- coverage-line-summary [lines coverage-only?]
-  (let [total (count lines)
-        instrumented (->> lines (remove nil?) count)
+(defn- coverage-summary [lines coverage-only?]
+  (let [instrumented (->> lines (remove nil?) count)
         covered (->> lines (filter #(and (number? %) (pos? %))) count)
         uncovered (->> lines (filter #(and (number? %) (zero? %))) count)
         partially (->> lines (filter true?) count)
@@ -21,7 +20,7 @@
     (assert (= instrumented (+ covered uncovered partially)))
     (if coverage-only?
       coverage
-      {:total total
+      {:total (count lines)
        :instrumented instrumented
        :covered covered
        :uncovered uncovered
@@ -29,7 +28,7 @@
        :coverage coverage})))
 
 (defn line-coverage [lines]
-  (coverage-line-summary lines true))
+  (coverage-summary lines true))
 
 (defn make-line-coverage-lookup [filename]
   (let [coverage (load-coverage filename)]

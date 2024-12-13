@@ -1,0 +1,8 @@
+#kaocha/v1
+ {:cloverage/opts
+  {:codecov? true}}
+   ; :coveralls? true
+   ; :emma-xml? true
+   ; :junit? true
+   ; :lcov? true
+   ; :raw? true}}
