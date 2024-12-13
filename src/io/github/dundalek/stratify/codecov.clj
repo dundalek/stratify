@@ -2,9 +2,24 @@
   (:require
    [clojure.java.io :as io]
    [clojure.string :as str]
-   [jsonista.core :as json])
+   [jsonista.core :as json]
+   [malli.core :as m]
+   [malli.transform :as mt])
   (:import
    [java.util.regex Pattern]))
+
+(def Codecov
+  [:map
+   ["coverage" [:map-of :string
+                [:sequential [:or nat-int? true? nil?]]]]])
+
+(def ^:private strict-json-transformer
+  (mt/transformer
+   mt/strip-extra-keys-transformer
+   mt/json-transformer))
+
+(def ^:private coerce-codecov
+  (m/coercer Codecov strict-json-transformer))
 
 (defn- coverage-summary [lines coverage-only?]
   (let [instrumented (->> lines (remove nil?) count)
@@ -28,6 +43,7 @@
 
 (defn load-coverage [filename]
   (-> (json/read-value (io/file filename) json/default-object-mapper)
+      (coerce-codecov)
       (get "coverage")
       ;; codecov uses 1-based indexing
       ;; remove the first padded values to make it 0-based indexed
