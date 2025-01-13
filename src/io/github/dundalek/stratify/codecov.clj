@@ -67,7 +67,8 @@
          (catch IndexOutOfBoundsException _
            (throw (ex-info (str "Coverage line range is out of bounds. "
                                 "Please make sure the coverage file is up-to-date with the source code.")
-                           {:filename filename :start start :end end}))))))))
+                           {:code ::coverage-range-out-of-bounds
+                            :filename filename :start start :end end}))))))))
 
 (defn make-line-coverage-lookup [opts]
   (comp
