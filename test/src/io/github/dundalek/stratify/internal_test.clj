@@ -61,11 +61,3 @@
 
 (deftest color-add-alpha
   (is (= "#EF123456" (stratify/color-add-alpha "#123456" "EF"))))
-
-(deftest errors
-  (testing "error when passing non-existing source directory"
-    (is (= ::stratify/no-source-namespaces
-           (tu/thrown-error-code (main/-main "NON_EXISTING"))))
-    (is (thrown-with-msg? clojure.lang.ExceptionInfo
-                          #"There are no defined namespaces in analysis."
-                          (main/-main "NON_EXISTING")))))

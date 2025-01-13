@@ -3,7 +3,7 @@
    [babashka.cli :as cli]
    [clojure.edn :as edn]
    [clojure.java.io :as io]
-   [clojure.main :as main]
+   [clojure.main :as clj-main]
    [clojure.repl.deps :as deps]
    [clojure.string :as str]
    [io.github.dundalek.stratify.codecharta :as-alias codecharta]
@@ -73,7 +73,7 @@
       (ensure-dynamic-context-classloader!)
       (deps/add-libs deps))))
 
-(defn- main* [args]
+(defn main* [& args]
   (let [parsed (cli/parse-args args {:spec cli-spec})
         {:keys [opts args]} parsed]
     (if (or (:help opts) (:h opts) (empty? args))
@@ -124,11 +124,14 @@
           :else
           (print-help))))))
 
+(defn clj-main-report-error [t]
+  (clj-main/report-error t :target (System/getProperty "clojure.main.report" "file")))
+
 (defn- print-full-error-report [e]
   ;; Reusing the full report file generation, but stripping other error messages so we can print more human-friendly ones.
   (let [message (with-out-str
                   (binding [*err* *out*]
-                    (main/report-error e :target (System/getProperty "clojure.main.report" "file"))))
+                    (clj-main-report-error e)))
         stripped-message (->> (str/split message #"\n")
                               (take-last 2)
                               (str/join "\n"))]
@@ -144,23 +147,52 @@
     (print-full-error-report e))
   (System/exit 1))
 
+(defn report-error [t]
+  (cond
+    (= (:type (ex-data t)) :malli.core/coercion)
+    (handle-validation-error t)
+
+    (keyword? (:code (ex-data t)))
+    (do
+      (binding [*out* *err*]
+        (println "Error:")
+        (println (ex-message t))
+        (println)
+        (println "Code:")
+        (println (:code (ex-data t)))
+        (println)
+        (println "Caused by:"))
+      (clj-main-report-error t))
+
+    :else
+    (do
+      (binding [*out* *err*]
+        (println "Unknown error")
+        (println "Please report an issue with details at https://github.com/dundalek/stratify/issues")
+        (println)
+        (println "Caused by:"))
+      (clj-main-report-error t))))
+
 (defn -main [& args]
   (try
-    (main* args)
+    (apply main* args)
     (catch Throwable t
-      (if (= (:type (ex-data t)) :malli.core/coercion)
-        (handle-validation-error t)
-        (throw t)))))
+      (report-error t)
+      (System/exit 1))))
 
 (comment
-  (-main "--help")
+  (main* "--help")
 
-  (-main "src")
-  (-main "--out" "out.dgml" "src")
-  (-main "--flat-namespaces" "src")
+  (main* "src")
 
-  (-main "-f" "overarch" "-o" "banking.dgml" "target/projects/overarch/models/banking")
+  (main* "NON_EXISTING")
+  (report-error *e)
 
-  (-main "-f" "bla")
+  (main* "--out" "out.dgml" "src")
+  (main* "--flat-namespaces" "src")
+
+  (main* "-f" "overarch" "-o" "banking.dgml" "target/projects/overarch/models/banking")
+
+  (main* "-f" "bla")
 
   (cli/parse-args [] {:spec cli-spec}))
