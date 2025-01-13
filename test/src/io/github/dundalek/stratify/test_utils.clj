@@ -10,3 +10,10 @@
       (is (= 0 (:exit result)))
       (is (= "" (:err result)))
       (is (= [""] (str/split-lines (:out result)))))))
+
+(defmacro thrown-error-code [& body]
+  `(try
+     ~@body
+     nil
+     (catch clojure.lang.ExceptionInfo e#
+       (:code (ex-data e#)))))

@@ -1,8 +1,8 @@
 (ns io.github.dundalek.stratify.internal-test
   (:require
-   [clojure.test :refer [deftest is]]
+   [clojure.test :refer [deftest is testing]]
    [io.github.dundalek.stratify.internal :as stratify]
-   [io.github.dundalek.stratify.test-utils :refer [is-same?]]
+   [io.github.dundalek.stratify.test-utils :as tu :refer [is-same?]]
    [stratify.main :as main]))
 
 (deftest extract-default-grouped-namespaces-via-cli
@@ -61,3 +61,11 @@
 
 (deftest color-add-alpha
   (is (= "#EF123456" (stratify/color-add-alpha "#123456" "EF"))))
+
+(deftest errors
+  (testing "error when passing non-existing source directory"
+    (is (= ::stratify/no-source-namespaces
+           (tu/thrown-error-code (main/-main "NON_EXISTING"))))
+    (is (thrown-with-msg? clojure.lang.ExceptionInfo
+                          #"There are no defined namespaces in analysis."
+                          (main/-main "NON_EXISTING")))))

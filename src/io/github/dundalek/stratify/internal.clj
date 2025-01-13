@@ -164,6 +164,10 @@
                                             :Foreground "#FFFFFF"}))])
 
 (defn analysis->graph [{:keys [analysis flat-namespaces include-dependencies insert-namespace-node line-coverage]}]
+  (when (empty? (:namespace-definitions analysis))
+    (throw (ex-info (str "There are no defined namespaces in analysis.\n"
+                         "Did you pass correct source paths?")
+                    {:code ::no-source-namespaces})))
   (let [var-usages (->> (if include-dependencies
                           (:var-usages analysis)
                           (analysis->own-var-usages analysis))
