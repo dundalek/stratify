@@ -3,6 +3,7 @@
    [clojure.java.io :as io]
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]
+   [io.github.dundalek.stratify.codecharta :as codecharta]
    [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.test-utils :as tu]
    [stratify.main :as main]))
@@ -55,6 +56,13 @@
       (test-error-code
        nil
        (main/main* "-o" "/output.dgml" "test/resources/sample/src"))
+
+      (print-category-heading "codecharta")
+
+      (binding [codecharta/*ccsh-bin* "NON_EXISTING"]
+        (test-error-code
+         nil
+         (main/main* "-t" "codecharta" "test/resources/nested/src")))
 
       (print-category-heading "codecov")
 

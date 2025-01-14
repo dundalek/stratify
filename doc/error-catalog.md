@@ -6,7 +6,7 @@ Unknown error
 Please report an issue with details at https://github.com/dundalek/stratify/issues
 
 Caused by:
-Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:49).
+Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:50).
 Sample message
 
 Full report at:
@@ -41,6 +41,23 @@ Please report an issue with details at https://github.com/dundalek/stratify/issu
 Caused by:
 Execution error (FileNotFoundException) at java.io.FileOutputStream/open0 (FileOutputStream.java:-2).
 /output.dgml (Permission denied)
+
+Full report at:
+...
+```
+
+## codecharta
+
+
+### 
+
+```
+Unknown error
+Please report an issue with details at https://github.com/dundalek/stratify/issues
+
+Caused by:
+Execution error (IOException) at java.lang.ProcessImpl/forkAndExec (ProcessImpl.java:-2).
+error=2, No such file or directory
 
 Full report at:
 ...

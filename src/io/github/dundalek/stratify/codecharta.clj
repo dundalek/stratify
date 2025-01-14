@@ -10,6 +10,8 @@
    [jsonista.core :as j]
    [loom.graph :as lg]))
 
+(def ^:dynamic *ccsh-bin* "ccsh")
+
 (defn- build-hierarchy [file-map]
   (->> file-map
        (reduce (fn [m [filename attrs]]
@@ -117,18 +119,17 @@
           gitlog-file (str gitlog-prefix suffix-compressed)
           kondo-prefix (str tmp-dir "/kondo")
           kondo-file (str kondo-prefix suffix-uncompressed)
-          repo-source-paths (->> source-paths (map #(str repo-path "/" %)))
-          ccsh-bin "ccsh"]
+          repo-source-paths (->> source-paths (map #(str repo-path "/" %)))]
 
       (try
         (run! ps/check (ps/pipeline
                         (apply ps/pb "tokei -o json" repo-source-paths)
-                        (ps/pb ccsh-bin "tokeiimporter" "-r" repo-path "-o" tokei-prefix)))
+                        (ps/pb *ccsh-bin* "tokeiimporter" "-r" repo-path "-o" tokei-prefix)))
         (catch Exception e
           (println "Failed to run tokei:" (ex-message e))))
 
       (try
-        (shell ccsh-bin "gitlogparser" "repo-scan" "--repo-path" repo-path "-o" gitlog-prefix)
+        (shell *ccsh-bin* "gitlogparser" "repo-scan" "--repo-path" repo-path "-o" gitlog-prefix)
         (catch Exception e
           (println "Failed to run gitlogparser:" (ex-message e))))
 
@@ -145,7 +146,7 @@
                                  ["kondo" kondo-file]]
                                 (filter (comp fs/exists? second)))]
         (println "Merging sources:" (->> files-to-merge (map first) (str/join ", ")))
-        (apply shell ccsh-bin "merge" "--leaf" "-f" "-o" output-prefix (map second files-to-merge))))))
+        (apply shell *ccsh-bin* "merge" "--leaf" "-f" "-o" output-prefix (map second files-to-merge))))))
 
 (comment
   (def result (internal/run-kondo ["test/resources/nested/src"]))
