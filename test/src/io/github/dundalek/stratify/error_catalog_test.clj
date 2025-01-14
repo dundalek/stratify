@@ -7,6 +7,8 @@
    [io.github.dundalek.stratify.test-utils :as tu]
    [stratify.main :as main]))
 
+(def catalog-file "doc/error-catalog.md")
+
 (def ^:dynamic *writer* nil)
 
 (defn report-with-stripped-tmp-file [t]
@@ -21,11 +23,17 @@
 (defn print-catalog-error [code t]
   (binding [*out* *writer*]
     (println)
-    (println (str "## " code))
+    (println (str "### " code))
     (println)
     (println "```")
     (report-with-stripped-tmp-file t)
     (println "```")))
+
+(defn print-category-heading [heading]
+  (binding [*out* *writer*]
+    (println)
+    (println (str "## " heading))
+    (println)))
 
 (defmacro test-error-code [code & body]
   `(try
@@ -35,9 +43,6 @@
        (is (= ~code (:code (ex-data t#))))
        (print-catalog-error ~code t#))))
 
-(def catalog-file
-  "doc/error-catalog.md")
-
 (deftest catalog
   (with-open [w (io/writer catalog-file)]
     (binding [*writer* w]
@@ -45,6 +50,24 @@
 
       (test-error-code
        ::internal/no-source-namespaces
-       (main/main* "NON_EXISTING"))))
+       (main/main* "NON_EXISTING"))
+
+      (test-error-code
+       nil
+       (main/main* "-o" "/output.dgml" "test/resources/sample/src"))
+
+      (print-category-heading "pulumi")
+
+      (test-error-code
+       nil
+       (main/main* "-f" "pulumi" "test/resources/pulumi/bad.json"))
+
+      (test-error-code
+       nil
+       (main/main* "-f" "pulumi" "test/resources/pulumi/empty.json"))
+
+      (test-error-code
+       nil
+       (main/main* "-f" "pulumi" "-o" "/output.dgml" "test/resources/pulumi/sample-export.json"))))
 
   (tu/is-same? catalog-file))

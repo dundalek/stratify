@@ -144,8 +144,7 @@
     (print "Invalid input: ")
     (prn (-> e ex-data :data :explain me/humanize))
     (println)
-    (print-full-error-report e))
-  (System/exit 1))
+    (print-full-error-report e)))
 
 (defn report-error [t]
   (cond
