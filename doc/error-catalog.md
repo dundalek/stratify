@@ -107,6 +107,65 @@ Full report at:
 ...
 ```
 
+## graphviz
+
+
+### 
+
+```
+Unknown error
+Please report an issue with details at https://github.com/dundalek/stratify/issues
+
+Caused by:
+Execution error (ParseError) at clj-antlr.common/parse-error (common.clj:188).
+missing '}' at '<EOF>'
+
+Full report at:
+...
+```
+
+### 
+
+```
+Unknown error
+Please report an issue with details at https://github.com/dundalek/stratify/issues
+
+Caused by:
+Execution error (NullPointerException) at loom.graph/build-graph$build (graph.cljc:499).
+Cannot invoke "java.util.Map$Entry.getValue()" because "e" is null
+
+Full report at:
+...
+```
+
+### 
+
+```
+Unknown error
+Please report an issue with details at https://github.com/dundalek/stratify/issues
+
+Caused by:
+Execution error (FileNotFoundException) at java.io.FileInputStream/open0 (FileInputStream.java:-2).
+test/resources/graphviz/NON_EXISTING (No such file or directory)
+
+Full report at:
+...
+```
+
+### 
+
+```
+Unknown error
+Please report an issue with details at https://github.com/dundalek/stratify/issues
+
+Caused by:
+Execution error (FileNotFoundException) at java.io.FileOutputStream/open0 (FileOutputStream.java:-2).
+/tmp/__NON_EXISTING_DIRECTORY_42__/output.dgml (No such file or directory)
+
+Full report at:
+...
+```
+
 ## pulumi
 
 

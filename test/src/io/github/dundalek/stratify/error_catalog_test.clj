@@ -78,6 +78,24 @@
        :io.github.dundalek.stratify.codecov/coverage-range-out-of-bounds
        (main/main* "--coverage-file" "test/resources/codecov/empty-coverage.json" "test/resources/coverage/src"))
 
+      (print-category-heading "graphviz")
+
+      (test-error-code
+       nil
+       (main/main* "-f" "dot" "test/resources/graphviz/bad.dot"))
+
+      (test-error-code
+       nil
+       (main/main* "-f" "dot" "test/resources/graphviz/empty.dot"))
+
+      (test-error-code
+       nil
+       (main/main* "-f" "dot" "test/resources/graphviz/NON_EXISTING"))
+
+      (test-error-code
+       nil
+       (main/main* "-f" "dot" "-o" "/tmp/__NON_EXISTING_DIRECTORY_42__/output.dgml" "test/resources/graphviz/simple.dot"))
+
       (print-category-heading "pulumi")
 
       (test-error-code
