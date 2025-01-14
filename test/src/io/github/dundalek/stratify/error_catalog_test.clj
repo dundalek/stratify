@@ -56,6 +56,20 @@
        nil
        (main/main* "-o" "/output.dgml" "test/resources/sample/src"))
 
+      (print-category-heading "codecov")
+
+      (test-error-code
+       nil
+       (main/main* "--coverage-file" "test/resources/pulumi/bad.json" "test/resources/coverage/src"))
+
+      (test-error-code
+       nil
+       (main/main* "--coverage-file" "test/resources/pulumi/empty.json" "test/resources/coverage/src"))
+
+      (test-error-code
+       :io.github.dundalek.stratify.codecov/coverage-range-out-of-bounds
+       (main/main* "--coverage-file" "test/resources/codecov/empty-coverage.json" "test/resources/coverage/src"))
+
       (print-category-heading "pulumi")
 
       (test-error-code

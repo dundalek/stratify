@@ -1,0 +1,7 @@
+{
+  "coverage": {
+    "example/covered.clj": [
+      null
+    ]
+  }
+}
