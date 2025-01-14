@@ -27,15 +27,14 @@
          ccd-of-binary-tree 0]
     (if (> current-node tree-size)
       ccd-of-binary-tree
-      (if (> current-node max-nodes-up-to-current-level)
-        (recur current-node
-               (inc level)
-               (+ max-nodes-up-to-current-level (Math/pow 2 (dec level)))
-               ccd-of-binary-tree)
+      (let [[next-level next-max-nodes-up-to-current-level]
+            (if (> current-node max-nodes-up-to-current-level)
+              [(inc level) (+ max-nodes-up-to-current-level (Math/pow 2 level))]
+              [level max-nodes-up-to-current-level])]
         (recur (inc current-node)
-               level
-               max-nodes-up-to-current-level
-               (+ ccd-of-binary-tree level))))))
+               next-level
+               next-max-nodes-up-to-current-level
+               (+ ccd-of-binary-tree next-level))))))
 
 (defn normalized-cumulative-component-dependency [g]
   (double
