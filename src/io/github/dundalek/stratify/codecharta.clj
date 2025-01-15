@@ -159,12 +159,18 @@
             :source-paths ["src"]
             :output-prefix "stratify"})
 
+  (def coverage-file "target/coverage/codecov.json")
+
   (extract {:repo-path "."
             :source-paths ["src"]
             :output-prefix "stratify"
-            :coverage-file "target/coverage/codecov.json"})
+            :coverage-file coverage-file})
 
-  (def coverage-file "target/coverage/codecov.json")
+  (extract-clj
+   {:repo-path "."
+    :source-paths ["src"]
+    :coverage-file coverage-file
+    :output-file "stratify-clj.cc.json"})
 
   (->codecharta {:analysis (:analysis result)})
 

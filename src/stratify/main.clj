@@ -80,7 +80,7 @@
         {:keys [opts args]} parsed]
     (if (or (:help opts) (:h opts) (empty? args))
       (print-help)
-      (let [{:keys [out metrics from to]} opts
+      (let [{:keys [out metrics from to coverage-file]} opts
             output-file (if (= out "-") *out* out)]
         (cond
           (= to "codecharta")
@@ -89,7 +89,8 @@
             ((requiring-resolve `codecharta/extract)
              {:repo-path "."
               :source-paths args
-              :output-prefix output-file}))
+              :output-prefix output-file
+              :coverage-file coverage-file}))
 
           metrics
           (do
