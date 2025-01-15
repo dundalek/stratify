@@ -46,6 +46,8 @@
                      :desc "Render flat namespaces instead of a nested hierarchy"}
    :include-dependencies {:coerce :boolean
                           :desc "Include links to library dependencies"}
+   :insert-namespace-node {:desc "Group vars mixed among namespaces under a node with a given label"
+                           :ref "<label>"}
    :metrics {:coerce :boolean
              :desc "Calculate and serve namespace metrics report"}
    :help {:alias :h
