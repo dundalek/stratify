@@ -4,17 +4,24 @@ Stratify is a tool for exploring and improving architecture of software.
 Discover bits of Stratified Design that are hiding in your code.
 Gain big picture understanding to make better decisions how to grow your system.
 
+Features and sources:
+
 - Code maps - Visualize structure and dependencies of codebases, supports following sources:
   - [Clojure/Script](#usage) code
   - [Graphviz](#graphviz-visualization) - Interactive visualization of outputs produced by other tools  
     (e.g. Go, JavaSript/TypeScript dependencies or others)
-  - [Architecture maps](#architecture-maps) -  Explore C4 models
+  - [Architecture maps](#architecture-maps) - Explore C4 models
+  - [Infrastructure maps](#infrastructure-maps) - Infrastructure-as-Code (IaC) using Pulumi or SST
 - [Metrics reports](#metrics-reports) -  Calculate code metrics and generate visual reports
 - [Architecture checks](#architecture-checks) - Enforce architectural constrains, dependency rules, layer violations
 
-For visualization it leverages the [code map](https://learn.microsoft.com/en-us/visualstudio/modeling/browse-and-rearrange-code-maps?view=vs-2022) tool from Visual Studio,
+Visualization renderers:
+- [DGML](#dgml-renderer) - For visualization it leverages the [code map](https://learn.microsoft.com/en-us/visualstudio/modeling/browse-and-rearrange-code-maps?view=vs-2022) tool from Visual Studio,
 which is designed for hierarchical graphs,
 and allows to interactively collapse or expand the amount of shown information.
+- [3D Code City](#3d-code-city-renderer) - Outputs data for use with [CodeCharta](https://codecharta.com) tool to visualize codebase and metrics in 3D view.
+
+### DGML Renderer
 
 This is an advantage over static graph rendering tools like Graphviz 
 which only work for trivial sized graphs,
@@ -32,6 +39,13 @@ Visualizing a codebase is a two step process:
 1. First, this tool reads Clojure code and outputs a DGML graph.
 2. Then the graph is loaded and visualized using the DGML Editor in Visual Studio.
 
+### 3D Code City Renderer
+
+Addiionally, Clojure code can be extracted to [CodeCharta](https://codecharta.com/) format to visualize it as 3D Code City. In this view code metrics can be mapped to visualization to uncover hotspots or areas that need attention.
+
+![Logseq codebase visualized using CodeCharta](doc/img/codecharta-logseq-cropped.avif)
+
+### Demos and Talks
 
 Watch the [demo video](https://www.youtube.com/watch?v=8LMrIpxxpDw) which shows several use cases:
 
@@ -107,12 +121,15 @@ Could not locate clojure/repl/deps__init.class, clojure/repl/deps.clj or clojure
 Usage: stratify <options> <src-paths>
 
 Options:
-  -o, --out                  <file>   -   Output file, default "-" standard output
-  -f, --from                 <format> clj Source format, choices: "clj", "dot", "overarch"
-      --flat-namespaces                   Render flat namespaces instead of a nested hierarchy
-      --include-dependencies              Include links to library dependencies
-      --metrics                           Calculate and serve namespace metrics report
-  -h, --help                              Print this help message and exit
+      --include-dependencies                Include links to library dependencies
+      --insert-namespace-node <label>       Group vars mixed among namespaces under a node with a given label
+      --flat-namespaces                     Render flat namespaces instead of a nested hierarchy
+      --coverage-file         <file>        Include line coverage metric from given Codecov file
+  -o, --out                   <file>   -    Output file, default "-" standard output
+  -f, --from                  <format> clj  Source format, choices: "clj", "dot", "overarch", "pulumi"
+  -h, --help                                Print this help message and exit
+      --metrics                             Calculate and serve namespace metrics report
+  -t, --to                    <format> dgml Target format, choices: "codecharta", "dgml"
 ```
 
 ### Using Visual Studio DGML Editor
@@ -131,6 +148,63 @@ It is [sufficient](https://learn.microsoft.com/en-us/visualstudio/modeling/analy
 - Install [DgmlPowerTools 2022](https://marketplace.visualstudio.com/items?itemName=ChrisLovett.DgmlPowerTools2022) extension ([source](https://github.com/clovett/DgmlPowerTools), optional)
   - provides extra features like neighborhood and butterfly exploration modes
   - menu Extensions -> Manage Extensions
+
+### 3D Code City
+
+1) Install dependencies
+
+
+Install [CodeCharta CLI](https://codecharta.com/docs/overview/getting-started#installation) with  `npm i -g codecharta-analysis` to get `ccsh` command.
+
+Install [tokei](https://github.com/XAMPPRocky/tokei?tab=readme-ov-file#installation) (optional to get line and comment counts).
+
+2) Extract with CLI
+
+Run the extraction command, it creates `output-prefix.cc.json.gz` file.
+````
+clojure -M:stratify -t codecharta -o output-prefix src
+````
+
+Additionally use `--coverage-file codecov.json` option to include [code coverage](#code-coverage) metrics.
+
+
+3) Visualize  
+
+Open [CodeCharta Web Studio](https://codecharta.com/visualization/app/index.html)
+and click the open button to load the `.cc.json.gz` file.
+
+Suggested metrics:
+
+- Area - representing size like `loc`, `rloc`
+- Color - representing quality like `betweenness_centrality`, `line_coverage`
+- Height - representing magnitude like `number_of_commits`, `number_of_authors`  
+  (If a source has bad quality metric, the problem is magnified by its height.)
+
+### Code coverage
+
+Stratify can load test coverage using [Codecov](https://docs.codecov.com/docs/codecov-custom-coverage-format) format.
+
+For Clojure use [Kaocha](https://github.com/lambdaisland/kaocha) test runner with
+[kaocha-cloverage](https://github.com/lambdaisland/kaocha-cloverage) plugin to collect coverage info.
+
+Enable the `codecov?` option in `tests.edn` to output the codecov file:
+
+```clojure
+#kaocha/v1
+{:plugins [kaocha.plugin/cloverage]
+ :cloverage/opts
+ {:codecov? true}}
+```
+
+Then use the `--coverage-file` option, nodes in the graph will be colored according to their coverage value.
+```
+clojure -M:stratify --coverage-file target/coverage/codecov.json -o graph.dgml src
+```
+
+![Example graph with code coverage visualization](doc/img/code-coverage-dgml-stratify.avif)
+
+Visualizing code coverage on a directed graph can help to discover a problem when lower layers are poorly tested. 
+As a rule of thumb strive for "greener" lower layers, since poor quality on lower layers compounds impact on upper layers.
 
 ### Graphviz visualization
 
@@ -201,6 +275,36 @@ clojure -M:stratify models/banking -f overarch -o banking.dgml
 Here is a rendering of the example [banking model](https://github.com/soulspace-org/overarch/blob/0551900472757ca1cf5973f5e598da534d49367e/models/banking/model.edn):
 
 ![Overarch Banking model](doc/img/overarch-banking.png)
+
+### Infrastructure maps
+
+[Pulumi](https://www.pulumi.com/) includes builtin graph visualization `pulumi stack graph`.
+It suffers the same illegibility problem like other solutions based on [Graphviz](#graphviz-visualization).
+Stratify can be used an alternative to visualize infrastructure stacks with collapsible levels of detail.
+
+
+Export stack state to JSON:
+```
+pulumi stack export --json > state.json
+```
+
+You can also export preview, useful for visualizing the stack first without deploying:
+```
+pulumi preview --show-sames --json > state-preview.json
+```
+
+Then transform the stack state to DGML graph:
+
+```
+clojure -M:stratify -f pulumi -o graph.dgml state.json
+```
+
+Since [SST](https://sst.dev/) internally uses Pulumi, it is possible to also visualize SST stacks.
+Run `sst diagnostic --stage your-stage` to generate `report.zip` which includes `state.json` that can be visualized.
+
+Example visualization of the AWS-based [Voting App](https://github.com/pulumi/examples/blob/master/aws-ts-pern-voting-app/index.ts) example:
+
+![Voting App example infrastructure visualization](doc/img/pulumi-aws-ts-pern-voting-app.avif)
 
 ### Metrics reports
 
