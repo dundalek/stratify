@@ -176,7 +176,7 @@ and click the open button to load the `.cc.json.gz` file.
 Suggested metrics:
 
 - Area - representing size like `loc`, `rloc`
-- Color - representing quality like `betweenness_centrality`, `line_coverage`
+- Color - representing quality like `graph_betweenness_centrality`, `line_coverage`
 - Height - representing magnitude like `number_of_commits`, `number_of_authors`  
   (If a source has bad quality metric, the problem is magnified by its height.)
 

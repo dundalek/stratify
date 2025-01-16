@@ -40,9 +40,6 @@
   (assert (re-matches #"[-a-z]+" s))
   (str/replace s #"-" "_"))
 
-(def ^:private attribute-key->str
-  (memoize (fn [kw] (naive-snake-case (name kw)))))
-
 (def ^:private metrics-attributes
   {:out-degree {:title "Out Degree" :description ""}
    :in-degree {:title "In Degree" :description ""}
@@ -51,6 +48,11 @@
    :transitive-dependents {:title "Transitive Dependents" :description ""}
    :betweenness-centrality {:title "Betweenness Centrality" :description ""}
    :page-rank {:title "Page Rank" :description ""}})
+
+(def ^:private attribute-key->str
+  (memoize (fn [kw]
+             (str (when (contains? metrics-attributes kw) "graph_")
+                  (naive-snake-case (name kw))))))
 
 ;; `direction` property specifies whether higher or lower attribute values indicate better code quality:
 ;; - `-1` lower is better

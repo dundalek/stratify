@@ -32,48 +32,51 @@
                 [{:name "bar.clj",
                   :type "File",
                   :attributes
-                  {"out_degree" 0,
-                   "in_degree" 1,
-                   "longest_shortest_path" 1,
-                   "transitive_dependencies" 1,
-                   "transitive_dependents" 2,
-                   "betweenness_centrality" 0.0,
-                   "page_rank" 0.6490941366427341}}]}
+                  {"graph_out_degree" 0,
+                   "graph_in_degree" 1,
+                   "graph_longest_shortest_path" 1,
+                   "graph_transitive_dependencies" 1,
+                   "graph_transitive_dependents" 2,
+                   "graph_betweenness_centrality" 0.0,
+                   "graph_page_rank" 0.6490941366427341}}]}
                {:name "foo.clj",
                 :type "File",
                 :attributes
-                {"out_degree" 1,
-                 "in_degree" 0,
-                 "longest_shortest_path" 2,
-                 "transitive_dependencies" 2,
-                 "transitive_dependents" 1,
-                 "betweenness_centrality" 0.0,
-                 "page_rank" 0.35090586335726587}}]}]}]}]}]}]}],
+                {"graph_out_degree" 1,
+                 "graph_in_degree" 0,
+                 "graph_longest_shortest_path" 2,
+                 "graph_transitive_dependencies" 2,
+                 "graph_transitive_dependents" 1,
+                 "graph_betweenness_centrality" 0.0,
+                 "graph_page_rank" 0.35090586335726587}}]}]}]}]}]}]}],
   :edges [],
   :projectName "",
   :attributeDescriptors
-  {"out_degree" {:title "Out Degree", :description "", :direction -1},
-   "in_degree" {:title "In Degree", :description "", :direction -1},
-   "longest_shortest_path"
+  {"graph_out_degree"
+   {:title "Out Degree", :description "", :direction -1},
+   "graph_in_degree"
+   {:title "In Degree", :description "", :direction -1},
+   "graph_longest_shortest_path"
    {:title "Longest Shortest Path", :description "", :direction -1},
-   "transitive_dependencies"
+   "graph_transitive_dependencies"
    {:title "Transitive Dependencies", :description "", :direction -1},
-   "transitive_dependents"
+   "graph_transitive_dependents"
    {:title "Transitive Dependents", :description "", :direction -1},
-   "betweenness_centrality"
+   "graph_betweenness_centrality"
    {:title "Betweenness Centrality", :description "", :direction -1},
-   "page_rank" {:title "Page Rank", :description "", :direction -1},
+   "graph_page_rank"
+   {:title "Page Rank", :description "", :direction -1},
    "line_coverage"
    {:title "Line Coverage", :description "", :direction 1}},
   :attributeTypes
   {:edges {},
    :nodes
-   {"out_degree" "absolute",
-    "in_degree" "absolute",
-    "longest_shortest_path" "absolute",
-    "transitive_dependencies" "absolute",
-    "transitive_dependents" "absolute",
-    "betweenness_centrality" "relative",
-    "page_rank" "relative",
+   {"graph_out_degree" "absolute",
+    "graph_in_degree" "absolute",
+    "graph_longest_shortest_path" "absolute",
+    "graph_transitive_dependencies" "absolute",
+    "graph_transitive_dependents" "absolute",
+    "graph_betweenness_centrality" "relative",
+    "graph_page_rank" "relative",
     "line_coverage" "relative"}},
   :apiVersion "1.3"}}
