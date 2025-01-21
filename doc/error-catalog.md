@@ -202,6 +202,37 @@ Full report at:
 ...
 ```
 
+## overarch
+
+
+### 
+
+```
+Unknown error
+Please report an issue with details at https://github.com/dundalek/stratify/issues
+
+Caused by:
+Execution error at org.soulspace.overarch.adapter.repository.file-model-repository/read-model-file (file_model_repository.clj:25).
+Invalid token: //
+
+Full report at:
+...
+```
+
+### 
+
+```
+Unknown error
+Please report an issue with details at https://github.com/dundalek/stratify/issues
+
+Caused by:
+Execution error (FileNotFoundException) at java.io.FileOutputStream/open0 (FileOutputStream.java:-2).
+/output.dgml (Permission denied)
+
+Full report at:
+...
+```
+
 ## pulumi
 
 

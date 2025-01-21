@@ -106,6 +106,16 @@
        nil
        (main/main* "-f" "dot" "-o" "/tmp/__NON_EXISTING_DIRECTORY_42__/output.dgml" "test/resources/graphviz/simple.dot"))
 
+      (print-category-heading "overarch")
+
+      (test-error-code
+       nil
+       (main/main* "-f" "overarch" "test/resources/overarch/invalid.edn"))
+
+      (test-error-code
+       nil
+       (main/main* "-f" "overarch" "-o" "/output.dgml" "test/resources/overarch/nodel.edn"))
+
       (print-category-heading "pulumi")
 
       (test-error-code
