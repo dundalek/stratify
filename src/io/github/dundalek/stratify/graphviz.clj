@@ -1,8 +1,8 @@
 (ns io.github.dundalek.stratify.graphviz
   (:require
    [clojure.data.xml :as xml]
-   [clojure.java.io :as io]
    [dorothy.core :as-alias dc]
+   [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.internal :as stratify]
    [io.github.dundalek.stratify.style :as style :refer [theme]]
    [loom.attr :as la]
@@ -71,10 +71,8 @@
   (let [digraph (theodora/parse (slurp input-file))
         data (graphviz->dgml {:digraph digraph
                               :flat-namespaces (boolean flat-namespaces)})]
-    (if (instance? java.io.Writer output-file)
-      (xml/indent data output-file)
-      (with-open [out (io/writer output-file)]
-        (xml/indent data out)))))
+
+    (sdgml/write-to-file output-file data)))
 
 (comment
   (def digraph (theodora/parse (slurp "test/resources/graphviz/simple.dot")))

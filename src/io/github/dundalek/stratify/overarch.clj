@@ -1,11 +1,11 @@
 (ns io.github.dundalek.stratify.overarch
   (:require
    [clojure.data.xml :as xml]
-   [clojure.java.io :as io]
-   [org.soulspace.overarch.domain.model :as model]
+   [io.github.dundalek.stratify.dgml :as sdgml]
+   [io.github.dundalek.stratify.internal :refer [property-setter-elements]]
    [org.soulspace.overarch.adapter.repository.file-model-repository :as repository]
-   [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]
-   [io.github.dundalek.stratify.internal :refer [property-setter-elements]]))
+   [org.soulspace.overarch.domain.model :as model]
+   [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]))
 
 (defn read-model [source-paths]
   (->> source-paths
@@ -86,10 +86,7 @@
 (defn extract [{:keys [source-paths output-file]}]
   (let [model (read-model source-paths)
         data (->dgml model)]
-    (if (instance? java.io.Writer output-file)
-      (xml/indent data output-file)
-      (with-open [out (io/writer output-file)]
-        (xml/indent data out)))))
+    (sdgml/write-to-file output-file data)))
 
 (comment
 

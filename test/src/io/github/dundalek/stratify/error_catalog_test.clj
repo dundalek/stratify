@@ -4,6 +4,7 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]
    [io.github.dundalek.stratify.codecharta :as codecharta]
+   [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.test-utils :as tu]
    [stratify.main :as main]))
@@ -54,7 +55,7 @@
        (main/main* "NON_EXISTING"))
 
       (test-error-code
-       ::internal/failed-to-write
+       ::sdgml/failed-to-write
        (main/main* "-o" "/output.dgml" "test/resources/sample/src"))
 
       (print-category-heading "codecharta")
@@ -103,7 +104,7 @@
        (main/main* "-f" "dot" "test/resources/graphviz/NON_EXISTING"))
 
       (test-error-code
-       nil
+       ::sdgml/failed-to-write
        (main/main* "-f" "dot" "-o" "/tmp/__NON_EXISTING_DIRECTORY_42__/output.dgml" "test/resources/graphviz/simple.dot"))
 
       (print-category-heading "overarch")
@@ -113,7 +114,7 @@
        (main/main* "-f" "overarch" "test/resources/overarch/invalid.edn"))
 
       (test-error-code
-       nil
+       ::sdgml/failed-to-write
        (main/main* "-f" "overarch" "-o" "/output.dgml" "test/resources/overarch/nodel.edn"))
 
       (print-category-heading "pulumi")
@@ -127,7 +128,7 @@
        (main/main* "-f" "pulumi" "test/resources/pulumi/empty.json"))
 
       (test-error-code
-       nil
+       ::sdgml/failed-to-write
        (main/main* "-f" "pulumi" "-o" "/output.dgml" "test/resources/pulumi/sample-export.json"))))
 
   (tu/is-same? catalog-file))

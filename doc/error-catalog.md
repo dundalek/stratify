@@ -6,7 +6,7 @@ Unknown error
 Please report an issue with details at https://github.com/dundalek/stratify/issues
 
 Caused by:
-Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:50).
+Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:51).
 Sample message
 
 Full report at:
@@ -24,7 +24,7 @@ Code:
 :io.github.dundalek.stratify.internal/no-source-namespaces
 
 Caused by:
-Execution error (ExceptionInfo) at io.github.dundalek.stratify.internal/analysis->graph (internal.clj:168).
+Execution error (ExceptionInfo) at io.github.dundalek.stratify.internal/analysis->graph (internal.clj:169).
 There are no defined namespaces in analysis.
 Did you pass correct source paths?
 
@@ -32,14 +32,14 @@ Full report at:
 ...
 ```
 
-### :io.github.dundalek.stratify.internal/failed-to-write
+### :io.github.dundalek.stratify.dgml/failed-to-write
 
 ```
 Error:
 Failed to write output file.
 
 Code:
-:io.github.dundalek.stratify.internal/failed-to-write
+:io.github.dundalek.stratify.dgml/failed-to-write
 
 Caused by:
 Execution error (FileNotFoundException) at java.io.FileOutputStream/open0 (FileOutputStream.java:-2).
@@ -191,11 +191,14 @@ Full report at:
 ...
 ```
 
-### 
+### :io.github.dundalek.stratify.dgml/failed-to-write
 
 ```
-Unknown error
-Please report an issue with details at https://github.com/dundalek/stratify/issues
+Error:
+Failed to write output file.
+
+Code:
+:io.github.dundalek.stratify.dgml/failed-to-write
 
 Caused by:
 Execution error (FileNotFoundException) at java.io.FileOutputStream/open0 (FileOutputStream.java:-2).
@@ -222,11 +225,14 @@ Full report at:
 ...
 ```
 
-### 
+### :io.github.dundalek.stratify.dgml/failed-to-write
 
 ```
-Unknown error
-Please report an issue with details at https://github.com/dundalek/stratify/issues
+Error:
+Failed to write output file.
+
+Code:
+:io.github.dundalek.stratify.dgml/failed-to-write
 
 Caused by:
 Execution error (FileNotFoundException) at java.io.FileOutputStream/open0 (FileOutputStream.java:-2).
@@ -263,11 +269,14 @@ Full report at:
 ...
 ```
 
-### 
+### :io.github.dundalek.stratify.dgml/failed-to-write
 
 ```
-Unknown error
-Please report an issue with details at https://github.com/dundalek/stratify/issues
+Error:
+Failed to write output file.
+
+Code:
+:io.github.dundalek.stratify.dgml/failed-to-write
 
 Caused by:
 Execution error (FileNotFoundException) at java.io.FileOutputStream/open0 (FileOutputStream.java:-2).

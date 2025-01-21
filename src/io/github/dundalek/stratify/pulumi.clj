@@ -1,8 +1,8 @@
 (ns io.github.dundalek.stratify.pulumi
   (:require
    [clojure.data.xml :as xml]
-   [clojure.java.io :as io]
    [clojure.string :as str]
+   [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.internal :refer [property-setter-elements]]
    [io.github.dundalek.stratify.style :as style :refer [theme]]
    [jsonista.core :as j]
@@ -131,10 +131,7 @@
 (defn extract [{:keys [input-file output-file]}]
   (let [input (j/read-value (slurp input-file) j/keyword-keys-object-mapper)
         data (->dgml input)]
-    (if (instance? java.io.Writer output-file)
-      (xml/indent data output-file)
-      (with-open [out (io/writer output-file)]
-        (xml/indent data out)))))
+    (sdgml/write-to-file output-file data)))
 
 (comment
   (extract {:input-file "test/resources/pulumi/sample-preview-creates.json"

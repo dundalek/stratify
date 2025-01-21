@@ -1,7 +1,7 @@
 (ns io.github.dundalek.stratify.polylith
   (:require
    [clojure.data.xml :as xml]
-   [clojure.java.io :as io]
+   [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.internal :as internal :refer [property-setter-elements]]
    [polylith.clj.core.workspace.interface :as workspace]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]))
@@ -111,10 +111,7 @@
 (defn extract [{:keys [source-paths output-file]}]
   (let [workspace (workspace/workspace {:ws-dir (first source-paths)})
         data (->dgml workspace)]
-    (if (instance? java.io.Writer output-file)
-      (xml/indent data output-file)
-      (with-open [out (io/writer output-file)]
-        (xml/indent data out)))))
+    (sdgml/write-to-file output-file data)))
 
 (comment
   (extract {:source-paths ["target/projects/clojure-polylith-realworld-example-app"]

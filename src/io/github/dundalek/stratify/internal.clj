@@ -2,14 +2,15 @@
   (:require
    [clj-kondo.core :as clj-kondo]
    [clojure.data.xml :as xml]
-   [clojure.java.io :as io]
    [clojure.set :as set]
    [clojure.string :as str]
    [io.github.dundalek.stratify.codecov :as codecov]
+   [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.style :as style :refer [theme]]
    [loom.attr :as la]
    [loom.graph :as lg]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml])
+
   (:import
    (java.util.regex Pattern)))
 
@@ -318,13 +319,7 @@
                                                (codecov/make-line-coverage-lookup
                                                 {:coverage-file coverage-file
                                                  :strip-prefixes source-paths}))})]
-    (try
-      (if (instance? java.io.Writer output-file)
-        (xml/indent data output-file)
-        (with-open [out (io/writer output-file)]
-          (xml/indent data out)))
-      (catch Throwable t
-        (throw (ex-info "Failed to write output file." {:code ::failed-to-write} t))))))
+    (sdgml/write-to-file output-file data)))
 
 (comment
   (extract
