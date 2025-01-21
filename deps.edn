@@ -16,6 +16,7 @@
   {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}
                 io.github.juxt/snap {:git/sha "588755d360d02d91287e6b2d3c6a9e1ccadb4af5"
                                      :exclusions [org.clojure/clojurescript cljs-node-io/cljs-node-io]}}
+   :extra-paths ["test/src"]
    :main-opts ["-m" "kaocha.runner"]}
 
   :coverage
