@@ -74,6 +74,10 @@
 
       (test-error-code
        nil
+       (main/main* "--coverage-file" "test/resources/pulumi/NON_EXISTING.json" "test/resources/coverage/src"))
+
+      (test-error-code
+       nil
        (main/main* "--coverage-file" "test/resources/pulumi/bad.json" "test/resources/coverage/src"))
 
       (test-error-code

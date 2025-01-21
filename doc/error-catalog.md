@@ -95,6 +95,20 @@ Unknown error
 Please report an issue with details at https://github.com/dundalek/stratify/issues
 
 Caused by:
+Execution error (FileNotFoundException) at java.io.FileInputStream/open0 (FileInputStream.java:-2).
+test/resources/pulumi/NON_EXISTING.json (No such file or directory)
+
+Full report at:
+...
+```
+
+### 
+
+```
+Unknown error
+Please report an issue with details at https://github.com/dundalek/stratify/issues
+
+Caused by:
 Execution error (JsonEOFException) at com.fasterxml.jackson.core.base.ParserMinimalBase/_reportInvalidEOF (ParserMinimalBase.java:585).
 Unexpected end-of-input: expected close marker for Object (start marker at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 1])
  at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 2, column: 1]
