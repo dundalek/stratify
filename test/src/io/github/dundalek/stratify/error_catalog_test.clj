@@ -59,9 +59,15 @@
 
       (print-category-heading "codecharta")
 
-      (binding [codecharta/*ccsh-bin* "NON_EXISTING"]
-        (test-error-code
-         nil
+      (test-error-code
+       ::codecharta/ccsh-not-found
+       (binding [codecharta/*ccsh-bin* "NON_EXISTING"]
+         (main/main* "-t" "codecharta" "test/resources/nested/src")))
+
+      (test-error-code
+       ::codecharta/ccsh-failed-to-run
+       ;; Non-executable
+       (binding [codecharta/*ccsh-bin* "./LICENSE"]
          (main/main* "-t" "codecharta" "test/resources/nested/src")))
 
       (print-category-heading "codecov")

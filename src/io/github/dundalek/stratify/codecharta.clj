@@ -148,7 +148,17 @@
                                  ["kondo" kondo-file]]
                                 (filter (comp fs/exists? second)))]
         (println "Merging sources:" (->> files-to-merge (map first) (str/join ", ")))
-        (apply shell *ccsh-bin* "merge" "--leaf" "-f" "-o" output-prefix (map second files-to-merge))))))
+        (try
+          (apply shell *ccsh-bin* "merge" "--leaf" "-f" "-o" output-prefix (map second files-to-merge))
+          (catch Throwable t
+            (if (and (instance? java.io.IOException t)
+                     (str/starts-with? (ex-message (ex-cause t)) "error=2,")) ; No such file or directory
+              (throw (ex-info (str "Failed to run `ccsh`.\n"
+                                   "Please make sure to have CodeCharta CLI installed.\n"
+                                   "Suggestion: `npm i -g codecharta-analysis`.")
+                              {:code ::ccsh-not-found} t))
+              (throw (ex-info "Failed to run `ccsh`."
+                              {:code ::ccsh-failed-to-run} t)))))))))
 
 (comment
   (def result (internal/run-kondo ["test/resources/nested/src"]))

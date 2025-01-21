@@ -49,15 +49,37 @@ Full report at:
 ## codecharta
 
 
-### 
+### :io.github.dundalek.stratify.codecharta/ccsh-not-found
 
 ```
-Unknown error
-Please report an issue with details at https://github.com/dundalek/stratify/issues
+Error:
+Failed to run `ccsh`.
+Please make sure to have CodeCharta CLI installed.
+Suggestion: `npm i -g codecharta-analysis`.
+
+Code:
+:io.github.dundalek.stratify.codecharta/ccsh-not-found
 
 Caused by:
 Execution error (IOException) at java.lang.ProcessImpl/forkAndExec (ProcessImpl.java:-2).
 error=2, No such file or directory
+
+Full report at:
+...
+```
+
+### :io.github.dundalek.stratify.codecharta/ccsh-failed-to-run
+
+```
+Error:
+Failed to run `ccsh`.
+
+Code:
+:io.github.dundalek.stratify.codecharta/ccsh-failed-to-run
+
+Caused by:
+Execution error (IOException) at java.lang.ProcessImpl/forkAndExec (ProcessImpl.java:-2).
+error=13, Permission denied
 
 Full report at:
 ...
