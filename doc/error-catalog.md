@@ -32,11 +32,14 @@ Full report at:
 ...
 ```
 
-### 
+### :io.github.dundalek.stratify.internal/failed-to-write
 
 ```
-Unknown error
-Please report an issue with details at https://github.com/dundalek/stratify/issues
+Error:
+Failed to write output file.
+
+Code:
+:io.github.dundalek.stratify.internal/failed-to-write
 
 Caused by:
 Execution error (FileNotFoundException) at java.io.FileOutputStream/open0 (FileOutputStream.java:-2).

@@ -318,10 +318,13 @@
                                                (codecov/make-line-coverage-lookup
                                                 {:coverage-file coverage-file
                                                  :strip-prefixes source-paths}))})]
-    (if (instance? java.io.Writer output-file)
-      (xml/indent data output-file)
-      (with-open [out (io/writer output-file)]
-        (xml/indent data out)))))
+    (try
+      (if (instance? java.io.Writer output-file)
+        (xml/indent data output-file)
+        (with-open [out (io/writer output-file)]
+          (xml/indent data out)))
+      (catch Throwable t
+        (throw (ex-info "Failed to write output file." {:code ::failed-to-write} t))))))
 
 (comment
   (extract

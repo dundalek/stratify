@@ -54,7 +54,7 @@
        (main/main* "NON_EXISTING"))
 
       (test-error-code
-       nil
+       ::internal/failed-to-write
        (main/main* "-o" "/output.dgml" "test/resources/sample/src"))
 
       (print-category-heading "codecharta")
