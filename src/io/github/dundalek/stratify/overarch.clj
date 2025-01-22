@@ -84,7 +84,10 @@
                                            (property-setter-elements  {:Background "#B9BAFB"}))))))
 
 (defn extract [{:keys [source-paths output-file]}]
-  (let [model (read-model source-paths)
+  (let [model (try
+                (read-model source-paths)
+                (catch Throwable t
+                  (throw (ex-info "Failed to load Overarch model." {:code ::invalid-input} t))))
         data (->dgml model)]
     (sdgml/write-to-file output-file data)))
 

@@ -6,7 +6,7 @@ Unknown error
 Please report an issue with details at https://github.com/dundalek/stratify/issues
 
 Caused by:
-Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:55).
+Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:56).
 Sample message
 
 Full report at:
@@ -236,11 +236,14 @@ Full report at:
 ## overarch
 
 
-### 
+### :io.github.dundalek.stratify.overarch/invalid-input
 
 ```
-Unknown error
-Please report an issue with details at https://github.com/dundalek/stratify/issues
+Error:
+Failed to load Overarch model.
+
+Code:
+:io.github.dundalek.stratify.overarch/invalid-input
 
 Caused by:
 Execution error at org.soulspace.overarch.adapter.repository.file-model-repository/read-model-file (file_model_repository.clj:25).

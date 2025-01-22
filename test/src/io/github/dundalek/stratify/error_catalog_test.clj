@@ -8,6 +8,7 @@
    [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.graphviz :as graphviz]
    [io.github.dundalek.stratify.internal :as internal]
+   [io.github.dundalek.stratify.overarch :as overarch]
    [io.github.dundalek.stratify.pulumi :as pulumi]
    [io.github.dundalek.stratify.test-utils :as tu]
    [stratify.main :as main]))
@@ -114,7 +115,7 @@
       (print-category-heading "overarch")
 
       (test-error-code
-       nil
+       ::overarch/invalid-input
        (main/main* "-f" "overarch" "test/resources/overarch/invalid.edn"))
 
       (test-error-code
