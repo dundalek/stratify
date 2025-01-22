@@ -4,6 +4,7 @@
    [clojure.string :as str]
    [clojure.test :refer [deftest is]]
    [io.github.dundalek.stratify.codecharta :as codecharta]
+   [io.github.dundalek.stratify.codecov :as codecov]
    [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.pulumi :as pulumi]
@@ -76,15 +77,15 @@
       (print-category-heading "codecov")
 
       (test-error-code
-       nil
+       ::codecov/failed-to-parse
        (main/main* "--coverage-file" "test/resources/pulumi/NON_EXISTING.json" "test/resources/coverage/src"))
 
       (test-error-code
-       nil
+       ::codecov/failed-to-parse
        (main/main* "--coverage-file" "test/resources/pulumi/bad.json" "test/resources/coverage/src"))
 
       (test-error-code
-       nil
+       ::codecov/invalid-input
        (main/main* "--coverage-file" "test/resources/pulumi/empty.json" "test/resources/coverage/src"))
 
       (test-error-code

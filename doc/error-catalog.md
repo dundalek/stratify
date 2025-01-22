@@ -6,7 +6,7 @@ Unknown error
 Please report an issue with details at https://github.com/dundalek/stratify/issues
 
 Caused by:
-Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:53).
+Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:54).
 Sample message
 
 Full report at:
@@ -91,11 +91,14 @@ Full report at:
 ## codecov
 
 
-### 
+### :io.github.dundalek.stratify.codecov/failed-to-parse
 
 ```
-Unknown error
-Please report an issue with details at https://github.com/dundalek/stratify/issues
+Error:
+Failed to parse Codecov file.
+
+Code:
+:io.github.dundalek.stratify.codecov/failed-to-parse
 
 Caused by:
 Execution error (FileNotFoundException) at java.io.FileInputStream/open0 (FileInputStream.java:-2).
@@ -105,11 +108,14 @@ Full report at:
 ...
 ```
 
-### 
+### :io.github.dundalek.stratify.codecov/failed-to-parse
 
 ```
-Unknown error
-Please report an issue with details at https://github.com/dundalek/stratify/issues
+Error:
+Failed to parse Codecov file.
+
+Code:
+:io.github.dundalek.stratify.codecov/failed-to-parse
 
 Caused by:
 Execution error (JsonEOFException) at com.fasterxml.jackson.core.base.ParserMinimalBase/_reportInvalidEOF (ParserMinimalBase.java:585).
@@ -120,10 +126,20 @@ Full report at:
 ...
 ```
 
-### 
+### :io.github.dundalek.stratify.codecov/invalid-input
 
 ```
-Invalid input: {"coverage" ["missing required key"]}
+Error:
+Failed to load Pulumi resources.
+
+{"coverage" ["missing required key"]}
+
+Code:
+:io.github.dundalek.stratify.codecov/invalid-input
+
+Caused by:
+Execution error (ExceptionInfo) at malli.core/-exception (core.cljc:157).
+:malli.core/coercion
 
 Full report at:
 ...
@@ -139,7 +155,7 @@ Code:
 :io.github.dundalek.stratify.codecov/coverage-range-out-of-bounds
 
 Caused by:
-Execution error (ExceptionInfo) at io.github.dundalek.stratify.codecov/make-line-coverage-raw-lookup$fn (codecov.clj:68).
+Execution error (ExceptionInfo) at io.github.dundalek.stratify.codecov/make-line-coverage-raw-lookup$fn (codecov.clj:80).
 Coverage line range is out of bounds. Please make sure the coverage file is up-to-date with the source code.
 
 Full report at:

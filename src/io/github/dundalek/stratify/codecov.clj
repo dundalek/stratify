@@ -4,6 +4,7 @@
    [clojure.string :as str]
    [jsonista.core :as json]
    [malli.core :as m]
+   [malli.error :as me]
    [malli.transform :as mt])
   (:import
    [java.util.regex Pattern]))
@@ -42,12 +43,23 @@
   (coverage-summary lines true))
 
 (defn load-coverage [filename]
-  (-> (json/read-value (io/file filename) json/default-object-mapper)
-      (coerce-codecov)
-      (get "coverage")
-      ;; codecov uses 1-based indexing
-      ;; remove the first padded values to make it 0-based indexed
-      (update-vals #(subvec % 1))))
+  (let [input (try
+                (json/read-value (io/file filename) json/default-object-mapper)
+                (catch Throwable t
+                  (throw (ex-info "Failed to parse Codecov file." {:code ::failed-to-parse} t))))
+        data (try
+               (coerce-codecov input)
+               (catch Throwable t
+                 (if (= (:type (ex-data t)) :malli.core/coercion)
+                   (throw (ex-info (str "Failed to load Pulumi resources.\n\n"
+                                        (-> t ex-data :data :explain me/humanize))
+                                   {:code ::invalid-input} t))
+                   (throw t))))]
+    (-> data
+        (get "coverage")
+        ;; codecov uses 1-based indexing
+        ;; remove the first padded values to make it 0-based indexed
+        (update-vals #(subvec % 1)))))
 
 (defn make-line-coverage-raw-lookup [{:keys [coverage-file strip-prefixes]}]
   (let [coverage (load-coverage coverage-file)
