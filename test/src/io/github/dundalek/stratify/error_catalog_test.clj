@@ -6,6 +6,7 @@
    [io.github.dundalek.stratify.codecharta :as codecharta]
    [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.internal :as internal]
+   [io.github.dundalek.stratify.pulumi :as pulumi]
    [io.github.dundalek.stratify.test-utils :as tu]
    [stratify.main :as main]))
 
@@ -37,13 +38,14 @@
     (println (str "## " heading))
     (println)))
 
-(defmacro test-error-code [code & body]
+(defmacro test-error-code [expected-code & body]
   `(try
      ~@body
      (is false "did not throw")
      (catch Throwable t#
-       (is (= ~code (:code (ex-data t#))))
-       (print-catalog-error ~code t#))))
+       (let [actual-code# (:code (ex-data t#))]
+         (is (= ~expected-code actual-code#))
+         (print-catalog-error (or ~expected-code actual-code#) t#)))))
 
 (deftest catalog
   (with-open [w (io/writer catalog-file)]
@@ -120,11 +122,11 @@
       (print-category-heading "pulumi")
 
       (test-error-code
-       nil
+       ::pulumi/failed-to-parse
        (main/main* "-f" "pulumi" "test/resources/pulumi/bad.json"))
 
       (test-error-code
-       nil
+       ::pulumi/invalid-input
        (main/main* "-f" "pulumi" "test/resources/pulumi/empty.json"))
 
       (test-error-code

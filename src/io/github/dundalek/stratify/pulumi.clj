@@ -1,6 +1,7 @@
 (ns io.github.dundalek.stratify.pulumi
   (:require
    [clojure.data.xml :as xml]
+   [clojure.java.io :as io]
    [clojure.string :as str]
    [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.internal :refer [property-setter-elements]]
@@ -9,6 +10,7 @@
    [loom.attr :as la]
    [loom.graph :as lg]
    [malli.core :as m]
+   [malli.error :as me]
    [malli.transform :as mt]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]))
 
@@ -60,6 +62,21 @@
       :checkpoint (-> value :checkpoint :latest :resources)
       :steps (->> value :steps (keep :newState)))))
 
+(defn- parse-resources-file [input-file]
+  (let [input (try
+                (j/read-value (io/file input-file) j/keyword-keys-object-mapper)
+                (catch Throwable t
+                  (throw (ex-info "Failed to parse Pulumi file." {:code ::failed-to-parse} t))))
+        resources (try
+                    (parse-resources input)
+                    (catch Throwable t
+                      (if (= (:type (ex-data t)) :malli.core/coercion)
+                        (throw (ex-info (str "Failed to load Pulumi resources.\n\n"
+                                             (-> t ex-data :data :explain me/humanize))
+                                        {:code ::invalid-input} t))
+                        (throw t))))]
+    resources))
+
 (def ^:private styles
   [(xml/element ::dgml/Style
                 {:TargetType "Node" :GroupLabel "Custom" :ValueLabel "False"}
@@ -84,9 +101,8 @@
 (defn- urn->resource-name [s]
   (last (str/split s #"::")))
 
-(defn- ->dgml [input]
-  (let [resources (parse-resources input)
-        node-with-children? (->> resources (keep :parent) set)
+(defn- ->dgml [resources]
+  (let [node-with-children? (->> resources (keep :parent) set)
         node-attrs (->> resources
                         (map (fn [resource]
                                (let [{:keys [urn custom]} resource
@@ -129,8 +145,8 @@
                  (xml/element ::dgml/Styles {} styles))))
 
 (defn extract [{:keys [input-file output-file]}]
-  (let [input (j/read-value (slurp input-file) j/keyword-keys-object-mapper)
-        data (->dgml input)]
+  (let [resources (parse-resources-file input-file)
+        data (->dgml resources)]
     (sdgml/write-to-file output-file data)))
 
 (comment

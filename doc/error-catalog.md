@@ -6,7 +6,7 @@ Unknown error
 Please report an issue with details at https://github.com/dundalek/stratify/issues
 
 Caused by:
-Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:51).
+Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:53).
 Sample message
 
 Full report at:
@@ -245,11 +245,14 @@ Full report at:
 ## pulumi
 
 
-### 
+### :io.github.dundalek.stratify.pulumi/failed-to-parse
 
 ```
-Unknown error
-Please report an issue with details at https://github.com/dundalek/stratify/issues
+Error:
+Failed to parse Pulumi file.
+
+Code:
+:io.github.dundalek.stratify.pulumi/failed-to-parse
 
 Caused by:
 Execution error (JsonEOFException) at com.fasterxml.jackson.core.base.ParserMinimalBase/_reportInvalidEOF (ParserMinimalBase.java:585).
@@ -260,10 +263,20 @@ Full report at:
 ...
 ```
 
-### 
+### :io.github.dundalek.stratify.pulumi/invalid-input
 
 ```
-Invalid input: {:steps ["missing required key"], :deployment ["missing required key" "missing required key"]}
+Error:
+Failed to load Pulumi resources.
+
+{:steps ["missing required key"], :deployment ["missing required key" "missing required key"]}
+
+Code:
+:io.github.dundalek.stratify.pulumi/invalid-input
+
+Caused by:
+Execution error (ExceptionInfo) at malli.core/-exception (core.cljc:157).
+:malli.core/coercion
 
 Full report at:
 ...
