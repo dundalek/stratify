@@ -6,6 +6,7 @@
    [io.github.dundalek.stratify.codecharta :as codecharta]
    [io.github.dundalek.stratify.codecov :as codecov]
    [io.github.dundalek.stratify.dgml :as sdgml]
+   [io.github.dundalek.stratify.graphviz :as graphviz]
    [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.pulumi :as pulumi]
    [io.github.dundalek.stratify.test-utils :as tu]
@@ -95,16 +96,16 @@
       (print-category-heading "graphviz")
 
       (test-error-code
-       nil
+       ::graphviz/failed-to-parse
        (main/main* "-f" "dot" "test/resources/graphviz/bad.dot"))
 
       (test-error-code
-       nil
-       (main/main* "-f" "dot" "test/resources/graphviz/empty.dot"))
+       ::graphviz/failed-to-parse
+       (main/main* "-f" "dot" "test/resources/graphviz/NON_EXISTING"))
 
       (test-error-code
-       nil
-       (main/main* "-f" "dot" "test/resources/graphviz/NON_EXISTING"))
+       ::graphviz/empty-graph
+       (main/main* "-f" "dot" "test/resources/graphviz/empty.dot"))
 
       (test-error-code
        ::sdgml/failed-to-write

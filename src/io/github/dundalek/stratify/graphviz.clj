@@ -28,6 +28,8 @@
                  (reduce (fn [m [from to]]
                            (update m from (fnil conj #{}) to))
                          adj))
+        _ (when (empty? adj)
+            (throw (ex-info "Input graph has no nodes or edges." {:code ::empty-graph})))
         g (cond-> (lg/digraph adj)
             (not flat-namespaces) (stratify/add-clustered-namespace-hierarchy "/"))
         g (reduce (fn [g {:keys [id attrs]}]
@@ -68,7 +70,10 @@
                                                                                 :Foreground (::style/node-text-color theme)}))))))
 
 (defn extract [{:keys [input-file output-file flat-namespaces]}]
-  (let [digraph (theodora/parse (slurp input-file))
+  (let [digraph (try
+                  (theodora/parse (slurp input-file))
+                  (catch Throwable t
+                    (throw (ex-info "Failed to parse Graphviz file." {:code ::failed-to-parse} t))))
         data (graphviz->dgml {:digraph digraph
                               :flat-namespaces (boolean flat-namespaces)})]
 

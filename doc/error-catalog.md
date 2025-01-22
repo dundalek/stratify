@@ -6,7 +6,7 @@ Unknown error
 Please report an issue with details at https://github.com/dundalek/stratify/issues
 
 Caused by:
-Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:54).
+Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:55).
 Sample message
 
 Full report at:
@@ -165,11 +165,14 @@ Full report at:
 ## graphviz
 
 
-### 
+### :io.github.dundalek.stratify.graphviz/failed-to-parse
 
 ```
-Unknown error
-Please report an issue with details at https://github.com/dundalek/stratify/issues
+Error:
+Failed to parse Graphviz file.
+
+Code:
+:io.github.dundalek.stratify.graphviz/failed-to-parse
 
 Caused by:
 Execution error (ParseError) at clj-antlr.common/parse-error (common.clj:188).
@@ -179,29 +182,35 @@ Full report at:
 ...
 ```
 
-### 
+### :io.github.dundalek.stratify.graphviz/failed-to-parse
 
 ```
-Unknown error
-Please report an issue with details at https://github.com/dundalek/stratify/issues
+Error:
+Failed to parse Graphviz file.
+
+Code:
+:io.github.dundalek.stratify.graphviz/failed-to-parse
 
 Caused by:
-Execution error (NullPointerException) at loom.graph/build-graph$build (graph.cljc:499).
-Cannot invoke "java.util.Map$Entry.getValue()" because "e" is null
+Execution error (FileNotFoundException) at java.io.FileInputStream/open0 (FileInputStream.java:-2).
+test/resources/graphviz/NON_EXISTING (No such file or directory)
 
 Full report at:
 ...
 ```
 
-### 
+### :io.github.dundalek.stratify.graphviz/empty-graph
 
 ```
-Unknown error
-Please report an issue with details at https://github.com/dundalek/stratify/issues
+Error:
+Input graph has no nodes or edges.
+
+Code:
+:io.github.dundalek.stratify.graphviz/empty-graph
 
 Caused by:
-Execution error (FileNotFoundException) at java.io.FileInputStream/open0 (FileInputStream.java:-2).
-test/resources/graphviz/NON_EXISTING (No such file or directory)
+Execution error (ExceptionInfo) at io.github.dundalek.stratify.graphviz/graphviz->dgml (graphviz.clj:32).
+Input graph has no nodes or edges.
 
 Full report at:
 ...
