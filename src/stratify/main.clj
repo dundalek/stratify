@@ -130,30 +130,8 @@
 (defn clj-main-report-error [t]
   (clj-main/report-error t :target (System/getProperty "clojure.main.report" "file")))
 
-(defn- print-full-error-report [e]
-  ;; Reusing the full report file generation, but stripping other error messages so we can print more human-friendly ones.
-  (let [message (with-out-str
-                  (binding [*err* *out*]
-                    (clj-main-report-error e)))
-        stripped-message (->> (str/split message #"\n")
-                              (take-last 2)
-                              (str/join "\n"))]
-    (if (str/starts-with? stripped-message "Full report at:")
-      (println stripped-message)
-      (println message))))
-
-(defn- handle-validation-error [e]
-  (binding [*out* *err*]
-    (print "Invalid input: ")
-    (prn (-> e ex-data :data :explain me/humanize))
-    (println)
-    (print-full-error-report e)))
-
 (defn report-error [t]
   (cond
-    (= (:type (ex-data t)) :malli.core/coercion)
-    (handle-validation-error t)
-
     (keyword? (:code (ex-data t)))
     (do
       (binding [*out* *err*]
