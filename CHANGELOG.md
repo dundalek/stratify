@@ -2,16 +2,17 @@
 
 ## [master](https://github.com/dundalek/stratify/compare/v0.3.0...master) (unreleased)
 
-## [0.3.0](https://github.com/dundalek/stratify/compare/v0.2.0...v0.3.0) (2025-01-XX)
+## [0.3.0](https://github.com/dundalek/stratify/compare/v0.2.0...v0.3.0) (2025-01-30)
 
 Main features:
-- Add support for 3D Code City visualization using CodeCharta
+- Added support for 3D Code City visualization using CodeCharta
 - Generate infrastructure maps from Infrastructure as Code specs (Pulumi)
 - Show nodes in dependency graph colored based on code coverage score
 
 Smaller improvements:
-- Add `--insert-namespace-node` option
+- Added `--insert-namespace-node` option to group vars mixed among namespaces under a node
 - Use node labels for Graphviz conversion
+- Improved error messages
 
 ## [0.2.0](https://github.com/dundalek/stratify/compare/v0.1.0...v0.2.0) (2024-09-16)
 
