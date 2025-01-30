@@ -77,7 +77,7 @@ clojure -Sdeps '{:deps{io.github.dundalek/stratify{:git/tag"v0.2.0":git/sha"85fc
 ```clojure
 {:aliases
  {:stratify
-  {:extra-deps {io.github.dundalek/stratify {:git/tag "v0.2.0" :git/sha "85fcdee"}}
+  {:extra-deps {io.github.dundalek/stratify {:git/tag "v0.3.0" :git/sha "e367536"}}
    :main-opts ["-m" "stratify.main"]
 ```
 
