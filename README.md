@@ -66,7 +66,7 @@ First extract DGML graph from source code.
 #### Use without installing
 
 ```
-clojure -Sdeps '{:deps{io.github.dundalek/stratify{:git/tag"v0.2.0":git/sha"85fcdee"}}}' \
+clojure -Sdeps '{:deps{io.github.dundalek/stratify{:git/tag"v0.3.0":git/sha"e367536"}}}' \
         -M -m stratify.main
 ```
 
@@ -108,7 +108,7 @@ Could not locate clojure/repl/deps__init.class, clojure/repl/deps.clj or clojure
 ```clojure
 {:aliases
  {:stratify
-  {:extra-deps {io.github.dundalek/stratify {:git/tag "v0.2.0" :git/sha "85fcdee"}
+  {:extra-deps {io.github.dundalek/stratify {:git/tag "v0.3.0" :git/sha "e367536"}
                 org.clojure/clojure {:mvn/version "1.12.0"}}
    :main-opts ["-m" "stratify.main"]
 ```
