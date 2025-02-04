@@ -3,6 +3,7 @@
    [clojure.test :refer [deftest is testing]]
    [io.github.dundalek.stratify.codecov :as codecov]
    [io.github.dundalek.stratify.internal :as internal]
+   [io.github.dundalek.stratify.kondo :as kondo]
    [io.github.dundalek.stratify.test-utils :as tu]))
 
 ;; Re-generate by running `cd test/resources/coverage; clojure -M:coverage`.
@@ -41,7 +42,7 @@
           "example.uncovered/uncovered" 50.0}
 
          (-> (:g (internal/analysis->graph
-                  {:analysis (:analysis (internal/run-kondo ["test/resources/coverage/src"]))
+                  {:analysis (:analysis (kondo/run-kondo ["test/resources/coverage/src"]))
                    :line-coverage sample-line-coverage-lookup}))
              :attrs
              (update-vals #(some-> % :line-coverage (* 100.0) (Math/round) (/ 100.0))))))

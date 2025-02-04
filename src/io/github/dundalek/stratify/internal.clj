@@ -1,23 +1,17 @@
 (ns io.github.dundalek.stratify.internal
   (:require
-   [clj-kondo.core :as clj-kondo]
    [clojure.data.xml :as xml]
    [clojure.set :as set]
    [clojure.string :as str]
    [io.github.dundalek.stratify.codecov :as codecov]
    [io.github.dundalek.stratify.dgml :as sdgml]
+   [io.github.dundalek.stratify.kondo :as kondo]
    [io.github.dundalek.stratify.style :as style :refer [theme]]
    [loom.attr :as la]
    [loom.graph :as lg]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml])
-
   (:import
    (java.util.regex Pattern)))
-
-(defn run-kondo [paths]
-  (clj-kondo/run!
-   {:lint paths
-    :config {:output {:analysis {:keywords true}}}}))
 
 (defn color-add-alpha [color alpha]
   (assert (and (string? color)
@@ -310,7 +304,7 @@
                                                  styles)))))
 
 (defn extract [{:keys [source-paths output-file flat-namespaces include-dependencies insert-namespace-node coverage-file]}]
-  (let [{:keys [analysis]} (run-kondo source-paths)
+  (let [{:keys [analysis]} (kondo/run-kondo source-paths)
         data (analysis->dgml {:analysis analysis
                               :flat-namespaces (boolean flat-namespaces)
                               :include-dependencies (boolean include-dependencies)
@@ -331,8 +325,8 @@
     :output-file "../../shared/coverage.dgml"
     :coverage-file "target/coverage/codecov.json"})
 
-  (def result (run-kondo ["test/resources/nested/src"]))
-  (def result (run-kondo ["src"]))
+  (def result (kondo/run-kondo ["test/resources/nested/src"]))
+  (def result (kondo/run-kondo ["src"]))
 
   (->> result
        :analysis

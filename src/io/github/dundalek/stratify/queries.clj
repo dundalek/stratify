@@ -1,7 +1,7 @@
 (ns io.github.dundalek.stratify.queries
   (:require
    [datascript.core :as d]
-   [io.github.dundalek.stratify.internal :as internal]))
+   [io.github.dundalek.stratify.kondo :as kondo]))
 
 (defn namespace-matcher [pattern]
   (let [re (re-pattern pattern)]
@@ -48,7 +48,7 @@
       (transact-analysis! analysis))))
 
 (defn load-sources [source-paths]
-  (let [result (internal/run-kondo source-paths)]
+  (let [result (kondo/run-kondo source-paths)]
     (analysis->conn (:analysis result))))
 
 (comment

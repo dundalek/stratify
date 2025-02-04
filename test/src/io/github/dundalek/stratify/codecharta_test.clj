@@ -3,7 +3,7 @@
    [clojure.test :refer [deftest is]]
    [clojure.walk :as walk]
    [io.github.dundalek.stratify.codecharta :as cc]
-   [io.github.dundalek.stratify.internal :as internal]
+   [io.github.dundalek.stratify.kondo :as kondo]
    [io.github.dundalek.stratify.test-utils :refer [is-same?]]
    [snap.core :as snap]))
 
@@ -40,7 +40,7 @@
 (deftest codecharta
   (is (snap/match-snapshot
        ::codecharta
-       (cc/->codecharta {:analysis (:analysis (internal/run-kondo ["test/resources/nested/src"]))}))))
+       (cc/->codecharta {:analysis (:analysis (kondo/run-kondo ["test/resources/nested/src"]))}))))
 
 (deftest with-coverage
   (let [output-file "test/resources/coverage/coverage.cc.json"]

@@ -3,6 +3,7 @@
    [clojure.data.xml :as xml]
    [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.internal :as internal :refer [property-setter-elements]]
+   [io.github.dundalek.stratify.kondo :as kondo]
    [polylith.clj.core.workspace.interface :as workspace]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]))
 
@@ -32,7 +33,7 @@
                                        (let [prefix (str ws-dir "/components/" name "/")
                                              source-paths (->> (pick-flaged flags paths)
                                                                (map #(str prefix %)))]
-                                         [name (:analysis (internal/run-kondo source-paths))])))
+                                         [name (:analysis (kondo/run-kondo source-paths))])))
                                 (into {}))
         {:keys [nodes links]} (internal/analysis->nodes-links {:analysis (apply merge-with concat (vals component-analyses))})]
     (xml/element ::dgml/DirectedGraph
@@ -123,13 +124,13 @@
   (let [component-analyses (->> w
                                 :components
                                 (map (fn [{:keys [name paths]}]
-                                       [name (:analysis (internal/run-kondo (pick-flaged flags paths)))]))
+                                       [name (:analysis (kondo/run-kondo (pick-flaged flags paths)))]))
                                 (into {}))]
     (tap> (apply merge-with concat (vals component-analyses))))
 
   (def p (-> w :projects first))
 
-  (def result (internal/run-kondo (-> w :components first :paths :src)))
+  (def result (kondo/run-kondo (-> w :components first :paths :src)))
   (-> result :analysis keys)
 
   (pick-flaged

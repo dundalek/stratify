@@ -6,6 +6,7 @@
    [clojure.string :as str]
    [io.github.dundalek.stratify.codecov :as codecov]
    [io.github.dundalek.stratify.internal :as internal]
+   [io.github.dundalek.stratify.kondo :as kondo]
    [io.github.dundalek.stratify.metrics :as metrics]
    [jsonista.core :as j]
    [loom.graph :as lg]))
@@ -107,7 +108,7 @@
                                                             :strip-prefixes source-paths}))]
 
     (j/write-value (io/file output-file)
-                   (->codecharta {:analysis (:analysis (internal/run-kondo repo-source-paths))
+                   (->codecharta {:analysis (:analysis (kondo/run-kondo repo-source-paths))
                                   :transform-filename #(str/replace-first % repo-prefix "")
                                   :line-coverage line-coverage}))))
 
@@ -161,8 +162,8 @@
                               {:code ::ccsh-failed-to-run} t)))))))))
 
 (comment
-  (def result (internal/run-kondo ["test/resources/nested/src"]))
-  (def result (internal/run-kondo ["src"]))
+  (def result (kondo/run-kondo ["test/resources/nested/src"]))
+  (def result (kondo/run-kondo ["src"]))
 
   (j/write-value (io/file "metrics.cc.json")
                  (->codecharta {:analysis (:analysis result)}))
