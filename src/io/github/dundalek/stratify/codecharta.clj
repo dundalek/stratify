@@ -5,7 +5,6 @@
    [clojure.java.io :as io]
    [clojure.string :as str]
    [io.github.dundalek.stratify.codecov :as codecov]
-   [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.kondo :as kondo]
    [io.github.dundalek.stratify.metrics :as metrics]
    [jsonista.core :as j]
@@ -75,7 +74,7 @@
 
 (defn- calculate-metrics [{:keys [analysis transform-filename line-coverage]
                            :or {transform-filename identity}}]
-  (let [g (lg/digraph (internal/->graph analysis))
+  (let [g (lg/digraph (kondo/->graph analysis))
         metrics (metrics/metrics g {:metrics (keys metrics-attributes)})
         ns->file (->> analysis
                       :namespace-definitions

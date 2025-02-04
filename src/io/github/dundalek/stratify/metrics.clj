@@ -1,6 +1,5 @@
 (ns io.github.dundalek.stratify.metrics
   (:require
-   [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.kondo :as kondo]
    [io.github.dundalek.stratify.metrics-lakos :as lakos]
    [loom.alg :as alg]
@@ -97,7 +96,7 @@
   (def result (kondo/run-kondo ["target/projects/asami/src"]))
   (def result (kondo/run-kondo ["target/projects/HumbleUI/src"]))
 
-  (def g (lg/digraph (internal/->graph (:analysis result))))
+  (def g (lg/digraph (kondo/->graph (:analysis result))))
 
   (metrics g)
 

@@ -53,24 +53,6 @@
                  from-var (str "/" from-var))
                (str (ns->str to) "/" name)]))))
 
-(defn ->graph [analysis]
-  (let [{:keys [namespace-usages namespace-definitions]} analysis
-        own-namespace? (->> namespace-definitions
-                            (map :name)
-                            (into #{}))
-        ;; Have an empty set for each defined namespace as a base,
-        ;; so that unconnected namespaces are also included.
-        adj (->> namespace-definitions
-                 (reduce (fn [m {:keys [name]}]
-                           (assoc m (str name) #{}))
-                         {}))
-        adj (->> namespace-usages
-                 (filter (comp own-namespace? :to))
-                 (reduce (fn [m {:keys [from to]}]
-                           (update m (str from) (fnil conj #{}) (str to)))
-                         adj))]
-    adj))
-
 (defn- var->category [{:keys [defined-by->lint-as]}]
   (case (some-> defined-by->lint-as name)
     ("defn" "defn-" "defmulti") "Function"
@@ -105,9 +87,9 @@
                           (analysis->own-var-usages analysis))
                         ;; print warning when unknown namespace?
                         (remove #(= (:to %) :clj-kondo/unknown-namespace)))
-        g (lg/digraph (->graph (update analysis :namespace-definitions
-                                       concat (when include-dependencies
-                                                (->> var-usages (map (fn [{:keys [to]}] {:name to})))))))
+        g (lg/digraph (kondo/->graph (update analysis :namespace-definitions
+                                             concat (when include-dependencies
+                                                      (->> var-usages (map (fn [{:keys [to]}] {:name to})))))))
         g (cond-> g
             (not flat-namespaces) (add-clustered-namespace-hierarchy "."))
         g (if-not line-coverage
@@ -274,7 +256,7 @@
        :var-definitions
        first)
 
-  (-> (->graph (:analysis result))
+  (-> (kondo/->graph (:analysis result))
       lg/digraph
       (add-clustered-namespace-hierarchy "."))
 

@@ -2,7 +2,6 @@
 (ns io.github.dundalek.stratify.notebook
   (:require
    [fastmath.stats :as stats]
-   [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.kondo :as kondo]
    [io.github.dundalek.stratify.metrics :as metrics]
    [io.github.dundalek.stratify.report :as report]
@@ -25,7 +24,7 @@
 ;; ## Metrics
 
 (def result (kondo/run-kondo @report/*source-paths))
-(def g (lg/digraph (internal/->graph (:analysis result))))
+(def g (lg/digraph (kondo/->graph (:analysis result))))
 
 (def selected-metrics
   [:out-degree
