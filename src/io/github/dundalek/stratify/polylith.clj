@@ -2,8 +2,9 @@
   (:require
    [clojure.data.xml :as xml]
    [io.github.dundalek.stratify.dgml :as sdgml]
-   [io.github.dundalek.stratify.internal :as internal :refer [property-setter-elements]]
+   [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.kondo :as kondo]
+   [io.github.dundalek.stratify.style :as style :refer [property-setter-elements]]
    [polylith.clj.core.workspace.interface :as workspace]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]))
 
@@ -107,7 +108,7 @@
                                            {:TargetType "Node" :GroupLabel "Component"}
                                            (xml/element ::dgml/Condition {:Expression "HasCategory('Component')"})
                                            (property-setter-elements {:Background "#8EB8EC"}))
-                              internal/styles))))
+                              style/styles))))
 
 (defn extract [{:keys [source-paths output-file]}]
   (let [workspace (workspace/workspace {:ws-dir (first source-paths)})

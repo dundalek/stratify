@@ -6,20 +6,12 @@
    [io.github.dundalek.stratify.codecov :as codecov]
    [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.kondo :as kondo]
-   [io.github.dundalek.stratify.style :as style :refer [theme]]
+   [io.github.dundalek.stratify.style :as style]
    [loom.attr :as la]
    [loom.graph :as lg]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml])
   (:import
    (java.util.regex Pattern)))
-
-(defn color-add-alpha [color alpha]
-  (assert (and (string? color)
-               (= (first color) \#)
-               (= (count color) 7)))
-  (assert (and (string? alpha)
-               (= (count alpha) 2)))
-  (str "#" alpha (subs color 1)))
 
 (defn- add-clustered-namespace-node [{:keys [split join]} g node-id]
   (loop [g g
@@ -44,10 +36,6 @@
     (reduce (partial add-clustered-namespace-node opts)
             g
             (lg/nodes g))))
-
-(defn property-setter-elements [properties]
-  (for [[k v] properties]
-    (xml/element ::dgml/Setter {:Property (name k) :Value v})))
 
 (defn- analysis->own-var-usages [analysis]
   (let [{:keys [namespace-definitions var-usages]} analysis
@@ -90,57 +78,6 @@
     ;; All others in the same category for now: def, defonce, defprotocol, defrecord, deftype, deftest
     "Var"))
 
-(def styles
-  [(xml/element ::dgml/Style
-                {:TargetType "Node" :GroupLabel "Namespace" :ValueLabel "True"}
-                (xml/element ::dgml/Condition {:Expression "HasCategory('Namespace')"})
-                (property-setter-elements  {:Background (::style/namespace-color theme)
-                                            :Stroke (::style/namespace-stroke-color theme)
-                                            :Foreground (::style/node-text-color theme)}))
-   (xml/element ::dgml/Style
-                {:TargetType "Node" :GroupLabel "Function" :ValueLabel "Public"}
-                (xml/element ::dgml/Condition {:Expression "HasCategory('Function') and Access = 'Public'"})
-                (property-setter-elements {:Background (::style/function-color theme)
-                                           :Stroke (::style/function-stroke-color theme)
-                                           :Foreground (::style/node-text-color theme)}))
-   (xml/element ::dgml/Style
-                {:TargetType "Node" :GroupLabel "Function" :ValueLabel "Private"}
-                (xml/element ::dgml/Condition {:Expression "HasCategory('Function') and  Access = 'Private'"})
-                (property-setter-elements {:Background (color-add-alpha (::style/function-color theme) "66")
-                                           :Stroke (::style/function-stroke-color theme)
-                                           :StrokeDashArray "3,6"
-                                           :Foreground (::style/node-text-color theme)}))
-   (xml/element ::dgml/Style
-                {:TargetType "Node" :GroupLabel "Macro" :ValueLabel "Public"}
-                (xml/element ::dgml/Condition {:Expression "HasCategory('Macro') and Access = 'Public'"})
-                (property-setter-elements {:Background (::style/macro-color theme)
-                                           :Stroke (::style/macro-stroke-color theme)
-                                           :Foreground (::style/node-text-color theme)}))
-   (xml/element ::dgml/Style
-                {:TargetType "Node" :GroupLabel "Macro" :ValueLabel "Private"}
-                (xml/element ::dgml/Condition {:Expression "HasCategory('Macro') and Access = 'Private'"})
-                (property-setter-elements {:Background (color-add-alpha (::style/macro-color theme) "66")
-                                           :Stroke (::style/macro-stroke-color theme)
-                                           :StrokeDashArray "3,6"
-                                           :Foreground (::style/node-text-color theme)}))
-   (xml/element ::dgml/Style
-                {:TargetType "Node" :GroupLabel "Var" :ValueLabel "Public"}
-                (xml/element ::dgml/Condition {:Expression "HasCategory('Var') and Access = 'Public'"})
-                (property-setter-elements {:Background (::style/var-color theme)
-                                           :Stroke (::style/var-stroke-color theme)
-                                           :Foreground (::style/node-text-color theme)}))
-   (xml/element ::dgml/Style
-                {:TargetType "Node" :GroupLabel "Var" :ValueLabel "Private"}
-                (xml/element ::dgml/Condition {:Expression "HasCategory('Var') and Access = 'Private'"})
-                (property-setter-elements {:Background (color-add-alpha (::style/var-color theme) "66")
-                                           :Stroke (::style/var-stroke-color theme)
-                                           :StrokeDashArray "3,6"
-                                           :Foreground (::style/node-text-color theme)}))
-   (xml/element ::dgml/Style
-                {:TargetType "Link" :GroupLabel "Link" :ValueLabel "Private Reference"}
-                (xml/element ::dgml/Condition {:Expression "Target.Access = 'Private'"})
-                (property-setter-elements {:StrokeDashArray "4,2"}))])
-
 (def coverage-styles
   [(xml/element ::dgml/Style {:TargetType "Node" :GroupLabel "Coverage" :ValueLabel "Good"}
                 (xml/element ::dgml/Condition {:Expression "HasValue('Coverage') and Coverage > 80"})
@@ -155,8 +92,8 @@
                 (xml/element ::dgml/Setter {:Property "Background"
                                             :Expression "Color.FromRgb(180, 180 * Coverage / 50, 0)"}))
    (xml/element ::dgml/Style {:TargetType "Node" :GroupLabel "Coverage" :ValueLabel "Unknown"}
-                (property-setter-elements  {:Background "#686868"
-                                            :Foreground "#FFFFFF"}))])
+                (style/property-setter-elements  {:Background "#686868"
+                                                  :Foreground "#FFFFFF"}))])
 
 (defn analysis->graph [{:keys [analysis flat-namespaces include-dependencies insert-namespace-node line-coverage]}]
   (when (empty? (:namespace-definitions analysis))
@@ -301,7 +238,7 @@
                  (xml/element ::dgml/Links {} links)
                  (xml/element ::dgml/Styles {} (if line-coverage
                                                  coverage-styles
-                                                 styles)))))
+                                                 style/styles)))))
 
 (defn extract [{:keys [source-paths output-file flat-namespaces include-dependencies insert-namespace-node coverage-file]}]
   (let [{:keys [analysis]} (kondo/run-kondo source-paths)

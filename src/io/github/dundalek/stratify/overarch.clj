@@ -2,7 +2,7 @@
   (:require
    [clojure.data.xml :as xml]
    [io.github.dundalek.stratify.dgml :as sdgml]
-   [io.github.dundalek.stratify.internal :refer [property-setter-elements]]
+   [io.github.dundalek.stratify.style :refer [property-setter-elements]]
    [org.soulspace.overarch.adapter.repository.file-model-repository :as repository]
    [org.soulspace.overarch.domain.model :as model]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]))

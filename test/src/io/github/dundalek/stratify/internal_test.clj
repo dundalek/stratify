@@ -1,6 +1,6 @@
 (ns io.github.dundalek.stratify.internal-test
   (:require
-   [clojure.test :refer [deftest is testing]]
+   [clojure.test :refer [deftest is]]
    [io.github.dundalek.stratify.internal :as stratify]
    [io.github.dundalek.stratify.test-utils :as tu :refer [is-same?]]
    [stratify.main :as main]))
@@ -58,6 +58,3 @@
                        :output-file output-file
                        :coverage-file "test/resources/coverage/target/coverage/codecov.json"})
     (is-same? output-file)))
-
-(deftest color-add-alpha
-  (is (= "#EF123456" (stratify/color-add-alpha "#123456" "EF"))))

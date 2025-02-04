@@ -65,9 +65,9 @@
                  (xml/element ::dgml/Styles {}
                               (xml/element ::dgml/Style
                                            {:TargetType "Node"}
-                                           (stratify/property-setter-elements  {:Background (::style/namespace-color theme)
-                                                                                :Stroke (::style/namespace-stroke-color theme)
-                                                                                :Foreground (::style/node-text-color theme)}))))))
+                                           (style/property-setter-elements  {:Background (::style/namespace-color theme)
+                                                                             :Stroke (::style/namespace-stroke-color theme)
+                                                                             :Foreground (::style/node-text-color theme)}))))))
 
 (defn extract [{:keys [input-file output-file flat-namespaces]}]
   (let [digraph (try
