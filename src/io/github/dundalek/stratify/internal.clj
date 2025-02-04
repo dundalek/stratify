@@ -55,7 +55,7 @@
   (for [[k v] properties]
     (xml/element ::dgml/Setter {:Property (name k) :Value v})))
 
-(defn analysis->own-var-usages [analysis]
+(defn- analysis->own-var-usages [analysis]
   (let [{:keys [namespace-definitions var-usages]} analysis
         own-namespace? (->> namespace-definitions
                             (map :name)
@@ -64,7 +64,7 @@
          (remove (fn [{:keys [to]}]
                    (not (own-namespace? to)))))))
 
-(defn var-edges [var-usages ns->str]
+(defn- var-edges [var-usages ns->str]
   (->> var-usages
        (map (fn [{:keys [from to name from-var]}]
               [(cond-> (ns->str from)
@@ -89,7 +89,7 @@
                          adj))]
     adj))
 
-(defn var->category [{:keys [defined-by->lint-as]}]
+(defn- var->category [{:keys [defined-by->lint-as]}]
   (case (some-> defined-by->lint-as name)
     ("defn" "defn-" "defmulti") "Function"
     "defmacro" "Macro"
