@@ -17,7 +17,10 @@
                      :browse true}))))
 
 (comment
+  (reset! *source-paths ["src"])
+
   (clerk/serve! {:browse true
                  :port 7788
                  :index "resources/io/github/dundalek/stratify/notebook.clj"
                  :watch-paths ["src" "resources"]}))
+

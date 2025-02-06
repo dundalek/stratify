@@ -47,7 +47,15 @@
               (assoc (stats/stats-map (map metric-kw metrics))
                      :id metric-kw)))))
 
+(def system-metrics
+  (metrics/system-metrics g))
+
 {::clerk/visibility {:code :hide :result :show}}
+
+;; System metrics
+
+(clerk/table
+ (seq system-metrics))
 
 ;; Namespace metrics
 

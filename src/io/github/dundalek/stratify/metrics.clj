@@ -55,9 +55,18 @@
    ;; coreness works only on undirected graphs
    ; :coreness #(new Coreness %)
 
+(def lakos-metrics
+  {:cumulative-component-dependency lakos/cumulative-component-dependency
+   :average-component-dependency lakos/average-component-dependency
+   :relative-average-component-dependency lakos/relative-average-component-dependency
+   :normalized-cumulative-component-dependency lakos/normalized-cumulative-component-dependency})
+
 (def all-metrics
   (concat (keys graph-metrics)
           (keys score-metrics)))
+
+(def all-system-metrics
+  (keys lakos-metrics))
 
 (defn wrap-score-metric [f jg]
   (let [scores (.getScores (f jg))]
@@ -91,6 +100,18 @@
                   {:id node}
                   calculate)))))))
 
+(defn system-metrics
+  ([g] (system-metrics g {:metrics all-system-metrics}))
+  ([g {:keys [metrics]}]
+   (reduce
+    (fn [m metric-kw]
+      (if (contains? lakos-metrics metric-kw)
+        (assoc m metric-kw ((get lakos-metrics metric-kw) g))
+        (do (println "Warning: Unknown metric" metric-kw)
+            m)))
+    {}
+    metrics)))
+
 (comment
   (def result (kondo/run-kondo ["src"]))
   (def result (kondo/run-kondo ["target/projects/asami/src"]))
@@ -103,4 +124,6 @@
   (->> (metrics g)
        ; (sort-by :in-degree)
        (sort-by :out-degree)
-       (reverse)))
+       (reverse))
+
+  (system-metrics g))
