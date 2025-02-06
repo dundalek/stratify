@@ -4,6 +4,7 @@
    [fastmath.stats :as stats]
    [io.github.dundalek.stratify.kondo :as kondo]
    [io.github.dundalek.stratify.metrics :as metrics]
+   [io.github.dundalek.stratify.metrics-dowalil :as metrics-dowalil]
    [io.github.dundalek.stratify.report :as report]
    [loom.graph :as lg]
    [nextjournal.clerk :as clerk]))
@@ -50,6 +51,9 @@
 (def system-metrics
   (metrics/system-metrics g))
 
+(def visibilities
+  (metrics-dowalil/relative-visibilities (:analysis result)))
+
 {::clerk/visibility {:code :hide :result :show}}
 
 ;; System metrics
@@ -62,6 +66,14 @@
 (table-with-colums
  (->> metrics (sort-by :id))
  (cons :id selected-metrics))
+
+;; Visibility metrics
+
+(clerk/table
+ [[:average-relative-visibility (double (metrics-dowalil/average-relative-visibility visibilities))]
+  [:global-relative-visibility (double (metrics-dowalil/global-relative-visibility visibilities))]])
+
+(clerk/table visibilities)
 
 ;; ## Statistics
 
