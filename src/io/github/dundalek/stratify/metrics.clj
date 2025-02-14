@@ -68,7 +68,9 @@
           (keys score-metrics)))
 
 (def all-system-metrics
-  (keys lakos-metrics))
+  (cons
+   :num-connected-components
+   (keys lakos-metrics)))
 
 (defn wrap-score-metric [f jg]
   (let [scores (.getScores (f jg))]
@@ -108,10 +110,12 @@
   ([g {:keys [metrics]}]
    (reduce
     (fn [m metric-kw]
-      (if (contains? lakos-metrics metric-kw)
-        (assoc m metric-kw ((get lakos-metrics metric-kw) g))
-        (do (println "Warning: Unknown metric" metric-kw)
-            m)))
+      (case metric-kw
+        :num-connected-components (assoc m metric-kw (count (alg/connected-components g)))
+        (if (contains? lakos-metrics metric-kw)
+          (assoc m metric-kw ((get lakos-metrics metric-kw) g))
+          (do (println "Warning: Unknown metric" metric-kw)
+              m))))
     {}
     metrics)))
 
