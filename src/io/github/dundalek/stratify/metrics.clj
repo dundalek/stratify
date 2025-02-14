@@ -64,13 +64,15 @@
    :normalized-cumulative-component-dependency lakos/normalized-cumulative-component-dependency})
 
 (def all-metrics
-  (concat (keys graph-metrics)
-          (keys score-metrics)))
+  (set
+   (concat (keys graph-metrics)
+           (keys score-metrics))))
 
 (def all-system-metrics
-  (cons
-   :num-connected-components
-   (keys lakos-metrics)))
+  (set
+   (cons
+    :num-connected-components
+    (keys lakos-metrics))))
 
 (defn wrap-score-metric [f jg]
   (let [scores (.getScores (f jg))]
