@@ -16,16 +16,9 @@
 
 (defn ->graph [data]
   (assert (= ::xdgml/DirectedGraph (:tag data)))
-  (let [nodes (->> (:content data)
-                   (filter (comp #{::xdgml/Nodes} :tag))
-                   (first))
-        links (->> (:content data)
+  (let [links (->> (:content data)
                    (filter (comp #{::xdgml/Links} :tag))
                    (first))
-        node-attrs (->> (:content nodes)
-                        (filter (comp #{::xdgml/Node} :tag))
-                        (map (juxt (comp :Id :attrs) :attrs))
-                        (into {}))
         parents (->> (:content links)
                      (filter (comp #{::xdgml/Link} :tag))
                      (filter (comp #{"Contains"} :Category :attrs))
@@ -33,8 +26,9 @@
                             (let [{:keys [Source Target]} attrs]
                               [Target Source])))
                      (into {}))
+        parent? (set (vals parents))
         get-namespace (fn [node-id]
-                        (if (= (get-in node-attrs [node-id :Category]) "Namespace")
+                        (if (parent? node-id)
                           node-id
                           (get parents node-id)))
         edges (->> (:content links)
@@ -42,14 +36,16 @@
                    (remove (comp #{"Contains"} :Category :attrs))
                    (map (fn [{:keys [attrs]}]
                           (let [{:keys [Source Target]} attrs]
-                            [(get-namespace Source) (get-namespace Target)]))))]
+                            [(get-namespace Source) (get-namespace Target)])))
+                   (remove (fn [[from to]]
+                             (= from to))))]
     (-> (lg/digraph)
         (lg/add-edges* edges))))
 
 (defn load-graph [input-file]
-  (let [data (with-open [rdr (io/reader input-file)]
-               (xml/parse rdr))]
-    (->graph data)))
+  (with-open [rdr (io/reader input-file)]
+    (let [data (xml/parse rdr)]
+      (->graph data))))
 
 (comment
   (load-graph "test/resources/nested/output-default.dgml"))
