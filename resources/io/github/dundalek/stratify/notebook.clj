@@ -50,7 +50,7 @@
 (def selected-metrics
   (concat selected-graph-metrics
           (when analysis
-            [:num-elements :num-visible-elements :relative-visibility])))
+            [:num-elements :num-visible-elements :relative-visibility :num-connected-components])))
 
 (def metrics
   (->> (merge-with merge

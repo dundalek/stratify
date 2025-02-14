@@ -5,6 +5,6 @@
    [io.github.dundalek.stratify.metrics-lcom :as metrics-lcom]))
 
 (deftest namespaces-connected-components-count
-  (is (= '{example1 2 example2 1}
+  (is (= {"example1" 2 "example2" 1}
          (metrics-lcom/namespaces-connected-components-count
           (kondo/analysis ["test/resources/connected-components/src"])))))

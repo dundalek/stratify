@@ -18,6 +18,8 @@
 
 (comment
   (reset! *source-paths ["src"])
+  (reset! *source-paths ["test/resources/nested/src"])
+  (reset! *source-paths ["test/resources/connected-components/src"])
 
   (clerk/serve! {:browse true
                  :port 7788

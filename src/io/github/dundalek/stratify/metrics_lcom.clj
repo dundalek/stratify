@@ -17,12 +17,13 @@
 (defn namespaces-connected-components-count
   "LCOM4 is number of connected components."
   [analysis]
-  (-> (->> analysis
-           :var-usages
-           (group-by :from))
-      (update-vals
-       (fn [usages]
-         (count (alg/connected-components (namespace-usages->graph usages)))))))
+  (->> analysis
+       :var-usages
+       (group-by :from)
+       (map (fn [[ns-name usages]]
+              [(str ns-name)
+               (count (alg/connected-components (namespace-usages->graph usages)))]))
+       (into {})))
 
 (comment
   (def analysis (kondo/analysis ["test/resources/connected-components/src"]))

@@ -3,6 +3,7 @@
    [io.github.dundalek.stratify.kondo :as kondo]
    [io.github.dundalek.stratify.metrics-dowalil :as metrics-dowalil]
    [io.github.dundalek.stratify.metrics-lakos :as lakos]
+   [io.github.dundalek.stratify.metrics-lcom :as metrics-lcom]
    [loom.alg :as alg]
    [loom.alg-generic :as algg]
    [loom.graph :as lg])
@@ -118,7 +119,10 @@
 ;; For now passing clj-kondo analysis, should come up with more abstract model in the future.
 
 (defn analysis-element-metrics [analysis]
-  (metrics-dowalil/relative-visibilities analysis))
+  (merge-with merge
+              (metrics-dowalil/relative-visibilities analysis)
+              (-> (metrics-lcom/namespaces-connected-components-count analysis)
+                  (update-vals (fn [v] {:num-connected-components v})))))
 
 (defn analysis-system-metrics [analysis]
   (let [visibilities (metrics-dowalil/relative-visibilities analysis)]
