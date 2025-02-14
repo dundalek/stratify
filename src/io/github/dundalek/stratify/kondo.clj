@@ -7,6 +7,9 @@
    {:lint paths
     :config {:output {:analysis {:keywords true}}}}))
 
+(defn analysis [paths]
+  (:analysis (run-kondo paths)))
+
 (defn ->graph [analysis]
   (let [{:keys [namespace-usages namespace-definitions]} analysis
         own-namespace? (->> namespace-definitions
