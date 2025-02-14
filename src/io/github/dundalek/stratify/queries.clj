@@ -48,8 +48,7 @@
       (transact-analysis! analysis))))
 
 (defn load-sources [source-paths]
-  (let [result (kondo/run-kondo source-paths)]
-    (analysis->conn (:analysis result))))
+  (analysis->conn (kondo/analysis source-paths)))
 
 (comment
   (def conn-valid (load-sources ["test/resources/layered-valid/src"]))

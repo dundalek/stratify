@@ -223,8 +223,7 @@
                                                  style/styles)))))
 
 (defn extract [{:keys [source-paths output-file flat-namespaces include-dependencies insert-namespace-node coverage-file]}]
-  (let [{:keys [analysis]} (kondo/run-kondo source-paths)
-        data (analysis->dgml {:analysis analysis
+  (let [data (analysis->dgml {:analysis (kondo/analysis source-paths)
                               :flat-namespaces (boolean flat-namespaces)
                               :include-dependencies (boolean include-dependencies)
                               :insert-namespace-node insert-namespace-node
@@ -244,24 +243,22 @@
     :output-file "../../shared/coverage.dgml"
     :coverage-file "target/coverage/codecov.json"})
 
-  (def result (kondo/run-kondo ["test/resources/nested/src"]))
-  (def result (kondo/run-kondo ["src"]))
+  (def analysis (kondo/analysis ["test/resources/nested/src"]))
+  (def analysis (kondo/analysis ["src"]))
 
-  (->> result
-       :analysis
+  (->> analysis
        :var-usages)
 
-  (->> result
-       :analysis
+  (->> analysis
        :var-definitions
        first)
 
-  (-> (kondo/->graph (:analysis result))
+  (-> (kondo/->graph analysis)
       lg/digraph
       (add-clustered-namespace-hierarchy "."))
 
   (def coverage-file "target/coverage/codecov.json")
   (def lookup (some-> coverage-file codecov/make-line-coverage-raw-lookup))
-  (:g (analysis->graph {:analysis (:analysis result)
+  (:g (analysis->graph {:analysis analysis
                         :line-coverage (fn [filename & args]
                                          (apply lookup (str/replace-first filename "src/" "") args))})))

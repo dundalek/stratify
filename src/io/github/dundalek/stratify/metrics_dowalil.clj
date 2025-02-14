@@ -28,7 +28,7 @@
      (reduce + (map :num-elements visibilities))))
 
 (comment
-  (def analysis (:analysis (kondo/run-kondo ["src"])))
+  (def analysis (kondo/analysis ["src"]))
 
   (relative-visibilities analysis)
   (double (global-relative-visibility (relative-visibilities analysis)))

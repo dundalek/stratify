@@ -25,7 +25,7 @@
          (count (alg/connected-components (namespace-usages->graph usages)))))))
 
 (comment
-  (def analysis (:analysis (kondo/run-kondo ["test/resources/connected-components/src"])))
-  (def analysis (:analysis (kondo/run-kondo ["src"])))
+  (def analysis (kondo/analysis ["test/resources/connected-components/src"]))
+  (def analysis (kondo/analysis ["src"]))
 
   (namespaces-connected-components-count analysis))

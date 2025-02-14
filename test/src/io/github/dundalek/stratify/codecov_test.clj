@@ -42,7 +42,7 @@
           "example.uncovered/uncovered" 50.0}
 
          (-> (:g (internal/analysis->graph
-                  {:analysis (:analysis (kondo/run-kondo ["test/resources/coverage/src"]))
+                  {:analysis (kondo/analysis ["test/resources/coverage/src"])
                    :line-coverage sample-line-coverage-lookup}))
              :attrs
              (update-vals #(some-> % :line-coverage (* 100.0) (Math/round) (/ 100.0))))))

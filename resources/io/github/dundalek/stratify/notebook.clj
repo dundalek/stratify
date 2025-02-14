@@ -24,8 +24,8 @@
 
 ;; ## Metrics
 
-(def result (kondo/run-kondo @report/*source-paths))
-(def g (lg/digraph (kondo/->graph (:analysis result))))
+(def analysis (kondo/analysis @report/*source-paths))
+(def g (lg/digraph (kondo/->graph analysis)))
 
 (def selected-metrics
   [:out-degree
@@ -52,7 +52,7 @@
   (metrics/system-metrics g))
 
 (def visibilities
-  (metrics-dowalil/relative-visibilities (:analysis result)))
+  (metrics-dowalil/relative-visibilities analysis))
 
 {::clerk/visibility {:code :hide :result :show}}
 

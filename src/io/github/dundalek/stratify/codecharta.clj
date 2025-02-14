@@ -107,7 +107,7 @@
                                                             :strip-prefixes source-paths}))]
 
     (j/write-value (io/file output-file)
-                   (->codecharta {:analysis (:analysis (kondo/run-kondo repo-source-paths))
+                   (->codecharta {:analysis (kondo/analysis repo-source-paths)
                                   :transform-filename #(str/replace-first % repo-prefix "")
                                   :line-coverage line-coverage}))))
 
@@ -161,11 +161,11 @@
                               {:code ::ccsh-failed-to-run} t)))))))))
 
 (comment
-  (def result (kondo/run-kondo ["test/resources/nested/src"]))
-  (def result (kondo/run-kondo ["src"]))
+  (def analysis (kondo/analysis ["test/resources/nested/src"]))
+  (def analysis (kondo/analysis ["src"]))
 
   (j/write-value (io/file "metrics.cc.json")
-                 (->codecharta {:analysis (:analysis result)}))
+                 (->codecharta {:analysis analysis}))
 
   (extract {:repo-path "."
             :source-paths ["src"]
@@ -184,8 +184,8 @@
     :coverage-file coverage-file
     :output-file "stratify-clj.cc.json"})
 
-  (->codecharta {:analysis (:analysis result)})
+  (->codecharta {:analysis analysis})
 
   (calculate-metrics
-   {:analysis (:analysis result)
+   {:analysis analysis
     :line-coverage (some-> coverage-file codecov/make-line-coverage-raw-lookup)}))

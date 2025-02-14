@@ -34,7 +34,7 @@
                                        (let [prefix (str ws-dir "/components/" name "/")
                                              source-paths (->> (pick-flaged flags paths)
                                                                (map #(str prefix %)))]
-                                         [name (:analysis (kondo/run-kondo source-paths))])))
+                                         [name (kondo/analysis source-paths)])))
                                 (into {}))
         {:keys [nodes links]} (internal/analysis->nodes-links {:analysis (apply merge-with concat (vals component-analyses))})]
     (xml/element ::dgml/DirectedGraph
@@ -125,14 +125,14 @@
   (let [component-analyses (->> w
                                 :components
                                 (map (fn [{:keys [name paths]}]
-                                       [name (:analysis (kondo/run-kondo (pick-flaged flags paths)))]))
+                                       [name (kondo/analysis (pick-flaged flags paths))]))
                                 (into {}))]
     (tap> (apply merge-with concat (vals component-analyses))))
 
   (def p (-> w :projects first))
 
-  (def result (kondo/run-kondo (-> w :components first :paths :src)))
-  (-> result :analysis keys)
+  (def analysis (kondo/analysis (-> w :components first :paths :src)))
+  (-> analysis keys)
 
   (pick-flaged
    [:src]

@@ -40,7 +40,7 @@
 (deftest codecharta
   (is (snap/match-snapshot
        ::codecharta
-       (cc/->codecharta {:analysis (:analysis (kondo/run-kondo ["test/resources/nested/src"]))}))))
+       (cc/->codecharta {:analysis (kondo/analysis ["test/resources/nested/src"])}))))
 
 (deftest with-coverage
   (let [output-file "test/resources/coverage/coverage.cc.json"]

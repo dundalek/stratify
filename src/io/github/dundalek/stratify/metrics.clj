@@ -113,11 +113,11 @@
     metrics)))
 
 (comment
-  (def result (kondo/run-kondo ["src"]))
-  (def result (kondo/run-kondo ["target/projects/asami/src"]))
-  (def result (kondo/run-kondo ["target/projects/HumbleUI/src"]))
+  (def analysis (kondo/analysis ["src"]))
+  (def analysis (kondo/analysis ["target/projects/asami/src"]))
+  (def analysis (kondo/analysis ["target/projects/HumbleUI/src"]))
 
-  (def g (lg/digraph (kondo/->graph (:analysis result))))
+  (def g (lg/digraph (kondo/->graph analysis)))
 
   (metrics g)
 
