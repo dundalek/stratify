@@ -75,16 +75,16 @@
 (defn- calculate-metrics [{:keys [analysis transform-filename line-coverage]
                            :or {transform-filename identity}}]
   (let [g (lg/digraph (kondo/->graph analysis))
-        metrics (metrics/metrics g {:metrics (keys metrics-attributes)})
+        metrics (metrics/element-metrics g {:metrics (keys metrics-attributes)})
         ns->file (->> analysis
                       :namespace-definitions
                       (map (fn [{:keys [name filename]}]
                              [(str name) (transform-filename filename)]))
                       (into {}))]
     (->> metrics
-         (map (fn [{:keys [id] :as attrs}]
+         (map (fn [[id attrs]]
                 (let [filename (ns->file id)
-                      attrs (cond-> (dissoc attrs :id)
+                      attrs (cond-> attrs
                               line-coverage (assoc :line-coverage (line-coverage filename)))]
                   [filename (update-keys attrs attribute-key->str)])))
          (into {}))))

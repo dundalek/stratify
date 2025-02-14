@@ -1,6 +1,7 @@
 (ns io.github.dundalek.stratify.metrics
   (:require
    [io.github.dundalek.stratify.kondo :as kondo]
+   [io.github.dundalek.stratify.metrics-dowalil :as metrics-dowalil]
    [io.github.dundalek.stratify.metrics-lakos :as lakos]
    [loom.alg :as alg]
    [loom.alg-generic :as algg]
@@ -75,8 +76,8 @@
 (defn wrap-graph-metric [f g]
   #(f g %))
 
-(defn metrics
-  ([g] (metrics g {:metrics all-metrics}))
+(defn element-metrics
+  ([g] (element-metrics g {:metrics all-metrics}))
   ([g {:keys [metrics]}]
    (let [jg (->jgraph g)
          calculate (reduce (fn [m metric-kw]
@@ -94,11 +95,12 @@
                            metrics)]
      (->> (lg/nodes g)
           (map (fn [node]
-                 (reduce
-                  (fn [m [metric calc]]
-                    (assoc m metric (calc node)))
-                  {:id node}
-                  calculate)))))))
+                 [node (reduce
+                        (fn [m [metric calc]]
+                          (assoc m metric (calc node)))
+                        {}
+                        calculate)]))
+          (into {})))))
 
 (defn system-metrics
   ([g] (system-metrics g {:metrics all-system-metrics}))
@@ -112,18 +114,25 @@
     {}
     metrics)))
 
+;; analysis-* metrics are different from graph metrics because they need more information that is present in a graph.
+;; For now passing clj-kondo analysis, should come up with more abstract model in the future.
+
+(defn analysis-element-metrics [analysis]
+  (metrics-dowalil/relative-visibilities analysis))
+
+(defn analysis-system-metrics [analysis]
+  (let [visibilities (metrics-dowalil/relative-visibilities analysis)]
+    {:average-relative-visibility (double (metrics-dowalil/average-relative-visibility visibilities))
+     :global-relative-visibility (double (metrics-dowalil/global-relative-visibility visibilities))}))
+
 (comment
+  (def analysis (kondo/analysis ["test/resources/nested/src"]))
   (def analysis (kondo/analysis ["src"]))
   (def analysis (kondo/analysis ["target/projects/asami/src"]))
   (def analysis (kondo/analysis ["target/projects/HumbleUI/src"]))
 
   (def g (lg/digraph (kondo/->graph analysis)))
 
-  (metrics g)
-
-  (->> (metrics g)
-       ; (sort-by :in-degree)
-       (sort-by :out-degree)
-       (reverse))
+  (element-metrics g)
 
   (system-metrics g))

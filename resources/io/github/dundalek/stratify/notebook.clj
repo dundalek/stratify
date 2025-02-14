@@ -1,10 +1,11 @@
 {:nextjournal.clerk/visibility {:code :hide :result :hide}}
 (ns io.github.dundalek.stratify.notebook
   (:require
+   [clojure.string :as str]
    [fastmath.stats :as stats]
+   [io.github.dundalek.stratify.dgml :as dgml]
    [io.github.dundalek.stratify.kondo :as kondo]
    [io.github.dundalek.stratify.metrics :as metrics]
-   [io.github.dundalek.stratify.metrics-dowalil :as metrics-dowalil]
    [io.github.dundalek.stratify.report :as report]
    [loom.graph :as lg]
    [nextjournal.clerk :as clerk]))
@@ -24,10 +25,15 @@
 
 ;; ## Metrics
 
-(def analysis (kondo/analysis @report/*source-paths))
-(def g (lg/digraph (kondo/->graph analysis)))
+(if (str/ends-with? (first @report/*source-paths) ".dgml")
+  (do
+    (def analysis nil)
+    (def g (dgml/load-graph (first @report/*source-paths))))
+  (do
+    (def analysis (kondo/analysis @report/*source-paths))
+    (def g (lg/digraph (kondo/->graph analysis)))))
 
-(def selected-metrics
+(def selected-graph-metrics
   [:out-degree
    :in-degree
    :longest-shortest-path
@@ -41,7 +47,17 @@
    #_:harmonic-centrality
    #_:katz-centrality])
 
-(def metrics (metrics/metrics g {:metrics selected-metrics}))
+(def selected-metrics
+  (concat selected-graph-metrics
+          (when analysis
+            [:num-elements :num-visible-elements :relative-visibility])))
+
+(def metrics
+  (->> (merge-with merge
+                   (metrics/element-metrics g {:metrics selected-graph-metrics})
+                   (some-> analysis metrics/analysis-element-metrics))
+       (map (fn [[id m]] (assoc m :id id)))))
+
 (def stats
   (->> selected-metrics
        (map (fn [metric-kw]
@@ -49,31 +65,23 @@
                      :id metric-kw)))))
 
 (def system-metrics
-  (metrics/system-metrics g))
-
-(def visibilities
-  (metrics-dowalil/relative-visibilities analysis))
+  (merge
+   (metrics/system-metrics g)
+   (some-> analysis metrics/analysis-system-metrics)))
 
 {::clerk/visibility {:code :hide :result :show}}
 
 ;; System metrics
 
 (clerk/table
- (seq system-metrics))
+ (->> system-metrics
+      (sort-by key)))
 
-;; Namespace metrics
+;; Elements metrics
 
 (table-with-colums
  (->> metrics (sort-by :id))
  (cons :id selected-metrics))
-
-;; Visibility metrics
-
-(clerk/table
- [[:average-relative-visibility (double (metrics-dowalil/average-relative-visibility visibilities))]
-  [:global-relative-visibility (double (metrics-dowalil/global-relative-visibility visibilities))]])
-
-(clerk/table visibilities)
 
 ;; ## Statistics
 

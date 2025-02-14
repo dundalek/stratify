@@ -14,18 +14,19 @@
                 (let [num-elements (count (vars-by-ns name))
                       num-visible-elements (count (->> (vars-by-ns name)
                                                        (remove :private)))]
-                  {:name name
-                   :num-elements num-elements
-                   :num-visible-elements num-visible-elements
-                   :relative-visibility (/ num-visible-elements num-elements)}))))))
+                  [(str name)
+                   {:num-elements num-elements
+                    :num-visible-elements num-visible-elements
+                    :relative-visibility (/ num-visible-elements num-elements)}])))
+         (into {}))))
 
 (defn average-relative-visibility [visibilities]
-  (/ (reduce + (map :relative-visibility visibilities))
+  (/ (reduce + (->> visibilities vals (map :relative-visibility)))
      (count visibilities)))
 
 (defn global-relative-visibility [visibilities]
-  (/ (reduce + (map :num-visible-elements visibilities))
-     (reduce + (map :num-elements visibilities))))
+  (/ (reduce + (->> visibilities vals (map :num-visible-elements)))
+     (reduce + (->> visibilities vals (map :num-elements)))))
 
 (comment
   (def analysis (kondo/analysis ["src"]))
