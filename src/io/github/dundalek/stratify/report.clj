@@ -24,5 +24,8 @@
   (clerk/serve! {:browse true
                  :port 7788
                  :index "resources/io/github/dundalek/stratify/notebook.clj"
-                 :watch-paths ["src" "resources"]}))
+                 :watch-paths ["src" "resources"]})
 
+  (clerk/halt!)
+
+  (reset! *source-paths ["test/resources/nested/output-default.dgml"]))

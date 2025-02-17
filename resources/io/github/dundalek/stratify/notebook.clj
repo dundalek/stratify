@@ -1,5 +1,5 @@
-{:nextjournal.clerk/visibility {:code :hide :result :hide}}
 (ns io.github.dundalek.stratify.notebook
+  {:nextjournal.clerk/visibility {:code :hide :result :hide}}
   (:require
    [clojure.string :as str]
    [fastmath.stats :as stats]
@@ -25,6 +25,7 @@
 
 ;; ## Metrics
 
+^::clerk/no-cache
 (if (str/ends-with? (first @report/*source-paths) ".dgml")
   (do
     (def analysis nil)
