@@ -4,6 +4,7 @@
    [io.github.dundalek.stratify.metrics-dowalil :as metrics-dowalil]
    [io.github.dundalek.stratify.metrics-lakos :as lakos]
    [io.github.dundalek.stratify.metrics-lcom :as metrics-lcom]
+   [io.github.dundalek.stratify.metrics-module-depth :as metrics-module-depth]
    [loom.alg :as alg]
    [loom.alg-generic :as algg]
    [loom.graph :as lg])
@@ -128,7 +129,8 @@
   (merge-with merge
               (metrics-dowalil/relative-visibilities analysis)
               (-> (metrics-lcom/namespaces-connected-components-count analysis)
-                  (update-vals (fn [v] {:num-connected-components v})))))
+                  (update-vals (fn [v] {:num-connected-components v})))
+              (metrics-module-depth/calculate-depth analysis)))
 
 (defn analysis-system-metrics [analysis]
   (let [visibilities (metrics-dowalil/relative-visibilities analysis)]

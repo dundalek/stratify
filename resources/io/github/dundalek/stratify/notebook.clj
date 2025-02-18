@@ -10,11 +10,28 @@
    [loom.graph :as lg]
    [nextjournal.clerk :as clerk]))
 
+(defn round-to-significant [num sig-figs]
+  (let [order (Math/floor (Math/log10 (Math/abs (double num))))
+        factor (Math/pow 10 (- sig-figs order 1))]
+    (/ (Math/round (* num factor)) factor)))
+
+(defn format-numeric [x]
+  (if (or (not (number? x)) (integer? x))
+    x
+    (round-to-significant x 4)))
+
+(comment
+  (round-to-significant 123456.789 4) ;; => 123500.0
+  (round-to-significant 1 4)
+  (round-to-significant 0.00123456789 4)) ;; => 0.001235
+
 (defn table-with-colums [data columns]
   (clerk/table
    {:head columns
     :rows (->> data
-               (map (apply juxt columns)))}))
+               (map (comp
+                     (partial map format-numeric)
+                     (apply juxt columns))))}))
 
 ;; # Code Metrics 📊
 
@@ -51,7 +68,8 @@
 (def selected-metrics
   (concat selected-graph-metrics
           (when analysis
-            [:num-elements :num-visible-elements :relative-visibility :num-connected-components])))
+            [:num-elements :num-visible-elements :relative-visibility :num-connected-components
+             :module-depth :loc :var-loc :var-count :private-var-count :public-var-count])))
 
 (def metrics
   (->> (merge-with merge
@@ -75,7 +93,8 @@
 ;; System metrics
 
 (clerk/table
- (->> system-metrics
+ (->> (-> system-metrics
+          (update-vals format-numeric))
       (sort-by key)))
 
 ;; Elements metrics
