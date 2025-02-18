@@ -28,4 +28,5 @@
 
   (clerk/halt!)
 
-  (reset! *source-paths ["test/resources/nested/output-default.dgml"]))
+  (reset! *source-paths ["test/resources/nested/output-default.dgml"])
+  (reset! *source-paths ["stratify.dgml"]))
