@@ -1,0 +1,8 @@
+services:
+  glean-demo:
+    image: ghcr.io/facebookincubator/glean/demo:latest
+    container_name: glean-demo
+    volumes:
+      - ./data:/data
+    ports:
+      - "8888:8888"
