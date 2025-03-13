@@ -13,11 +13,12 @@
    [io.github.dundalek.stratify.overarch :as-alias overarch]
    [io.github.dundalek.stratify.pulumi :as-alias pulumi]
    [io.github.dundalek.stratify.report :as-alias report]
+   [io.github.dundalek.stratify.gabotechs-dep-tree :as-alias dep-tree]
    [malli.error :as me]))
 
 (def ^:private source-formats #{"clj" "dot" "overarch" "pulumi"})
 
-(def ^:private target-formats #{"codecharta" "dgml"})
+(def ^:private target-formats #{"codecharta" "dep-tree" "dgml"})
 
 (defn- format-choice-list [choices]
   (->> choices
@@ -91,6 +92,11 @@
               :source-paths args
               :output-prefix output-file
               :coverage-file coverage-file}))
+
+          (= to "dep-tree")
+          ((requiring-resolve `dep-tree/extract)
+           {:source-paths args
+            :output-file output-file})
 
           metrics
           (do
