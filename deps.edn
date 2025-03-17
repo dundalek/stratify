@@ -24,6 +24,7 @@
    :main-opts ["-m" "kaocha.runner" "--plugin" "cloverage"]}
 
   :optional-deps {:extra-deps {stratify/metrics {:local/root "resources/io/github/dundalek/stratify/optional-deps/metrics"}
+                               stratify/metrics-delta {:local/root "resources/io/github/dundalek/stratify/optional-deps/metrics-delta"}
                                stratify/overarch {:local/root "resources/io/github/dundalek/stratify/optional-deps/overarch"}
                                stratify/graphviz {:local/root "resources/io/github/dundalek/stratify/optional-deps/graphviz"}
                                stratify/report {:local/root "resources/io/github/dundalek/stratify/optional-deps/report"}

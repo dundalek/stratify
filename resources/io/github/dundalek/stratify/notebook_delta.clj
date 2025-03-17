@@ -3,6 +3,7 @@
   (:require
    [io.github.dundalek.stratify.dgml :as dgml]
    [io.github.dundalek.stratify.metrics :as metrics]
+   [io.github.dundalek.stratify.report :as report]
    [nextjournal.clerk :as clerk]
    [portal.api :as p]
    [portal.viewer :as pv]))
@@ -10,10 +11,10 @@
 ;; # Metrics delta 📈
 
 ^{::clerk/visibility {:code :show :result :show}}
-(def source-a "a.dgml")
+(def source-a (first @report/*source-paths))
 
 ^{::clerk/visibility {:code :show :result :show}}
-(def source-b "b.dgml")
+(def source-b (second @report/*source-paths))
 
 ^::clerk/no-cache
 (def graph-a (dgml/load-graph source-a))

@@ -51,6 +51,8 @@
                            :ref "<label>"}
    :metrics {:coerce :boolean
              :desc "Calculate and serve namespace metrics report"}
+   :metrics-delta {:coerce :boolean
+                   :desc "Calculate and serve metrics delta report"}
    :help {:alias :h
           :desc "Print this help message and exit"}})
 
@@ -81,7 +83,7 @@
         {:keys [opts args]} parsed]
     (if (or (:help opts) (:h opts) (empty? args))
       (print-help)
-      (let [{:keys [out metrics from to coverage-file]} opts
+      (let [{:keys [out metrics metrics-delta from to coverage-file]} opts
             output-file (if (= out "-") *out* out)]
         (cond
           (= to "codecharta")
@@ -104,7 +106,18 @@
             (add-deps "report")
             ((requiring-resolve `report/report!)
              {:source-paths args
-              :output-path (when (not= out "-") out)}))
+              :output-path (when (not= out "-") out)
+              :notebook-path "io/github/dundalek/stratify/notebook.clj"}))
+
+          metrics-delta
+          (do
+            (add-deps "metrics")
+            (add-deps "metrics-delta")
+            (add-deps "report")
+            ((requiring-resolve `report/report!)
+             {:source-paths args
+              :output-path (when (not= out "-") out)
+              :notebook-path "io/github/dundalek/stratify/notebook_delta.clj"}))
 
           (= from "overarch")
           (do
