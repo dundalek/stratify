@@ -42,7 +42,8 @@ Visualizing a codebase is a two step process:
 
 ### 3D Code City Renderer
 
-Addiionally, Clojure code can be extracted to [CodeCharta](https://codecharta.com/) format to visualize it as 3D Code City. In this view code metrics can be mapped to visualization to uncover hotspots or areas that need attention.
+Additionally, Clojure code can be extracted to [CodeCharta](https://codecharta.com/) format to visualize it as 3D Code City. In this view code metrics can be mapped to visualization to uncover hotspots or areas that need attention.
+[See details](#3d-code-city).
 
 ![Logseq codebase visualized using CodeCharta](doc/img/codecharta-logseq-cropped.avif)
 
@@ -64,7 +65,7 @@ Watch the [demo video](https://www.youtube.com/watch?v=8LMrIpxxpDw) which shows 
 
 [![Stratify Demo](doc/img/demo-thumbnail.png)](https://www.youtube.com/watch?v=8LMrIpxxpDw)
 
-Watch the [London Clojurians talk](https://www.youtube.com/watch?v=olTNZeKpc2M) that goes into depth and also dicusses software architecture in general:
+Watch the [London Clojurians talk](https://www.youtube.com/watch?v=olTNZeKpc2M) that goes into depth and also discusses software architecture in general:
 
 [![Stratify Clojurians talk](doc/img/london-clj-talk-thumbnail.avif)](https://www.youtube.com/watch?v=olTNZeKpc2M)
 
