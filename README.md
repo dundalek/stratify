@@ -20,6 +20,7 @@ Visualization renderers:
 which is designed for hierarchical graphs,
 and allows to interactively collapse or expand the amount of shown information.
 - [3D Code City](#3d-code-city-renderer) - Outputs data for use with [CodeCharta](https://codecharta.com) tool to visualize codebase and metrics in 3D view.
+- [3D Code Galaxy](#3d-galaxy-renderer) - Outputs data for use with the [Dep-Tree](https://github.com/gabotechs/dep-tree) visualizer that uses 3D force layout view.
 
 ### DGML Renderer
 
@@ -44,6 +45,14 @@ Visualizing a codebase is a two step process:
 Addiionally, Clojure code can be extracted to [CodeCharta](https://codecharta.com/) format to visualize it as 3D Code City. In this view code metrics can be mapped to visualization to uncover hotspots or areas that need attention.
 
 ![Logseq codebase visualized using CodeCharta](doc/img/codecharta-logseq-cropped.avif)
+
+### 3D Galaxy Renderer
+
+There is also support for the [Dep-Tree](https://github.com/gabotechs/dep-tree) visualizer which uses 3D force layout.
+The way the nodes are spread into clusters can be used to judge modularity of a codebase.
+[See instructions](#3d-code-galaxy).
+
+![Example visualization of InstandDB](doc/img/dep-tree-instantdb.avif)
 
 ### Demos and Talks
 
@@ -179,6 +188,16 @@ Suggested metrics:
 - Color - representing quality like `graph_betweenness_centrality`, `line_coverage`
 - Height - representing magnitude like `number_of_commits`, `number_of_authors`  
   (If a source has bad quality metric, the problem is magnified by its height.)
+
+### 3D Code Galaxy
+
+1) Run the extraction command:
+
+````
+clojure -M:stratify -t dep-tree -o output.json src
+````
+
+2) Open the [Dep-Tree visualizer](https://dep-tree.pages.dev/) and load the file to visualize.
 
 ### Code coverage
 
