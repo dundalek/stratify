@@ -43,7 +43,9 @@
 
 (defn extract [{:keys [source-paths output-file]}]
   (let [data (->graph (kondo/analysis source-paths))]
-    (j/write-value (io/file output-file) data)))
+    (if (= output-file *out*)
+      (j/write-value output-file data (j/object-mapper {:close false}))
+      (j/write-value (io/writer output-file) data))))
 
 (comment
   (extract {:source-paths ["src"]
