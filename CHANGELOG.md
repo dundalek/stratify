@@ -1,6 +1,17 @@
 # Changelog
 
-## [master](https://github.com/dundalek/stratify/compare/v0.3.0...master) (unreleased)
+## [master](https://github.com/dundalek/stratify/compare/v0.4.0...master) (unreleased)
+
+## [0.4.0](https://github.com/dundalek/stratify/compare/v0.3.0...v0.4.0) (2025-03-18)
+
+New features:
+- Implemented additional code metrics in the report:
+  - Lakos component dependency
+  - Dowalil visibility
+  - LCOM4 cohesion
+  - Experimental Module Depth metric (inspired by Osterhout)
+- Support to view metrics delta to compare a system between two versions using `--metrics-delta` option
+- Added 3D Code Galaxy visualization using `dep-tree` renderer
 
 ## [0.3.0](https://github.com/dundalek/stratify/compare/v0.2.0...v0.3.0) (2025-01-30)
 
