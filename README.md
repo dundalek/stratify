@@ -347,6 +347,31 @@ clojure -M:stratify src --metrics -o report.html
 | - | - |
 | ![Metrics](doc/img/metrics-table.png) | ![Charts](doc/img/metrics-chart-degrees.png) |
 
+#### Metrics delta
+
+There is a way to compare metrics between two versions to see how a system changed over time.
+
+1) Extract sources to DGML at different checkouts:
+
+```
+git checkout commit-a
+clojure -M:stratify -o a.dgml src
+
+git checkout commit-b
+clojure -M:stratify -o b.dgml src
+```
+
+
+2) Then open the report with:
+
+```
+clojure -M:stratify --metrics-delta a.dgml b.dgml
+```
+
+| | |
+| - | - |
+| ![System metrics diff](doc/img/metrics-delta-top.avif) | ![Element metrics diff](doc/img/metrics-delta-bottom.avif) |
+
 ### Architecture checks
 
 The goal is to be able to define rules for code like architectural constraints, dependency rules, and layer violations.
