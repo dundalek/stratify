@@ -1,0 +1,188 @@
+(ns stratify.lsp
+  (:require
+   [clojure.java.io :as io]
+   [clojure.main :as clj-main]
+   [clojure.string :as str]
+   [jsonista.core :as j])
+  (:import
+   [java.io BufferedReader InputStreamReader OutputStreamWriter]
+   [java.lang ProcessHandle]))
+
+(defn- read-message [^BufferedReader in]
+  (loop [headers {}]
+    (let [line (.readLine in)]
+      (if (or (nil? line) (str/blank? line))
+        (if (empty? headers)
+          nil
+          (try
+            (let [content-length (Integer/parseInt (get headers "Content-Length"))
+                  cbuf (char-array content-length)]
+              (.read in cbuf 0 content-length)
+              (String. cbuf))
+            (catch Exception e
+              (throw (ex-info "Failed to parse message" {:headers headers} e)))))
+        (let [[k v] (str/split (str/trim line) #": " 2)]
+          (recur (assoc headers k v)))))))
+
+(defn- read-json-message [in]
+  (some-> (read-message in)
+          (j/read-value j/keyword-keys-object-mapper)))
+
+(defn start-server [{:keys [args]}]
+  (let [process-builder (ProcessBuilder. (into-array String args))
+        process (.start process-builder)
+        server-in (BufferedReader. (InputStreamReader. (.getInputStream process)))
+        server-out (OutputStreamWriter. (.getOutputStream process))
+        server-err (BufferedReader. (InputStreamReader. (.getErrorStream process)))
+        !requests (atom {})]
+
+    (future
+      (try
+        (loop []
+          (when-let [message (read-json-message server-in)]
+            (prn "server->client:" message)
+            (when-some [id (:id message)]
+              (let [p (get @!requests id)]
+                (swap! !requests dissoc id)
+                (deliver p (:result message))))
+            (recur)))
+        (catch Exception e
+          (clj-main/report-error (ex-info "Error in server handler" {} e) :target "file"))))
+
+    (future
+      (io/copy server-err *err*))
+
+    {:process process
+     :in server-in
+     :out server-out
+     :err server-err
+     :!msg-id (atom 0)
+     :!requests !requests}))
+
+(defn server-message! [server payload]
+  (prn "client->server:" payload)
+  (let [message (j/write-value-as-string payload)
+        out ^OutputStreamWriter (:out server)]
+    (locking out
+      (let [content-length (count (.getBytes message "UTF-8"))]
+        (.write out (str "Content-Length: " content-length "\r\n\r\n"))
+        (.write out message)
+        (.flush out)))))
+
+(defn server-request-async!
+  ([server method]
+   (server-request-async! server method nil))
+  ([server method params]
+   (let [{:keys [!msg-id !requests]} server
+         id (swap! !msg-id inc)
+         message (cond-> {:method method
+                          :jsonrpc "2.0"
+                          :id id}
+                   params (assoc :params params))
+         p (promise)]
+     (swap! !requests assoc id p)
+     (server-message! server message)
+     p)))
+
+(defn server-request!
+  ([server method]
+   (server-request! server method nil))
+  ([server method params]
+   (deref (server-request-async! server method params))))
+
+(defn server-initialize! [server opts]
+  ;; TODO maybe queue other requests internally to wait on response from initialize
+  (let [{:keys [root-path]} opts
+        root-uri (str "file://" root-path)
+        params {:capabilities {:general {:positionEncodings ["utf-16"]}
+                               :workspace {:workspaceFolders true
+                                           :symbol {:dynamicRegistration false
+                                                    :symbolKind {:valueSet (range 1 27)}}}
+                               :textDocument {:definition {:dynamicRegistration true
+                                                           :linkSupport true}
+                                              :references {:dynamicRegistration false}
+                                              :documentSymbol {:dynamicRegistration false
+                                                               :hierarchicalDocumentSymbolSupport true
+                                                               :symbolKind {:valueSet (range 1 27)}}
+                                              :callHierarchy {:dynamicRegistration false}
+                                              :declaration {:linkSupport true}}}
+                :processId (.pid (ProcessHandle/current))
+                :rootPath root-path
+                :rootUri root-uri
+                :workDoneToken "initialize-1"
+                :workspaceFolders [{:name root-path
+                                    :uri root-uri}]}]
+                ; :clientInfo {:name "lsp-sniffer" :version "0.1.0"}
+                ; :initializationOptions {}
+                ; :trace "off"
+
+    (server-request! server "initialize" params)))
+    ; (server-request-async! server "initialize" params)))
+
+(defn server-stop! [server]
+  (server-request! server "shutdown")
+  (server-message! server {:method "exit" :jsonrpc "2.0"}))
+
+(comment
+  (def root-path (.getCanonicalPath (io/file "../..")))
+  (def root-path (.getCanonicalPath (io/file "../../test/resources/nested")))
+  (def uri-base (str "file://" root-path "/"))
+
+  (def server (start-server {:args ["clojure-lsp"]}))
+
+  (tap> (server-initialize! server {:root-path root-path}))
+
+  (server-stop! server)
+
+  (let [uri (str uri-base "src/stratify/main.clj")]
+    (->> (server-request! server "textDocument/documentSymbol"
+                          {:position {:character 0, :line 0}, :textDocument {:uri uri}})
+         #_(mapv (fn [document-symbol]
+                   (update document-symbol :kind symbol-kind-lookup)))
+         #_(mapv (fn [{:keys [name kind selectionRange]}]
+                   [(str/replace-first uri base-path "") name kind selectionRange]))
+         #_(mapcat (fn [{:keys [selectionRange]}]
+                     (->> (server-request! server "textDocument/references"
+                                           {:textDocument {:uri uri}, :context {:includeDeclaration true}, :position (:start selectionRange)})
+                          (mapv (fn [{:keys [uri range]}]
+                                  [(str/replace-first uri base-path "") range])))))
+
+         tap>))
+
+  (let [uri (str uri-base "src/stratify/main.clj")]
+    (->> (server-request! server "textDocument/documentSymbol"
+                          {:position {:character 0, :line 0}, :textDocument {:uri uri}})))
+         ; (butlast)
+         ; last))
+
+  (let [uri (str uri-base "src/example/foo.clj")]
+    (->> (server-request! server "textDocument/documentSymbol"
+                          {:position {:character 0, :line 0}, :textDocument {:uri uri}})))
+
+  (->> (server-request! server "textDocument/references"
+                        {:textDocument {:uri (str uri-base "src/stratify/main.clj")}
+                         :context {:includeDeclaration false} ; if it is from a document symbol we don't need the declaration
+                         :position {:character 13, :line 57}}))
+      ; (tap>))
+
+  (->> (server-request! server "workspace/symbol"
+                        {:query ""})
+      ; kind
+      ; location - uri, range
+      ; name)
+       (tap>))
+
+  (def hierarchy-item
+    (->> (server-request! server "textDocument/prepareCallHierarchy"
+                          {:textDocument {:uri (str uri-base "src/stratify/main.clj")}
+                           :position {:character 13, :line 57}
+                           :workDoneToken "hierarchy-1"})
+         first))
+
+  (server-request! server "callHierarchy/incomingCalls"
+                   {:item hierarchy-item})
+
+  (server-request! server "callHierarchy/outgoingCalls"
+                   {:item hierarchy-item}))
+
+
