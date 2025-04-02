@@ -1,5 +1,6 @@
 (ns stratify.lsp
   (:require
+   [babashka.fs :as fs]
    [clojure.java.io :as io]
    [clojure.main :as clj-main]
    [clojure.string :as str]
@@ -123,6 +124,24 @@
   (server-request! server "shutdown")
   (server-message! server {:method "exit" :jsonrpc "2.0"}))
 
+(defn path->uri [path]
+  (str "file://" path))
+
+(defn location-less-or-equal? [a b]
+  (or (< (:line a) (:line b))
+      (and (= (:line a) (:line b))
+           (<= (:character a) (:character b)))))
+
+(comment
+  [(true? (location-less-or-equal? {:line 0 :character 0} {:line 0 :character 15}))
+   (true? (location-less-or-equal? {:line 0 :character 15} {:line 1 :character 1}))
+   (false? (location-less-or-equal? {:line 1 :character 15} {:line 1 :character 1}))
+   (false? (location-less-or-equal? {:line 1 :character 15} {:line 0 :character 1}))])
+
+(defn range-contains? [outer inner]
+  (and (location-less-or-equal? (:start outer) (:start inner))
+       (location-less-or-equal? (:end inner) (:end outer))))
+
 (comment
   (def root-path (.getCanonicalPath (io/file "../..")))
   (def root-path (.getCanonicalPath (io/file "../../test/resources/nested")))
@@ -132,8 +151,56 @@
 
   (tap> (server-initialize! server {:root-path root-path}))
 
-  (server-stop! server)
+  (server-stop! server))
 
+(comment
+  (def symbols
+    (->> (fs/glob root-path "**.clj{,c,s}")
+         (mapcat (fn [file]
+                   (let [uri (path->uri file)]
+                     (->> (server-request! server "textDocument/documentSymbol"
+                                           {:textDocument {:uri uri}
+                                            :position {:character 0, :line 0}})
+                          (map (fn [sym]
+                                 {:uri uri
+                                  :sym sym}))))))))
+
+  (def symbols-by-uri
+    (->> symbols
+         (group-by :uri)
+         #_(reduce (fn [m item]
+                     (let [{:keys [uri sym]} item]
+                       ;; TODO: check for uniqueness by detecting over-writing?
+                       (assoc-in m [uri (:range sym)] item)))
+                   {})))
+
+  (def symbol-references
+    (->> symbols
+         (map (fn [item]
+                (let [{:keys [uri sym]} item
+                      position (-> sym :selectionRange :start)]
+                  (assoc item :references
+                         (server-request! server "textDocument/references"
+                                          {:textDocument {:uri uri}
+                                           :context {:includeDeclaration false} ; if it is from a document symbol we don't need the declaration
+                                           :position position})))))
+         (doall)))
+
+  (->> symbol-references
+       (mapcat (fn [{:keys [references] target-uri :uri target-sym :sym}]
+                 (->> references
+                      (map (fn [{source-uri :uri source-range :range}]
+                             (let [source-sym (->> (get symbols-by-uri source-uri)
+                                                   (filter #(range-contains? (-> % :sym :range) source-range))
+                                                   (first))]
+
+                               [(or source-sym {:uri source-uri :range source-range})
+                                {:uri target-uri :sym target-sym}]))))))
+       (map (fn [[source target]]
+              [[(str/replace-first (:uri source) uri-base "") (:name (:sym source))]
+               [(str/replace-first (:uri target) uri-base "") (:name (:sym target))]]))))
+
+(comment
   (let [uri (str uri-base "src/stratify/main.clj")]
     (->> (server-request! server "textDocument/documentSymbol"
                           {:position {:character 0, :line 0}, :textDocument {:uri uri}})
@@ -184,5 +251,6 @@
 
   (server-request! server "callHierarchy/outgoingCalls"
                    {:item hierarchy-item}))
+
 
 
