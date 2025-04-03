@@ -37,6 +37,15 @@
             g
             (lg/nodes g))))
 
+(defn add-clustered-namespace-hierarchy-path-based [g prefix]
+  (let [separator "/"
+        split-pattern (re-pattern (Pattern/quote separator))
+        opts {:split #(str/split (str/replace-first % prefix "") split-pattern)
+              :join #(str prefix (str/join separator %))}]
+    (reduce (partial add-clustered-namespace-node opts)
+            g
+            (lg/nodes g))))
+
 (defn- analysis->own-var-usages [analysis]
   (let [{:keys [namespace-definitions var-usages]} analysis
         own-namespace? (->> namespace-definitions

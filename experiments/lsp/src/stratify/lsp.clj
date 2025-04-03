@@ -14,8 +14,8 @@
    [loom.graph :as lg]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml])
   (:import
-   [java.io BufferedReader InputStreamReader OutputStreamWriter]
-   [java.lang ProcessHandle]))
+   (java.io BufferedReader InputStreamReader OutputStreamWriter)
+   (java.lang ProcessHandle)))
 
 (defn- read-message [^BufferedReader in]
   (loop [headers {}]
@@ -155,80 +155,6 @@
   (let [{:keys [start end]} (:selectionRange sym)]
     (str uri "#L" (:line start) "C" (:character start) "-L" (:line end) "C" (:character end))))
 
-(comment
-  (def root-path (.getCanonicalPath (io/file "../..")))
-  (def root-path (.getCanonicalPath (io/file "../../test/resources/nested")))
-  (def uri-base (str "file://" root-path "/"))
-
-  (def server (start-server {:args ["clojure-lsp"]}))
-
-  (tap> (server-initialize! server {:root-path root-path}))
-
-  (server-stop! server))
-
-(comment
-  (def symbols
-    (->> (fs/glob root-path "**.clj{,c,s}")
-         (mapcat (fn [file]
-                   (let [uri (path->uri file)]
-                     (->> (server-request! server "textDocument/documentSymbol"
-                                           {:textDocument {:uri uri}
-                                            :position {:character 0, :line 0}})
-                          (map (fn [sym]
-                                 {:uri uri
-                                  :sym sym}))))))))
-
-  (def symbols-by-uri
-    (->> symbols
-         (group-by :uri)
-         #_(reduce (fn [m item]
-                     (let [{:keys [uri sym]} item]
-                       ;; TODO: check for uniqueness by detecting over-writing?
-                       (assoc-in m [uri (:range sym)] item)))
-                   {})))
-
-  (def symbol-references
-    (->> symbols
-         (map (fn [item]
-                (let [{:keys [uri sym]} item
-                      position (-> sym :selectionRange :start)]
-                  (assoc item :references
-                         (server-request! server "textDocument/references"
-                                          {:textDocument {:uri uri}
-                                           :context {:includeDeclaration false} ; if it is from a document symbol we don't need the declaration
-                                           :position position})))))
-         (doall)))
-
-  (->> symbol-references
-       (mapcat (fn [{:keys [references] target-uri :uri target-sym :sym}]
-                 (->> references
-                      (map (fn [{source-uri :uri source-range :range}]
-                             (let [source-sym (->> (get symbols-by-uri source-uri)
-                                                   (filter #(range-contains? (-> % :sym :range) source-range))
-                                                   (first))]
-                               (assert (some? source-sym))
-                               [source-sym
-                                {:uri target-uri :sym target-sym}]))))))
-       #_(map (fn [[source target]]
-                [[(str/replace-first (:uri source) uri-base "") (:name (:sym source))]
-                 [(str/replace-first (:uri target) uri-base "") (:name (:sym target))]])))
-
-  (->> symbols
-       (map (fn [item]
-              (let [{:keys [uri sym]} item]
-                {:id (symbol->id item)
-                 :label (:name sym)
-                 :parent (str/replace-first uri uri-base "")
-                 ;; kind map to category
-                 :kind (:kind sym)}))))
-
-  (def analysis (kondo/analysis ["../../test/resources/nested"]))
-
-  (kondo/->graph analysis)
-  (internal/analysis->graph {:analysis analysis}))
-
-; (defn ->graph [])
-
 (defn ->dgml [{:keys [root-path source-paths]}]
   (let [server (start-server {:args ["clojure-lsp"]})
         uri-base (str "file://" root-path "/")
@@ -279,20 +205,27 @@
                           (let [{:keys [uri sym]} item]
                             {:id (if sym (symbol->id item) uri)
                              :label (:name sym)
-                             :parent uri}))))]
+                             :parent uri}))))
                             ;; kind map to category
                             ; :kind (:kind sym)}))))]
+
+        g (-> (lg/digraph)
+              (lg/add-nodes* file-uris)
+              (internal/add-clustered-namespace-hierarchy-path-based uri-base))
+        namespace-with-nested-namespace? (->> (lg/nodes g)
+                                              (map #(la/attr g % :parent))
+                                              set)]
     (server-stop! server)
     (xml/element ::dgml/DirectedGraph
                  {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
                  (xml/element ::dgml/Nodes {}
                               (concat
-                               (for [uri file-uris]
+                               (for [node-id (lg/nodes g)]
                                  (xml/element ::dgml/Node
-                                              {:Id uri
-                                               :Label (str/replace-first uri uri-base "")
+                                              {:Id node-id
+                                               :Label (la/attr g node-id :label)
                                                :Category "Namespace"
-                                               :Group "Collapsed"}))
+                                               :Group (if (namespace-with-nested-namespace? node-id) "Expanded" "Collapsed")}))
                                (for [{:keys [id label]} nodes]
                                  (xml/element ::dgml/Node
                                               {:Id id
@@ -303,6 +236,10 @@
                                     (keep (fn [{:keys [id parent]}]
                                             (when parent
                                               (xml/element ::dgml/Link {:Source parent :Target id :Category "Contains"})))))
+                               (->> (lg/nodes g)
+                                    (keep (fn [node-id]
+                                            (when-some [parent (la/attr g node-id :parent)]
+                                              (xml/element ::dgml/Link {:Source parent :Target node-id :Category "Contains"})))))
                                (for [[source target] links]
                                  (xml/element ::dgml/Link {:Source source :Target target}))))
                  (xml/element ::dgml/Styles {} style/styles))))
@@ -314,9 +251,24 @@
 
   (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../.."))
                       :source-paths ["src"]})]
-    (sdgml/write-to-file "../../../../shared/lsp-stratify.dgml" data)))
+    (sdgml/write-to-file "../../../../shared/lsp-stratify.dgml" data))
+
+  (def analysis (kondo/analysis ["../../test/resources/nested"]))
+
+  (kondo/->graph analysis)
+  (internal/analysis->graph {:analysis analysis}))
 
 (comment
+  (def root-path (.getCanonicalPath (io/file "../..")))
+  (def root-path (.getCanonicalPath (io/file "../../test/resources/nested")))
+  (def uri-base (str "file://" root-path "/"))
+
+  (def server (start-server {:args ["clojure-lsp"]}))
+
+  (tap> (server-initialize! server {:root-path root-path}))
+
+  (server-stop! server)
+
   (let [uri (str uri-base "src/stratify/main.clj")]
     (->> (server-request! server "textDocument/documentSymbol"
                           {:position {:character 0, :line 0}, :textDocument {:uri uri}})
@@ -367,6 +319,3 @@
 
   (server-request! server "callHierarchy/outgoingCalls"
                    {:item hierarchy-item}))
-
-
-
