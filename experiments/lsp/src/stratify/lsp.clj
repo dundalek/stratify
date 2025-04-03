@@ -237,6 +237,7 @@
                        (mapcat (fn [path]
                                  (fs/glob (fs/file root-path path) "**.clj{,c,s}")))
                        (map path->uri))
+        file-uris-set (set file-uris)
         symbols (->> file-uris
                      (mapcat (fn [uri]
                                (->> (server-request! server "textDocument/documentSymbol"
@@ -259,6 +260,8 @@
         resolved-references (->> symbol-references
                                  (mapcat (fn [{:keys [references] target-uri :uri target-sym :sym}]
                                            (->> references
+                                                (filter (fn [{source-uri :uri}]
+                                                          (contains? file-uris-set source-uri)))
                                                 (map (fn [{source-uri :uri source-range :range}]
                                                        (let [source-sym (->> (get symbols-by-uri source-uri)
                                                                              (filter #(range-contains? (-> % :sym :range) source-range))
