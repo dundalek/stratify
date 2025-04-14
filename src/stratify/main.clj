@@ -7,14 +7,13 @@
    [clojure.repl.deps :as deps]
    [clojure.string :as str]
    [io.github.dundalek.stratify.codecharta :as-alias codecharta]
+   [io.github.dundalek.stratify.gabotechs-dep-tree :as-alias dep-tree]
    [io.github.dundalek.stratify.graphviz :as-alias graphviz]
    [io.github.dundalek.stratify.internal :as stratify]
    [io.github.dundalek.stratify.metrics :as-alias metrics]
    [io.github.dundalek.stratify.overarch :as-alias overarch]
    [io.github.dundalek.stratify.pulumi :as-alias pulumi]
-   [io.github.dundalek.stratify.report :as-alias report]
-   [io.github.dundalek.stratify.gabotechs-dep-tree :as-alias dep-tree]
-   [malli.error :as me]))
+   [io.github.dundalek.stratify.report :as-alias report]))
 
 (def ^:private source-formats #{"clj" "dot" "overarch" "pulumi"})
 
@@ -195,3 +194,4 @@
   (main* "-f" "bla")
 
   (cli/parse-args [] {:spec cli-spec}))
+
