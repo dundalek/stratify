@@ -43,17 +43,28 @@
         server-in (BufferedReader. (InputStreamReader. (.getInputStream process)))
         server-out (OutputStreamWriter. (.getOutputStream process))
         server-err (BufferedReader. (InputStreamReader. (.getErrorStream process)))
-        !requests (atom {})]
+        !requests (atom {})
+        !progresses (atom {})]
 
     (future
       (try
         (loop []
           (when-let [message (read-json-message server-in)]
             (prn "server->client:" message)
-            (when-some [id (:id message)]
-              (let [p (get @!requests id)]
+            (cond
+              ; To treat message from server as response it must not have :method, which is for requests that the server initiates, e.g. "window/workDoneProgress/create"
+              (and (not (contains? message :method)) (:id message))
+              (let [{:keys [id]} message
+                    p (get @!requests id)]
                 (swap! !requests dissoc id)
-                (deliver p (:result message))))
+                (deliver p (:result message)))
+
+              (= (:method message) "window/workDoneProgress/create")
+              (swap! !progresses assoc (-> message :params :token) true)
+
+              (and (= (:method message) "$/progress")
+                   (= (-> message :params :value :kind) "end"))
+              (swap! !progresses dissoc (-> message :params :token)))
             (recur)))
         (catch Exception e
           (clj-main/report-error (ex-info "Error in server handler" {} e) :target "file"))))
@@ -66,7 +77,8 @@
      :out server-out
      :err server-err
      :!msg-id (atom 0)
-     :!requests !requests}))
+     :!requests !requests
+     :!progresses !progresses}))
 
 (defn server-message! [server payload]
   (prn "client->server:" payload)
@@ -99,22 +111,27 @@
   ([server method params]
    (deref (server-request-async! server method params))))
 
+(def ^:private default-client-capabilities
+  {:general {:positionEncodings ["utf-16"]}
+   :workspace {:workspaceFolders true
+               :symbol {:dynamicRegistration false
+                        :symbolKind {:valueSet (range 1 27)}}}
+   :textDocument {:definition {:dynamicRegistration true
+                               :linkSupport true}
+                  :references {:dynamicRegistration false}
+                  :documentSymbol {:dynamicRegistration false
+                                   :hierarchicalDocumentSymbolSupport true
+                                   :symbolKind {:valueSet (range 1 27)}}
+                  :callHierarchy {:dynamicRegistration false}
+                  :declaration {:linkSupport true}}})
+
 (defn server-initialize! [server opts]
-  ;; TODO maybe queue other requests internally to wait on response from initialize
   (let [{:keys [root-path]} opts
         root-uri (str "file://" root-path)
-        params {:capabilities {:general {:positionEncodings ["utf-16"]}
-                               :workspace {:workspaceFolders true
-                                           :symbol {:dynamicRegistration false
-                                                    :symbolKind {:valueSet (range 1 27)}}}
-                               :textDocument {:definition {:dynamicRegistration true
-                                                           :linkSupport true}
-                                              :references {:dynamicRegistration false}
-                                              :documentSymbol {:dynamicRegistration false
-                                                               :hierarchicalDocumentSymbolSupport true
-                                                               :symbolKind {:valueSet (range 1 27)}}
-                                              :callHierarchy {:dynamicRegistration false}
-                                              :declaration {:linkSupport true}}}
+        params {:capabilities
+                default-client-capabilities
+                #_(:capabilities nvim-init-params)
+
                 :processId (.pid (ProcessHandle/current))
                 :rootPath root-path
                 :rootUri root-uri
@@ -125,9 +142,24 @@
                 ; :initializationOptions {}
                 ; :trace "off"
 
-    (server-request! server "initialize" params)
+        ; params (merge
+        ;         nvim-init-params
+        ;         {:processId (.pid (ProcessHandle/current))
+        ;          :rootPath root-path
+        ;          :rootUri root-uri
+        ;          :workDoneToken "initialize-1"
+        ;          :workspaceFolders [{:name root-path
+        ;                              :uri root-uri}]})]
+        ;         ; :clientInfo {:name "lsp-sniffer" :version "0.1.0"}
+        ;         ; :initializationOptions {}
+        ;         ; :trace "off"
+
     ; (server-request-async! server "initialize" params)))
-    (server-message! server {:method "initialized" :params {} :jsonrpc "2.0"})))
+
+    ;; We don't need to queue requests because sending initialize with server-request! will block the thread until server responses with initialize.
+    (let [response (server-request! server "initialize" params)]
+      (server-message! server {:method "initialized" :params {} :jsonrpc "2.0"})
+      response)))
 
 (defn server-stop! [server]
   (server-request! server "shutdown")
@@ -155,10 +187,8 @@
   (let [{:keys [start end]} (:selectionRange sym)]
     (str uri "#L" (:line start) "C" (:character start) "-L" (:line end) "C" (:character end))))
 
-(defn ->dgml [{:keys [root-path source-paths]}]
-  (let [server (start-server {:args ["clojure-lsp"]})
-        uri-base (str "file://" root-path "/")
-        _ (server-initialize! server {:root-path root-path})
+(defn extract-graph [{:keys [server root-path source-paths]}]
+  (let [uri-base (str "file://" root-path "/")
         file-uris (->> source-paths
                        (mapcat (fn [path]
                                  (fs/glob (fs/file root-path path) "**.clj{,c,s}")))
@@ -212,44 +242,62 @@
         g (-> (lg/digraph)
               (lg/add-nodes* file-uris)
               (internal/add-clustered-namespace-hierarchy-path-based uri-base))
+        g (reduce (fn [g node]
+                    (la/add-attr g node :category "Namespace"))
+                  g
+                  (lg/nodes g))
+        g (reduce
+           (fn [g {:keys [id label parent]}]
+             (-> g
+                 (lg/add-nodes id)
+                 (la/add-attr id :label label)
+                 (la/add-attr id :parent parent)))
+           g
+           nodes)
+        g (-> g
+              (lg/add-edges* links))]
+    g))
+
+(defn ->dgml [{:keys [root-path source-paths server-args]}]
+  (let [server (start-server {:args server-args})
+        _ (server-initialize! server {:root-path root-path})
+        g (extract-graph {:server server
+                          :root-path root-path
+                          :source-paths source-paths})
         namespace-with-nested-namespace? (->> (lg/nodes g)
-                                              (map #(la/attr g % :parent))
+                                              (keep #(la/attr g % :parent))
                                               set)]
     (server-stop! server)
     (xml/element ::dgml/DirectedGraph
                  {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
                  (xml/element ::dgml/Nodes {}
-                              (concat
-                               (for [node-id (lg/nodes g)]
-                                 (xml/element ::dgml/Node
-                                              {:Id node-id
-                                               :Label (la/attr g node-id :label)
-                                               :Category "Namespace"
-                                               :Group (if (namespace-with-nested-namespace? node-id) "Expanded" "Collapsed")}))
-                               (for [{:keys [id label]} nodes]
-                                 (xml/element ::dgml/Node
-                                              {:Id id
-                                               :Label label}))))
+                              (for [node-id (lg/nodes g)]
+                                (xml/element ::dgml/Node
+                                             (cond-> {:Id node-id
+                                                      :Label (la/attr g node-id :label)}
+
+                                               (= (la/attr g node-id :category) "Namespace")
+                                               (assoc
+                                                :Category "Namespace"
+                                                :Group (if (namespace-with-nested-namespace? node-id) "Expanded" "Collapsed"))))))
                  (xml/element ::dgml/Links {}
                               (concat
-                               (->> nodes
-                                    (keep (fn [{:keys [id parent]}]
-                                            (when parent
-                                              (xml/element ::dgml/Link {:Source parent :Target id :Category "Contains"})))))
                                (->> (lg/nodes g)
                                     (keep (fn [node-id]
                                             (when-some [parent (la/attr g node-id :parent)]
                                               (xml/element ::dgml/Link {:Source parent :Target node-id :Category "Contains"})))))
-                               (for [[source target] links]
+                               (for [[source target] (lg/edges g)]
                                  (xml/element ::dgml/Link {:Source source :Target target}))))
                  (xml/element ::dgml/Styles {} style/styles))))
 
 (comment
   (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../../test/resources/nested"))
+                      :server-args ["clojure-lsp"]
                       :source-paths ["src"]})]
-    (sdgml/write-to-file "../../../../shared/lsp-nested.dgml" data))
+    (sdgml/write-to-file "../../../../shared/lsp-nested-after.dgml" data))
 
   (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../.."))
+                      :server-args ["clojure-lsp"]
                       :source-paths ["src"]})]
     (sdgml/write-to-file "../../../../shared/lsp-stratify.dgml" data))
 
