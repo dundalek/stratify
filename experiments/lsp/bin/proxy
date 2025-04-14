@@ -1,0 +1,67 @@
+#!/usr/bin/env bb
+;; -*- clojure -*-
+;; vim: set filetype=clojure:
+#_{:clj-kondo/ignore [:namespace-name-mismatch]}
+(ns script
+  (:require
+   [babashka.fs :as fs]
+   [babashka.process :as bp]
+   [clojure.java.io :as io])
+   ; [clojure.main :as clj-main]
+  (:import
+   (java.io InputStream OutputStream)))
+
+(defn copy-stream-with-logging
+  "Copies input stream to output stream and log file, using buffered I/O for efficiency"
+  [^InputStream in ^OutputStream out ^OutputStream log]
+  (future
+    (try
+      (let [buffer-size 8192
+            buffer (byte-array buffer-size)]
+        (loop []
+          (let [bytes-read (.read in buffer 0 buffer-size)]
+            (when (pos? bytes-read)
+              (.write out buffer 0 bytes-read)
+              (.flush out)
+
+              (.write log buffer 0 bytes-read)
+              (.flush log)
+
+              (recur)))))
+      (catch Exception e
+        (binding [*out* *err*]
+          (println "Error in stream proxy" e)
+          #_(clj-main/report-error e :target "file"))))))
+
+(defn -main [& args]
+  (let [[opts [_ & args]] (split-with (complement #{"--"}) args)
+        opts (->> (partition 2 opts)
+                  (reduce (fn [m [k v]]
+                            (assoc m k v))
+                          {}))
+        _  (when (empty? args)
+             (println "Usage: bb stream-proxy.clj [options...] -- command [args...]")
+             (System/exit 1))
+        proc (bp/process args {:inherit false :shutdown bp/destroy-tree})
+        proc-in (-> proc :in)
+        proc-out (-> proc :out)
+        proc-err (-> proc :err)
+        base-path (get opts "--output-dir" ".")
+        _ (fs/create-dirs base-path)
+        in-log (io/output-stream (io/file base-path "in.log"))
+        out-log (io/output-stream (io/file base-path "out.log"))
+        err-log (io/output-stream (io/file base-path "error.log"))]
+
+    (copy-stream-with-logging System/in proc-in in-log)
+    (copy-stream-with-logging proc-out System/out out-log)
+    (copy-stream-with-logging proc-err System/err err-log)
+
+    (let [exit-code (-> @proc :exit)]
+      (.close in-log)
+      (.close out-log)
+      (.close err-log)
+
+      (System/exit exit-code))))
+
+(when (= *file* (System/getProperty "babashka.file"))
+  (apply -main *command-line-args*))
