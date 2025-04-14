@@ -29,26 +29,45 @@
       (assoc :attrs attrs)))
 
 (deftest extract-clj
-  (is (= (-> (make-digraph
-              {:adj {"src/example/foo.clj#L0C4-L0C15" #{"src/example/foo/bar.clj#L0C4-L0C19"
-                                                        "src/example/foo/bar.clj#L2C6-L2C7"},
-                     "src/example/foo.clj#L3C6-L3C7" #{"src/example/foo/bar.clj#L2C6-L2C7"}}
-               :attrs {"src" {:category "Namespace", :label "src", :parent nil},
-                       "src/example" {:category "Namespace", :label "example", :parent "src"},
-                       "src/example/foo" {:category "Namespace", :label "foo", :parent "src/example"},
-                       "src/example/foo.clj" {:category "Namespace", :label "foo.clj", :parent "src/example"},
-                       "src/example/foo.clj#L0C4-L0C15" {:label "example.foo", :parent "src/example/foo.clj"},
-                       "src/example/foo.clj#L3C6-L3C7" {:label "x", :parent "src/example/foo.clj"},
-                       "src/example/foo/bar.clj" {:category "Namespace",
-                                                  :label "bar.clj",
-                                                  :parent "src/example/foo"},
-                       "src/example/foo/bar.clj#L0C4-L0C19" {:label "example.foo.bar",
-                                                             :parent "src/example/foo/bar.clj"},
-                       "src/example/foo/bar.clj#L2C6-L2C7" {:label "y", :parent "src/example/foo/bar.clj"}}}))
+  (is (= (make-digraph
+          {:adj {"src/example/foo.clj#L0C4-L0C15" #{"src/example/foo/bar.clj#L0C4-L0C19"
+                                                    "src/example/foo/bar.clj#L2C6-L2C7"},
+                 "src/example/foo.clj#L3C6-L3C7" #{"src/example/foo/bar.clj#L2C6-L2C7"}}
+           :attrs {"src" {:category "Namespace", :label "src", :parent nil},
+                   "src/example" {:category "Namespace", :label "example", :parent "src"},
+                   "src/example/foo" {:category "Namespace", :label "foo", :parent "src/example"},
+                   "src/example/foo.clj" {:category "Namespace", :label "foo.clj", :parent "src/example"},
+                   "src/example/foo.clj#L0C4-L0C15" {:label "example.foo", :parent "src/example/foo.clj"},
+                   "src/example/foo.clj#L3C6-L3C7" {:label "x", :parent "src/example/foo.clj"},
+                   "src/example/foo/bar.clj" {:category "Namespace",
+                                              :label "bar.clj",
+                                              :parent "src/example/foo"},
+                   "src/example/foo/bar.clj#L0C4-L0C19" {:label "example.foo.bar",
+                                                         :parent "src/example/foo/bar.clj"},
+                   "src/example/foo/bar.clj#L2C6-L2C7" {:label "y", :parent "src/example/foo/bar.clj"}}})
          (let [server (lsp/start-server {:args ["clojure-lsp"]})
                root-path (.getCanonicalPath (io/file "../../test/resources/nested"))]
            (lsp/server-initialize! server {:root-path root-path})
            (relativize-graph root-path
                              (lsp/extract-graph {:root-path root-path
                                                  :source-paths ["src"]
+                                                 :source-pattern "**.clj{,c,s}"
+                                                 :server server}))))))
+
+(deftest extract-rs
+  (is (= (make-digraph
+          {:adj {"src/main.rs#L2C3-L2C7" #{"src/greeting.rs#L0C7-L0C12" "src/main.rs#L0C4-L0C12"}},
+           :attrs {"src" {:category "Namespace", :label "src", :parent nil},
+                   "src/greeting.rs" {:category "Namespace", :label "greeting.rs", :parent "src"},
+                   "src/greeting.rs#L0C7-L0C12" {:label "greet", :parent "src/greeting.rs"},
+                   "src/main.rs" {:category "Namespace", :label "main.rs", :parent "src"},
+                   "src/main.rs#L0C4-L0C12" {:label "greeting", :parent "src/main.rs"},
+                   "src/main.rs#L2C3-L2C7" {:label "main", :parent "src/main.rs"}}})
+         (let [server (lsp/start-server {:args ["rust-analyzer"]})
+               root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-rs"))]
+           (lsp/initialize-rust-analyzer! server {:root-path root-path})
+           (relativize-graph root-path
+                             (lsp/extract-graph {:root-path root-path
+                                                 :source-paths ["src"]
+                                                 :source-pattern "**.rs"
                                                  :server server}))))))

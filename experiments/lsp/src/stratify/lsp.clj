@@ -123,7 +123,10 @@
                                    :hierarchicalDocumentSymbolSupport true
                                    :symbolKind {:valueSet (range 1 27)}}
                   :callHierarchy {:dynamicRegistration false}
-                  :declaration {:linkSupport true}}})
+                  :declaration {:linkSupport true}}
+   :window {:workDoneProgress true
+            :showMessage {:messageActionItem {:additionalPropertiesSupport true}}
+            :showDocument {:support true}}})
 
 (defn server-initialize! [server opts]
   (let [{:keys [root-path]} opts
@@ -165,6 +168,19 @@
   (server-request! server "shutdown")
   (server-message! server {:method "exit" :jsonrpc "2.0"}))
 
+(defn server-wait-for-progress! [server pred]
+  (let [{:keys [!progresses]} server
+        p (promise)
+        k (Object.)]
+    (add-watch !progresses k
+               (fn [_ _ _ new-state]
+                 (when (pred new-state)
+                   (deliver p true))))
+    (try
+      @p
+      (finally
+        (remove-watch !progresses k)))))
+
 (defn path->uri [path]
   (str "file://" path))
 
@@ -187,11 +203,11 @@
   (let [{:keys [start end]} (:selectionRange sym)]
     (str uri "#L" (:line start) "C" (:character start) "-L" (:line end) "C" (:character end))))
 
-(defn extract-graph [{:keys [server root-path source-paths]}]
+(defn extract-graph [{:keys [server root-path source-paths source-pattern]}]
   (let [uri-base (str "file://" root-path "/")
         file-uris (->> source-paths
                        (mapcat (fn [path]
-                                 (fs/glob (fs/file root-path path) "**.clj{,c,s}")))
+                                 (fs/glob (fs/file root-path path) source-pattern)))
                        (map path->uri))
         file-uris-set (set file-uris)
         symbols (->> file-uris
@@ -201,7 +217,8 @@
                                                       :position {:character 0, :line 0}})
                                     (map (fn [sym]
                                            {:uri uri
-                                            :sym sym}))))))
+                                            :sym sym})))))
+                     (doall))
         symbols-by-uri (->> symbols (group-by :uri))
         symbol-references (->> symbols
                                (map (fn [item]
@@ -258,12 +275,13 @@
               (lg/add-edges* links))]
     g))
 
-(defn ->dgml [{:keys [root-path source-paths server-args]}]
+(defn ->dgml [{:keys [root-path source-paths server-args initialize! source-pattern] :or {initialize! server-initialize!}}]
   (let [server (start-server {:args server-args})
-        _ (server-initialize! server {:root-path root-path})
+        _ (initialize! server {:root-path root-path})
         g (extract-graph {:server server
                           :root-path root-path
-                          :source-paths source-paths})
+                          :source-paths source-paths
+                          :source-pattern source-pattern})
         namespace-with-nested-namespace? (->> (lg/nodes g)
                                               (keep #(la/attr g % :parent))
                                               set)]
@@ -305,6 +323,34 @@
 
   (kondo/->graph analysis)
   (internal/analysis->graph {:analysis analysis}))
+
+(defn initialize-rust-analyzer! [server opts]
+  (server-initialize! server opts)
+  ;; It seems rust-analyzer needs to prime cache twice to return correct results.
+  (server-wait-for-progress! server #(contains? % "rustAnalyzer/cachePriming"))
+  (server-wait-for-progress! server #(empty? %))
+  (server-wait-for-progress! server #(contains? % "rustAnalyzer/cachePriming"))
+  (server-wait-for-progress! server #(empty? %))
+  (println "custom initialize end"))
+
+(comment
+  (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-rs")))
+  (def uri-base (str "file://" root-path "/"))
+
+  (def server (start-server {:args ["rust-analyzer"]}))
+
+  (initialize-rust-analyzer! server {:root-path root-path})
+
+  (let [uri (str uri-base "src/main.rs")]
+    (->> (server-request! server "textDocument/documentSymbol"
+                          {:position {:character 0, :line 0}, :textDocument {:uri uri}})))
+
+  (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-rs"))
+                      :server-args ["rust-analyzer"]
+                      :source-paths ["src"]
+                      :source-pattern "**.rs"
+                      :initialize! initialize-rust-analyzer!})]
+    (sdgml/write-to-file "../../../../shared/lsp-sample-rs.dgml" data)))
 
 (comment
   (def root-path (.getCanonicalPath (io/file "../..")))
