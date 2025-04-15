@@ -23,12 +23,17 @@
 
     g))
 
+(defn- extract-relative-graph [extract-fn path]
+  (let [root-path (.getCanonicalPath (io/file path))]
+    (relativize-graph root-path
+                      (extract-fn {:root-path root-path}))))
+
 (defn- make-digraph [{:keys [adj attrs]}]
   (-> (lg/digraph adj)
       (lg/add-nodes* (keys attrs))
       (assoc :attrs attrs)))
 
-(deftest extract-clj
+(deftest extract-clojure
   (is (= (make-digraph
           {:adj {"src/example/foo.clj#L0C4-L0C15" #{"src/example/foo/bar.clj#L0C4-L0C19"
                                                     "src/example/foo/bar.clj#L2C6-L2C7"},
@@ -45,17 +50,7 @@
                    "src/example/foo/bar.clj#L0C4-L0C19" {:label "example.foo.bar",
                                                          :parent "src/example/foo/bar.clj"},
                    "src/example/foo/bar.clj#L2C6-L2C7" {:label "y", :parent "src/example/foo/bar.clj"}}})
-         (let [server (lsp/start-server {:args ["clojure-lsp"]})]
-           (try
-             (let [root-path (.getCanonicalPath (io/file "../../test/resources/nested"))]
-               (lsp/server-initialize! server {:root-path root-path})
-               (relativize-graph root-path
-                                 (lsp/extract-graph {:root-path root-path
-                                                     :source-paths ["src"]
-                                                     :source-pattern "**.clj{,c,s}"
-                                                     :server server})))
-             (finally
-               (lsp/server-stop! server)))))))
+         (extract-relative-graph lsp/extract-clojure "../../test/resources/nested"))))
 
 (deftest extract-go
   (is (= (make-digraph
@@ -65,19 +60,9 @@
                    "greet/greet.go#L2C5-L2C13" {:label "TheWorld", :parent "greet/greet.go"},
                    "main.go" {:category "Namespace", :label "main.go", :parent nil},
                    "main.go#L7C5-L7C9" {:label "main", :parent "main.go"}}})
-         (let [server (lsp/start-server {:args ["gopls"]})]
-           (try
-             (let [root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-go"))]
-               (lsp/server-initialize! server {:root-path root-path})
-               (relativize-graph root-path
-                                 (lsp/extract-graph {:root-path root-path
-                                                     :source-paths ["."]
-                                                     :source-pattern "**.go"
-                                                     :server server})))
-             (finally
-               (lsp/server-stop! server)))))))
+         (extract-relative-graph lsp/extract-go "../scip/test/resources/sample-go"))))
 
-(deftest extract-rs
+(deftest extract-rust
   (is (= (make-digraph
           {:adj {"src/main.rs#L2C3-L2C7" #{"src/greeting.rs#L0C7-L0C12" "src/main.rs#L0C4-L0C12"}},
            :attrs {"src" {:category "Namespace", :label "src", :parent nil},
@@ -86,15 +71,4 @@
                    "src/main.rs" {:category "Namespace", :label "main.rs", :parent "src"},
                    "src/main.rs#L0C4-L0C12" {:label "greeting", :parent "src/main.rs"},
                    "src/main.rs#L2C3-L2C7" {:label "main", :parent "src/main.rs"}}})
-         (let [server (lsp/start-server {:args ["rust-analyzer"]})]
-           (try
-             (let [root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-rs"))]
-               (lsp/initialize-rust-analyzer! server {:root-path root-path})
-               (relativize-graph root-path
-                                 (lsp/extract-graph {:root-path root-path
-                                                     :source-paths ["src"]
-                                                     :source-pattern "**.rs"
-                                                     :server server})))
-             (finally
-               (lsp/server-stop! server)))))))
-
+         (extract-relative-graph lsp/extract-rust "../scip/test/resources/sample-rs"))))

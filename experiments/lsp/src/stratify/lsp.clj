@@ -336,6 +336,51 @@
       (finally
         (server-stop! server)))))
 
+(defn extract-clojure [opts]
+  (let [{:keys [root-path]} opts
+        server (start-server {:args ["clojure-lsp"]})]
+    (try
+      (server-initialize! server {:root-path root-path})
+      (extract-graph (merge {:source-paths ["src"]
+                             :source-pattern "**.clj{,c,s}"
+                             :server server}
+                            opts))
+      (finally
+        (server-stop! server)))))
+
+(defn extract-go [opts]
+  (let [{:keys [root-path]} opts
+        server (start-server {:args ["gopls"]})]
+    (try
+      (server-initialize! server {:root-path root-path})
+      (extract-graph (merge {:source-paths ["."]
+                             :source-pattern "**.go"
+                             :server server}
+                            opts))
+      (finally
+        (server-stop! server)))))
+
+(defn initialize-rust-analyzer! [server opts]
+  (server-initialize! server opts)
+  ;; It seems rust-analyzer needs to prime cache twice to return correct results.
+  (server-wait-for-progress! server #(contains? % "rustAnalyzer/cachePriming"))
+  (server-wait-for-progress! server #(empty? %))
+  (server-wait-for-progress! server #(contains? % "rustAnalyzer/cachePriming"))
+  (server-wait-for-progress! server #(empty? %))
+  (println "custom initialize end"))
+
+(defn extract-rust [opts]
+  (let [{:keys [root-path]} opts
+        server (start-server {:args ["rust-analyzer"]})]
+    (try
+      (initialize-rust-analyzer! server {:root-path root-path})
+      (extract-graph (merge {:source-paths ["src"]
+                             :source-pattern "**.rs"
+                             :server server}
+                            opts))
+      (finally
+        (server-stop! server)))))
+
 (comment
   (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../../test/resources/nested"))
                       :server-args ["clojure-lsp"]
@@ -353,15 +398,6 @@
 
   (kondo/->graph analysis)
   (internal/analysis->graph {:analysis analysis}))
-
-(defn initialize-rust-analyzer! [server opts]
-  (server-initialize! server opts)
-  ;; It seems rust-analyzer needs to prime cache twice to return correct results.
-  (server-wait-for-progress! server #(contains? % "rustAnalyzer/cachePriming"))
-  (server-wait-for-progress! server #(empty? %))
-  (server-wait-for-progress! server #(contains? % "rustAnalyzer/cachePriming"))
-  (server-wait-for-progress! server #(empty? %))
-  (println "custom initialize end"))
 
 (comment
   (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-rs")))
