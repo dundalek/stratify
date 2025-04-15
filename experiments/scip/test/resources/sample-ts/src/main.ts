@@ -1,5 +1,9 @@
 import { greet } from './greeting';
 
-console.log(greet());
+function main() {
+  console.log(greet());
+}
+
+main()
 
 // bun src/main.ts

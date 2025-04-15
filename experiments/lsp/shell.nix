@@ -14,6 +14,9 @@ rust-analyzer
 cargo
 rustc
 rustfmt
+
+typescript-language-server
+typescript
 ];
 shellHook = ''
 '';

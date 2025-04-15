@@ -471,6 +471,31 @@
     (sdgml/write-to-file "../../../../shared/lsp-sample-lua.dgml" data)))
 
 (comment
+  (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-ts")))
+  (def uri-base (str "file://" root-path "/"))
+
+  (def server (start-server {:args ["typescript-language-server" "--stdio"]}))
+
+  (server-initialize! server {:root-path root-path})
+
+  (extract-graph {:server server
+                  :root-path root-path
+                  :source-paths ["."]
+                  :source-pattern "**.{j,t}s{,x}"})
+
+  (let [uri (str uri-base "src/main.ts")]
+    (->> (server-request! server "textDocument/documentSymbol"
+                          {:position {:character 0, :line 0}, :textDocument {:uri uri}})))
+
+  (server-stop! server)
+
+  (let [data (->dgml {:root-path root-path
+                      :server-args ["typescript-language-server" "--stdio"]
+                      :source-paths ["src"]
+                      :source-pattern "**.{j,t}s{,x}"})]
+    (sdgml/write-to-file "../../../../shared/lsp-sample-ts.dgml" data)))
+
+(comment
   (def root-path (.getCanonicalPath (io/file "../..")))
   (def root-path (.getCanonicalPath (io/file "../../test/resources/nested")))
   (def uri-base (str "file://" root-path "/"))
