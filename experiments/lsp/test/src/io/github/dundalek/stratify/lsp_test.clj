@@ -45,14 +45,17 @@
                    "src/example/foo/bar.clj#L0C4-L0C19" {:label "example.foo.bar",
                                                          :parent "src/example/foo/bar.clj"},
                    "src/example/foo/bar.clj#L2C6-L2C7" {:label "y", :parent "src/example/foo/bar.clj"}}})
-         (let [server (lsp/start-server {:args ["clojure-lsp"]})
-               root-path (.getCanonicalPath (io/file "../../test/resources/nested"))]
-           (lsp/server-initialize! server {:root-path root-path})
-           (relativize-graph root-path
-                             (lsp/extract-graph {:root-path root-path
-                                                 :source-paths ["src"]
-                                                 :source-pattern "**.clj{,c,s}"
-                                                 :server server}))))))
+         (let [server (lsp/start-server {:args ["clojure-lsp"]})]
+           (try
+             (let [root-path (.getCanonicalPath (io/file "../../test/resources/nested"))]
+               (lsp/server-initialize! server {:root-path root-path})
+               (relativize-graph root-path
+                                 (lsp/extract-graph {:root-path root-path
+                                                     :source-paths ["src"]
+                                                     :source-pattern "**.clj{,c,s}"
+                                                     :server server})))
+             (finally
+               (lsp/server-stop! server)))))))
 
 (deftest extract-rs
   (is (= (make-digraph
@@ -63,11 +66,14 @@
                    "src/main.rs" {:category "Namespace", :label "main.rs", :parent "src"},
                    "src/main.rs#L0C4-L0C12" {:label "greeting", :parent "src/main.rs"},
                    "src/main.rs#L2C3-L2C7" {:label "main", :parent "src/main.rs"}}})
-         (let [server (lsp/start-server {:args ["rust-analyzer"]})
-               root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-rs"))]
-           (lsp/initialize-rust-analyzer! server {:root-path root-path})
-           (relativize-graph root-path
-                             (lsp/extract-graph {:root-path root-path
-                                                 :source-paths ["src"]
-                                                 :source-pattern "**.rs"
-                                                 :server server}))))))
+         (let [server (lsp/start-server {:args ["rust-analyzer"]})]
+           (try
+             (let [root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-rs"))]
+               (lsp/initialize-rust-analyzer! server {:root-path root-path})
+               (relativize-graph root-path
+                                 (lsp/extract-graph {:root-path root-path
+                                                     :source-paths ["src"]
+                                                     :source-pattern "**.rs"
+                                                     :server server})))
+             (finally
+               (lsp/server-stop! server)))))))

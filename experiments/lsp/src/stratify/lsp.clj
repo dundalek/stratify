@@ -170,10 +170,15 @@
   (server-request! server "shutdown")
   (server-message! server {:method "exit" :jsonrpc "2.0"})
   (let [{::keys [^Process process]} server]
+    ;; First wait if the server stops by itself after receiving exit message
+    (.waitFor process 1000 TimeUnit/MILLISECONDS)
+    ;; Otherwise terminate it gracefully with destroy
+    (when (.isAlive process)
+      (.destroy process))
+    ;; If the server does not stop within a given time, then terminate it forcibly with destroyForcibly
     (.waitFor process 1000 TimeUnit/MILLISECONDS)
     (when (.isAlive process)
-      (.destroy process))))
-    ;; might also consider destroyForcibly if encountering misbehaving processes
+      (.destroyForcibly process))))
 
 (defn server-wait-for-progress! [server pred]
   (let [{::keys [!progresses]} server
