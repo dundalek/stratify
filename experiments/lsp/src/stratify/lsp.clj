@@ -38,6 +38,16 @@
   (some-> (read-message in)
           (j/read-value j/keyword-keys-object-mapper)))
 
+(defn server-message! [server payload]
+  (prn "client->server:" payload)
+  (let [message (j/write-value-as-string payload)
+        out ^OutputStreamWriter (::out server)]
+    (locking out
+      (let [content-length (count (.getBytes message "UTF-8"))]
+        (.write out (str "Content-Length: " content-length "\r\n\r\n"))
+        (.write out message)
+        (.flush out)))))
+
 (defn start-server [{:keys [args]}]
   (let [process-builder (ProcessBuilder. (into-array String args))
         process (.start process-builder)
@@ -68,11 +78,24 @@
                 (deliver p (:result message)))
 
               (= (:method message) "window/workDoneProgress/create")
-              (swap! !progresses assoc (-> message :params :token) true)
+              (let [{:keys [id]} message]
+                (swap! !progresses assoc (-> message :params :token) true)
+                (server-message! server {:jsonrpc "2.0"
+                                         :result nil
+                                         :id id}))
 
               (and (= (:method message) "$/progress")
                    (= (-> message :params :value :kind) "end"))
-              (swap! !progresses dissoc (-> message :params :token)))
+              ;; could also consider keeping and updating the progress text
+              (swap! !progresses dissoc (-> message :params :token))
+
+              (= (:method message) "workspace/configuration")
+              (let [{:keys [id]} message]
+                ;; no configuration support for now, but respond back to the server to avoid getting stuck
+                (server-message! server {:jsonrpc "2.0"
+                                         :result [nil]
+                                         :id id})))
+
             (recur)))
         (catch Exception e
           (clj-main/report-error (ex-info "Error in server handler" {} e) :target "file"))))
@@ -81,16 +104,6 @@
       (io/copy server-err *err*))
 
     server))
-
-(defn server-message! [server payload]
-  (prn "client->server:" payload)
-  (let [message (j/write-value-as-string payload)
-        out ^OutputStreamWriter (::out server)]
-    (locking out
-      (let [content-length (count (.getBytes message "UTF-8"))]
-        (.write out (str "Content-Length: " content-length "\r\n\r\n"))
-        (.write out message)
-        (.flush out)))))
 
 (defn server-request-async!
   ([server method]
@@ -368,6 +381,31 @@
                       :source-pattern "**.rs"
                       :initialize! initialize-rust-analyzer!})]
     (sdgml/write-to-file "../../../../shared/lsp-sample-rs.dgml" data)))
+
+(comment
+  (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-go")))
+  (def uri-base (str "file://" root-path "/"))
+
+  (def server (start-server {:args ["gopls"]}))
+
+  (server-initialize! server {:root-path root-path})
+
+  (extract-graph {:server server
+                  :root-path root-path
+                  :source-paths ["."]
+                  :source-pattern "**.go"})
+
+  (let [uri (str uri-base "main.go")]
+    (->> (server-request! server "textDocument/documentSymbol"
+                          {:position {:character 0, :line 0}, :textDocument {:uri uri}})))
+
+  (server-stop! server)
+
+  (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-go"))
+                      :server-args ["gopls"]
+                      :source-paths ["."]
+                      :source-pattern "**.go"})]
+    (sdgml/write-to-file "../../../../shared/lsp-sample-go2.dgml" data)))
 
 (comment
   (def root-path (.getCanonicalPath (io/file "../..")))

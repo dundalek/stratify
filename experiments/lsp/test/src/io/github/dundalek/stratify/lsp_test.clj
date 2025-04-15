@@ -57,6 +57,26 @@
              (finally
                (lsp/server-stop! server)))))))
 
+(deftest extract-go
+  (is (= (make-digraph
+          {:adj {"main.go#L7C5-L7C9" #{"greet/greet.go#L2C5-L2C13"}},
+           :attrs {"greet" {:category "Namespace", :label "greet", :parent nil},
+                   "greet/greet.go" {:category "Namespace", :label "greet.go", :parent "greet"},
+                   "greet/greet.go#L2C5-L2C13" {:label "TheWorld", :parent "greet/greet.go"},
+                   "main.go" {:category "Namespace", :label "main.go", :parent nil},
+                   "main.go#L7C5-L7C9" {:label "main", :parent "main.go"}}})
+         (let [server (lsp/start-server {:args ["gopls"]})]
+           (try
+             (let [root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-go"))]
+               (lsp/server-initialize! server {:root-path root-path})
+               (relativize-graph root-path
+                                 (lsp/extract-graph {:root-path root-path
+                                                     :source-paths ["."]
+                                                     :source-pattern "**.go"
+                                                     :server server})))
+             (finally
+               (lsp/server-stop! server)))))))
+
 (deftest extract-rs
   (is (= (make-digraph
           {:adj {"src/main.rs#L2C3-L2C7" #{"src/greeting.rs#L0C7-L0C12" "src/main.rs#L0C4-L0C12"}},
@@ -77,3 +97,4 @@
                                                      :server server})))
              (finally
                (lsp/server-stop! server)))))))
+

@@ -5,11 +5,13 @@ clojure
 
 clojure-lsp
 
+gopls
+go
+
 rust-analyzer
 cargo
 rustc
 rustfmt
-
 ];
 shellHook = ''
 '';
