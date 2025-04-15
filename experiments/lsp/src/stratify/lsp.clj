@@ -15,7 +15,8 @@
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml])
   (:import
    (java.io BufferedReader InputStreamReader OutputStreamWriter)
-   (java.lang ProcessHandle)))
+   (java.lang ProcessHandle)
+   (java.util.concurrent TimeUnit)))
 
 (defn- read-message [^BufferedReader in]
   (loop [headers {}]
@@ -166,7 +167,12 @@
 
 (defn server-stop! [server]
   (server-request! server "shutdown")
-  (server-message! server {:method "exit" :jsonrpc "2.0"}))
+  (server-message! server {:method "exit" :jsonrpc "2.0"})
+  (let [{:keys [^Process process]} server]
+    (.waitFor process 1000 TimeUnit/MILLISECONDS)
+    (when (.isAlive process)
+      (.destroy process))))
+    ;; might also consider destroyForcibly if encountering misbehaving processes
 
 (defn server-wait-for-progress! [server pred]
   (let [{:keys [!progresses]} server
@@ -276,47 +282,52 @@
     g))
 
 (defn ->dgml [{:keys [root-path source-paths server-args initialize! source-pattern] :or {initialize! server-initialize!}}]
-  (let [server (start-server {:args server-args})
-        _ (initialize! server {:root-path root-path})
-        g (extract-graph {:server server
-                          :root-path root-path
-                          :source-paths source-paths
-                          :source-pattern source-pattern})
-        namespace-with-nested-namespace? (->> (lg/nodes g)
-                                              (keep #(la/attr g % :parent))
-                                              set)]
-    (server-stop! server)
-    (xml/element ::dgml/DirectedGraph
-                 {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
-                 (xml/element ::dgml/Nodes {}
-                              (for [node-id (lg/nodes g)]
-                                (xml/element ::dgml/Node
-                                             (cond-> {:Id node-id
-                                                      :Label (la/attr g node-id :label)}
+  (let [server (start-server {:args server-args})]
+    (try
+      (let [_ (initialize! server {:root-path root-path})
+            g (extract-graph {:server server
+                              :root-path root-path
+                              :source-paths source-paths
+                              :source-pattern source-pattern})
+            namespace-with-nested-namespace? (->> (lg/nodes g)
+                                                  (keep #(la/attr g % :parent))
+                                                  set)]
 
-                                               (= (la/attr g node-id :category) "Namespace")
-                                               (assoc
-                                                :Category "Namespace"
-                                                :Group (if (namespace-with-nested-namespace? node-id) "Expanded" "Collapsed"))))))
-                 (xml/element ::dgml/Links {}
-                              (concat
-                               (->> (lg/nodes g)
-                                    (keep (fn [node-id]
-                                            (when-some [parent (la/attr g node-id :parent)]
-                                              (xml/element ::dgml/Link {:Source parent :Target node-id :Category "Contains"})))))
-                               (for [[source target] (lg/edges g)]
-                                 (xml/element ::dgml/Link {:Source source :Target target}))))
-                 (xml/element ::dgml/Styles {} style/styles))))
+        (xml/element ::dgml/DirectedGraph
+                     {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
+                     (xml/element ::dgml/Nodes {}
+                                  (for [node-id (lg/nodes g)]
+                                    (xml/element ::dgml/Node
+                                                 (cond-> {:Id node-id
+                                                          :Label (la/attr g node-id :label)}
+
+                                                   (= (la/attr g node-id :category) "Namespace")
+                                                   (assoc
+                                                    :Category "Namespace"
+                                                    :Group (if (namespace-with-nested-namespace? node-id) "Expanded" "Collapsed"))))))
+                     (xml/element ::dgml/Links {}
+                                  (concat
+                                   (->> (lg/nodes g)
+                                        (keep (fn [node-id]
+                                                (when-some [parent (la/attr g node-id :parent)]
+                                                  (xml/element ::dgml/Link {:Source parent :Target node-id :Category "Contains"})))))
+                                   (for [[source target] (lg/edges g)]
+                                     (xml/element ::dgml/Link {:Source source :Target target}))))
+                     (xml/element ::dgml/Styles {} style/styles)))
+      (finally
+        (server-stop! server)))))
 
 (comment
   (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../../test/resources/nested"))
                       :server-args ["clojure-lsp"]
-                      :source-paths ["src"]})]
+                      :source-paths ["src"]
+                      :source-pattern "**.clj{,c,s}"})]
     (sdgml/write-to-file "../../../../shared/lsp-nested-after.dgml" data))
 
   (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../.."))
                       :server-args ["clojure-lsp"]
-                      :source-paths ["src"]})]
+                      :source-paths ["src"]
+                      :source-pattern "**.clj{,c,s}"})]
     (sdgml/write-to-file "../../../../shared/lsp-stratify.dgml" data))
 
   (def analysis (kondo/analysis ["../../test/resources/nested"]))
