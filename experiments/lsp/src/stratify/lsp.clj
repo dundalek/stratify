@@ -45,7 +45,14 @@
         server-out (OutputStreamWriter. (.getOutputStream process))
         server-err (BufferedReader. (InputStreamReader. (.getErrorStream process)))
         !requests (atom {})
-        !progresses (atom {})]
+        !progresses (atom {})
+        server {::process process
+                ::in server-in
+                ::out server-out
+                ::err server-err
+                ::!msg-id (atom 0)
+                ::!requests !requests
+                ::!progresses !progresses}]
 
     (future
       (try
@@ -53,7 +60,7 @@
           (when-let [message (read-json-message server-in)]
             (prn "server->client:" message)
             (cond
-              ; To treat message from server as response it must not have :method, which is for requests that the server initiates, e.g. "window/workDoneProgress/create"
+                 ; To treat message from server as response it must not have :method, which is for requests that the server initiates, e.g. "window/workDoneProgress/create"
               (and (not (contains? message :method)) (:id message))
               (let [{:keys [id]} message
                     p (get @!requests id)]
@@ -73,18 +80,12 @@
     (future
       (io/copy server-err *err*))
 
-    {:process process
-     :in server-in
-     :out server-out
-     :err server-err
-     :!msg-id (atom 0)
-     :!requests !requests
-     :!progresses !progresses}))
+    server))
 
 (defn server-message! [server payload]
   (prn "client->server:" payload)
   (let [message (j/write-value-as-string payload)
-        out ^OutputStreamWriter (:out server)]
+        out ^OutputStreamWriter (::out server)]
     (locking out
       (let [content-length (count (.getBytes message "UTF-8"))]
         (.write out (str "Content-Length: " content-length "\r\n\r\n"))
@@ -95,7 +96,7 @@
   ([server method]
    (server-request-async! server method nil))
   ([server method params]
-   (let [{:keys [!msg-id !requests]} server
+   (let [{::keys [!msg-id !requests]} server
          id (swap! !msg-id inc)
          message (cond-> {:method method
                           :jsonrpc "2.0"
@@ -168,14 +169,14 @@
 (defn server-stop! [server]
   (server-request! server "shutdown")
   (server-message! server {:method "exit" :jsonrpc "2.0"})
-  (let [{:keys [^Process process]} server]
+  (let [{::keys [^Process process]} server]
     (.waitFor process 1000 TimeUnit/MILLISECONDS)
     (when (.isAlive process)
       (.destroy process))))
     ;; might also consider destroyForcibly if encountering misbehaving processes
 
 (defn server-wait-for-progress! [server pred]
-  (let [{:keys [!progresses]} server
+  (let [{::keys [!progresses]} server
         p (promise)
         k (Object.)]
     (add-watch !progresses k
