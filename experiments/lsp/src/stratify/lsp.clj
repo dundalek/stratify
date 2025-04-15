@@ -354,6 +354,18 @@
       (finally
         (server-stop! server)))))
 
+(defn extract-lua [opts]
+  (let [{:keys [root-path]} opts
+        server (start-server {:args ["lua-language-server"]})]
+    (try
+      (server-initialize! server {:root-path root-path})
+      (extract-graph (merge {:source-paths ["lua"]
+                             :source-pattern "**.lua"
+                             :server server}
+                            opts))
+      (finally
+        (server-stop! server)))))
+
 (defn initialize-rust-analyzer! [server opts]
   (server-initialize! server opts)
   ;; It seems rust-analyzer needs to prime cache twice to return correct results.
@@ -436,6 +448,27 @@
                       :source-paths ["."]
                       :source-pattern "**.go"})]
     (sdgml/write-to-file "../../../../shared/lsp-sample-go2.dgml" data)))
+
+(comment
+  (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-lua")))
+  (def uri-base (str "file://" root-path "/"))
+
+  (def server (start-server {:args ["lua-language-server"]}))
+
+  (server-initialize! server {:root-path root-path})
+
+  (extract-graph {:server server
+                  :root-path root-path
+                  :source-paths ["lua"]
+                  :source-pattern "**.lua"})
+
+  (server-stop! server)
+
+  (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-lua"))
+                      :server-args ["lua-language-server"]
+                      :source-paths ["."]
+                      :source-pattern "**.lua"})]
+    (sdgml/write-to-file "../../../../shared/lsp-sample-lua.dgml" data)))
 
 (comment
   (def root-path (.getCanonicalPath (io/file "../..")))

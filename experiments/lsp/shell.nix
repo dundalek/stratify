@@ -8,6 +8,8 @@ clojure-lsp
 gopls
 go
 
+lua-language-server
+
 rust-analyzer
 cargo
 rustc

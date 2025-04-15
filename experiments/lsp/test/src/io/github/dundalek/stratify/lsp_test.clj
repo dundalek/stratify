@@ -62,6 +62,21 @@
                    "main.go#L7C5-L7C9" {:label "main", :parent "main.go"}}})
          (extract-relative-graph lsp/extract-go "../scip/test/resources/sample-go"))))
 
+(deftest extract-lua
+  (is (= (make-digraph
+          {:adj {"lua/greeting.lua" #{"lua/greeting.lua#L0C6-L0C7"},
+                 "lua/greeting.lua#L2C11-L2C16" #{"lua/greeting.lua#L0C6-L0C7"},
+                 "lua/main.lua" #{"lua/main.lua#L2C15-L2C19"},
+                 "lua/main.lua#L2C15-L2C19" #{"lua/greeting.lua#L2C11-L2C16" "lua/main.lua#L0C6-L0C14"}},
+           :attrs {"lua" {:category "Namespace", :label "lua", :parent nil},
+                   "lua/greeting.lua" {:category "Namespace", :label "greeting.lua", :parent "lua"},
+                   "lua/greeting.lua#L0C6-L0C7" {:label "M", :parent "lua/greeting.lua"},
+                   "lua/greeting.lua#L2C11-L2C16" {:label "M.greet", :parent "lua/greeting.lua"},
+                   "lua/main.lua" {:category "Namespace", :label "main.lua", :parent "lua"},
+                   "lua/main.lua#L0C6-L0C14" {:label "greeting", :parent "lua/main.lua"},
+                   "lua/main.lua#L2C15-L2C19" {:label "main", :parent "lua/main.lua"}}})
+         (extract-relative-graph lsp/extract-lua "../scip/test/resources/sample-lua"))))
+
 (deftest extract-rust
   (is (= (make-digraph
           {:adj {"src/main.rs#L2C3-L2C7" #{"src/greeting.rs#L0C7-L0C12" "src/main.rs#L0C4-L0C12"}},
