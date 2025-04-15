@@ -72,3 +72,9 @@
                    "src/main.rs#L0C4-L0C12" {:label "greeting", :parent "src/main.rs"},
                    "src/main.rs#L2C3-L2C7" {:label "main", :parent "src/main.rs"}}})
          (extract-relative-graph lsp/extract-rust "../scip/test/resources/sample-rs"))))
+
+(deftest location-less-or-equal?
+  (is (true? (lsp/location-less-or-equal? {:line 0 :character 0} {:line 0 :character 15})))
+  (is (true? (lsp/location-less-or-equal? {:line 0 :character 15} {:line 1 :character 1})))
+  (is (false? (lsp/location-less-or-equal? {:line 1 :character 15} {:line 1 :character 1})))
+  (is (false? (lsp/location-less-or-equal? {:line 1 :character 15} {:line 0 :character 1}))))

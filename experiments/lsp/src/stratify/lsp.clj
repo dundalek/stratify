@@ -214,12 +214,6 @@
       (and (= (:line a) (:line b))
            (<= (:character a) (:character b)))))
 
-(comment
-  [(true? (location-less-or-equal? {:line 0 :character 0} {:line 0 :character 15}))
-   (true? (location-less-or-equal? {:line 0 :character 15} {:line 1 :character 1}))
-   (false? (location-less-or-equal? {:line 1 :character 15} {:line 1 :character 1}))
-   (false? (location-less-or-equal? {:line 1 :character 15} {:line 0 :character 1}))])
-
 (defn range-contains? [outer inner]
   (and (location-less-or-equal? (:start outer) (:start inner))
        (location-less-or-equal? (:end inner) (:end outer))))
