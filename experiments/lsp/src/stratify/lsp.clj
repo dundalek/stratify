@@ -294,41 +294,43 @@
               (lg/add-edges* links))]
     g))
 
+(defn graph->dgml [g]
+  (let [namespace-with-nested-namespace? (->> (lg/nodes g)
+                                              (keep #(la/attr g % :parent))
+                                              set)]
+    (xml/element ::dgml/DirectedGraph
+                 {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
+                 (xml/element ::dgml/Nodes {}
+                              (for [node-id (lg/nodes g)]
+                                (xml/element ::dgml/Node
+                                             (cond-> {:Id node-id
+                                                      :Label (la/attr g node-id :label)}
+
+                                               (= (la/attr g node-id :category) "Namespace")
+                                               (assoc
+                                                :Category "Namespace"
+                                                :Group (if (namespace-with-nested-namespace? node-id) "Expanded" "Collapsed"))))))
+                 (xml/element ::dgml/Links {}
+                              (concat
+                               (->> (lg/nodes g)
+                                    (keep (fn [node-id]
+                                            (when-some [parent (la/attr g node-id :parent)]
+                                              (xml/element ::dgml/Link {:Source parent :Target node-id :Category "Contains"})))))
+                               (for [[source target] (lg/edges g)]
+                                 (xml/element ::dgml/Link {:Source source :Target target}))))
+                 (xml/element ::dgml/Styles {} style/styles))))
+
 (defn ->dgml [{:keys [root-path source-paths server-args initialize! source-pattern] :or {initialize! server-initialize!}}]
-  (let [server (start-server {:args server-args})]
-    (try
-      (let [_ (initialize! server {:root-path root-path})
-            g (extract-graph {:server server
-                              :root-path root-path
-                              :source-paths source-paths
-                              :source-pattern source-pattern})
-            namespace-with-nested-namespace? (->> (lg/nodes g)
-                                                  (keep #(la/attr g % :parent))
-                                                  set)]
-
-        (xml/element ::dgml/DirectedGraph
-                     {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
-                     (xml/element ::dgml/Nodes {}
-                                  (for [node-id (lg/nodes g)]
-                                    (xml/element ::dgml/Node
-                                                 (cond-> {:Id node-id
-                                                          :Label (la/attr g node-id :label)}
-
-                                                   (= (la/attr g node-id :category) "Namespace")
-                                                   (assoc
-                                                    :Category "Namespace"
-                                                    :Group (if (namespace-with-nested-namespace? node-id) "Expanded" "Collapsed"))))))
-                     (xml/element ::dgml/Links {}
-                                  (concat
-                                   (->> (lg/nodes g)
-                                        (keep (fn [node-id]
-                                                (when-some [parent (la/attr g node-id :parent)]
-                                                  (xml/element ::dgml/Link {:Source parent :Target node-id :Category "Contains"})))))
-                                   (for [[source target] (lg/edges g)]
-                                     (xml/element ::dgml/Link {:Source source :Target target}))))
-                     (xml/element ::dgml/Styles {} style/styles)))
-      (finally
-        (server-stop! server)))))
+  (let [server (start-server {:args server-args})
+        g (try
+            (initialize! server {:root-path root-path})
+            (extract-graph {:server server
+                            :root-path root-path
+                            :source-paths source-paths
+                            :source-pattern source-pattern})
+            (finally
+              (server-stop! server)))]
+    (graph->dgml g)))
 
 (defn extract-clojure [opts]
   (let [{:keys [root-path]} opts
@@ -469,6 +471,9 @@
                       :source-paths ["."]
                       :source-pattern "**.lua"})]
     (sdgml/write-to-file "../../../../shared/lsp-sample-lua.dgml" data)))
+
+  (let [data (graph->dgml (extract-lua {:root-path (.getCanonicalPath (io/file "/home/me/code/lazy-lsp.nvim"))}))]
+    (sdgml/write-to-file "../../../../shared/lsp-lua-lazy-lsp.dgml" data)))
 
 (comment
   (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-ts")))
