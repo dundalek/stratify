@@ -24,7 +24,7 @@ Code:
 :io.github.dundalek.stratify.internal/no-source-namespaces
 
 Caused by:
-Execution error (ExceptionInfo) at io.github.dundalek.stratify.internal/analysis->graph (internal.clj:82).
+Execution error (ExceptionInfo) at io.github.dundalek.stratify.internal/analysis->graph (internal.clj:91).
 There are no defined namespaces in analysis.
 Did you pass correct source paths?
 
