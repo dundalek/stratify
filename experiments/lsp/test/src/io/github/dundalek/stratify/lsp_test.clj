@@ -93,3 +93,12 @@
   (is (true? (lsp/location-less-or-equal? {:line 0 :character 15} {:line 1 :character 1})))
   (is (false? (lsp/location-less-or-equal? {:line 1 :character 15} {:line 1 :character 1})))
   (is (false? (lsp/location-less-or-equal? {:line 1 :character 15} {:line 0 :character 1}))))
+
+(deftest decode-semantic-tokens
+  (is (= [{:line 2, :startChar 5, :length 3, :tokenType "property", :tokenModifiers #{"private" "static"}}
+          {:line 2, :startChar 10, :length 4, :tokenType "type", :tokenModifiers #{}}
+          {:line 5, :startChar 2, :length 7, :tokenType "class", :tokenModifiers #{}}]
+         (lsp/decode-semantic-tokens
+          {:data [2,5,3,0,3,  0,5,4,1,0,  3,2,7,2,0]}
+          ["property", "type", "class"]
+          ["private", "static"]))))

@@ -18,6 +18,37 @@
    (java.lang ProcessHandle)
    (java.util.concurrent TimeUnit)))
 
+(def symbol-kind
+  {::file 1
+   ::module 2
+   ::namespace 3
+   ::package 4
+   ::class 5
+   ::method 6
+   ::property 7
+   ::field 8
+   ::constructor 9
+   ::enum 10
+   ::interface 11
+   ::function 12
+   ::variable 13
+   ::constant 14
+   ::string 15
+   ::number 16
+   ::boolean 17
+   ::array 18
+   ::object 19
+   ::key 20
+   ::null 21
+   ::enum-member 22
+   ::struct 23
+   ::event 24
+   ::operator 25
+   ::type-parameter 26})
+
+(def symbol-kind-lookup
+  (into {} (map (juxt val key)) symbol-kind))
+
 (defn- read-message [^BufferedReader in]
   (loop [headers {}]
     (let [line (.readLine in)]
@@ -56,13 +87,15 @@
         server-err (BufferedReader. (InputStreamReader. (.getErrorStream process)))
         !requests (atom {})
         !progresses (atom {})
+        !initialization (atom nil)
         server {::process process
                 ::in server-in
                 ::out server-out
                 ::err server-err
                 ::!msg-id (atom 0)
                 ::!requests !requests
-                ::!progresses !progresses}]
+                ::!progresses !progresses
+                ::!initialization !initialization}]
 
     (future
       (try
@@ -70,7 +103,7 @@
           (when-let [message (read-json-message server-in)]
             (prn "server->client:" message)
             (cond
-                 ; To treat message from server as response it must not have :method, which is for requests that the server initiates, e.g. "window/workDoneProgress/create"
+              ;; To treat message from server as response it must not have :method, which is for requests that the server initiates, e.g. "window/workDoneProgress/create"
               (and (not (contains? message :method)) (:id message))
               (let [{:keys [id]} message
                     p (get @!requests id)]
@@ -126,6 +159,9 @@
   ([server method params]
    (deref (server-request-async! server method params))))
 
+(defn path->uri [path]
+  (str "file://" path))
+
 (def ^:private default-client-capabilities
   {:general {:positionEncodings ["utf-16"]}
    :workspace {:workspaceFolders true
@@ -145,7 +181,7 @@
 
 (defn server-initialize! [server opts]
   (let [{:keys [root-path]} opts
-        root-uri (str "file://" root-path)
+        root-uri (path->uri root-path)
         params {:capabilities
                 default-client-capabilities
                 #_(:capabilities nvim-init-params)
@@ -159,23 +195,9 @@
                 ; :clientInfo {:name "lsp-sniffer" :version "0.1.0"}
                 ; :initializationOptions {}
                 ; :trace "off"
-
-        ; params (merge
-        ;         nvim-init-params
-        ;         {:processId (.pid (ProcessHandle/current))
-        ;          :rootPath root-path
-        ;          :rootUri root-uri
-        ;          :workDoneToken "initialize-1"
-        ;          :workspaceFolders [{:name root-path
-        ;                              :uri root-uri}]})]
-        ;         ; :clientInfo {:name "lsp-sniffer" :version "0.1.0"}
-        ;         ; :initializationOptions {}
-        ;         ; :trace "off"
-
-    ; (server-request-async! server "initialize" params)))
-
     ;; We don't need to queue requests because sending initialize with server-request! will block the thread until server responses with initialize.
     (let [response (server-request! server "initialize" params)]
+      (reset! (::!initialization server) response)
       (server-message! server {:method "initialized" :params {} :jsonrpc "2.0"})
       response)))
 
@@ -206,9 +228,6 @@
       (finally
         (remove-watch !progresses k)))))
 
-(defn path->uri [path]
-  (str "file://" path))
-
 (defn location-less-or-equal? [a b]
   (or (< (:line a) (:line b))
       (and (= (:line a) (:line b))
@@ -236,7 +255,7 @@
                                                       :position {:character 0, :line 0}})
                                     (map (fn [sym]
                                            {:uri uri
-                                            :sym sym})))))
+                                            :sym (assoc sym :kind-kw (symbol-kind-lookup (:kind sym)))})))))
                      (doall))
         symbols-by-uri (->> symbols (group-by :uri))
         symbol-references (->> symbols
@@ -272,9 +291,6 @@
                             {:id (if sym (symbol->id item) uri)
                              :label (:name sym)
                              :parent uri}))))
-                            ;; kind map to category
-                            ; :kind (:kind sym)}))))]
-
         g (-> (lg/digraph)
               (lg/add-nodes* file-uris)
               (internal/add-clustered-namespace-hierarchy-path-based uri-base))
@@ -389,6 +405,39 @@
       (finally
         (server-stop! server)))))
 
+(defn decode-semantic-tokens [payload token-types token-modifiers]
+  (let [{:keys [data]} payload]
+    (loop [[delta-line delta-start-char length token-type-id token-modifiers-bits & remaining] data
+           prev-line 0
+           prev-start-char 0
+           tokens []]
+      (if-not delta-line
+        tokens
+        (let [line (+ prev-line delta-line)
+              start-char (if (zero? delta-line)
+                           (+ prev-start-char delta-start-char)
+                           delta-start-char)
+              token-type (get token-types token-type-id "unknown")
+              modifiers (into #{}
+                              (keep-indexed
+                               (fn [idx _]
+                                 (when (bit-test token-modifiers-bits idx)
+                                   (get token-modifiers idx))))
+                              token-modifiers)]
+          (recur remaining line start-char
+                 (conj tokens
+                       {:line line
+                        :startChar start-char
+                        :length length
+                        :tokenType token-type
+                        :tokenModifiers modifiers})))))))
+
+::process
+
+::process
+
+:stratify.lsp/process
+
 (comment
   (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../../test/resources/nested"))
                       :server-args ["clojure-lsp"]
@@ -405,102 +454,8 @@
   (def analysis (kondo/analysis ["../../test/resources/nested"]))
 
   (kondo/->graph analysis)
-  (internal/analysis->graph {:analysis analysis}))
+  (internal/analysis->graph {:analysis analysis})
 
-(comment
-  (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-rs")))
-  (def uri-base (str "file://" root-path "/"))
-
-  (def server (start-server {:args ["rust-analyzer"]}))
-
-  (initialize-rust-analyzer! server {:root-path root-path})
-
-  (let [uri (str uri-base "src/main.rs")]
-    (->> (server-request! server "textDocument/documentSymbol"
-                          {:position {:character 0, :line 0}, :textDocument {:uri uri}})))
-
-  (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-rs"))
-                      :server-args ["rust-analyzer"]
-                      :source-paths ["src"]
-                      :source-pattern "**.rs"
-                      :initialize! initialize-rust-analyzer!})]
-    (sdgml/write-to-file "../../../../shared/lsp-sample-rs.dgml" data)))
-
-(comment
-  (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-go")))
-  (def uri-base (str "file://" root-path "/"))
-
-  (def server (start-server {:args ["gopls"]}))
-
-  (server-initialize! server {:root-path root-path})
-
-  (extract-graph {:server server
-                  :root-path root-path
-                  :source-paths ["."]
-                  :source-pattern "**.go"})
-
-  (let [uri (str uri-base "main.go")]
-    (->> (server-request! server "textDocument/documentSymbol"
-                          {:position {:character 0, :line 0}, :textDocument {:uri uri}})))
-
-  (server-stop! server)
-
-  (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-go"))
-                      :server-args ["gopls"]
-                      :source-paths ["."]
-                      :source-pattern "**.go"})]
-    (sdgml/write-to-file "../../../../shared/lsp-sample-go2.dgml" data)))
-
-(comment
-  (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-lua")))
-  (def uri-base (str "file://" root-path "/"))
-
-  (def server (start-server {:args ["lua-language-server"]}))
-
-  (server-initialize! server {:root-path root-path})
-
-  (extract-graph {:server server
-                  :root-path root-path
-                  :source-paths ["lua"]
-                  :source-pattern "**.lua"})
-
-  (server-stop! server)
-
-  (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-lua"))
-                      :server-args ["lua-language-server"]
-                      :source-paths ["."]
-                      :source-pattern "**.lua"})]
-    (sdgml/write-to-file "../../../../shared/lsp-sample-lua.dgml" data)))
-
-  (let [data (graph->dgml (extract-lua {:root-path (.getCanonicalPath (io/file "/home/me/code/lazy-lsp.nvim"))}))]
-    (sdgml/write-to-file "../../../../shared/lsp-lua-lazy-lsp.dgml" data)))
-
-(comment
-  (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-ts")))
-  (def uri-base (str "file://" root-path "/"))
-
-  (def server (start-server {:args ["typescript-language-server" "--stdio"]}))
-
-  (server-initialize! server {:root-path root-path})
-
-  (extract-graph {:server server
-                  :root-path root-path
-                  :source-paths ["."]
-                  :source-pattern "**.{j,t}s{,x}"})
-
-  (let [uri (str uri-base "src/main.ts")]
-    (->> (server-request! server "textDocument/documentSymbol"
-                          {:position {:character 0, :line 0}, :textDocument {:uri uri}})))
-
-  (server-stop! server)
-
-  (let [data (->dgml {:root-path root-path
-                      :server-args ["typescript-language-server" "--stdio"]
-                      :source-paths ["src"]
-                      :source-pattern "**.{j,t}s{,x}"})]
-    (sdgml/write-to-file "../../../../shared/lsp-sample-ts.dgml" data)))
-
-(comment
   (def root-path (.getCanonicalPath (io/file "../..")))
   (def root-path (.getCanonicalPath (io/file "../../test/resources/nested")))
   (def uri-base (str "file://" root-path "/"))
@@ -561,3 +516,121 @@
 
   (server-request! server "callHierarchy/outgoingCalls"
                    {:item hierarchy-item}))
+
+(comment
+  (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-rs")))
+  (do
+    (def uri-base (str "file://" root-path "/"))
+    (def server (start-server {:args ["rust-analyzer"]}))
+    (initialize-rust-analyzer! server {:root-path root-path}))
+
+  (let [uri (str uri-base "src/main.rs")]
+    (->> (server-request! server "textDocument/documentSymbol"
+                          {:position {:character 0, :line 0}, :textDocument {:uri uri}})))
+
+  (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-rs"))
+                      :server-args ["rust-analyzer"]
+                      :source-paths ["src"]
+                      :source-pattern "**.rs"
+                      :initialize! initialize-rust-analyzer!})]
+    (sdgml/write-to-file "../../../../shared/lsp-sample-rs.dgml" data))
+
+  (let [data (graph->dgml (extract-rust {:root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-rs"))}))]
+    (sdgml/write-to-file "../../../../shared/lsp-sample-rs.dgml" data)))
+
+(comment
+  (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-go")))
+  (def uri-base (str "file://" root-path "/"))
+
+  (def server (start-server {:args ["gopls"]}))
+
+  (server-initialize! server {:root-path root-path})
+
+  (extract-graph {:server server
+                  :root-path root-path
+                  :source-paths ["."]
+                  :source-pattern "**.go"})
+
+  (let [uri (str uri-base "main.go")]
+    (->> (server-request! server "textDocument/documentSymbol"
+                          {:position {:character 0, :line 0}, :textDocument {:uri uri}})))
+
+  (server-stop! server)
+
+  (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-go"))
+                      :server-args ["gopls"]
+                      :source-paths ["."]
+                      :source-pattern "**.go"})]
+    (sdgml/write-to-file "../../../../shared/lsp-sample-go2.dgml" data)))
+
+(comment
+  (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-lua")))
+  (def root-path (.getCanonicalPath (io/file "/home/me/code/lazy-lsp.nvim")))
+  (def uri-base (str "file://" root-path "/"))
+
+  (def server (start-server {:args ["lua-language-server"]}))
+
+  (server-initialize! server {:root-path root-path})
+
+  (def symbls (let [uri (str uri-base "lua/lazy-lsp/init.lua")]
+                (->> (server-request! server "textDocument/documentSymbol"
+                                      {:position {:character 0, :line 0}, :textDocument {:uri uri}})
+                     (map (fn [sym]
+                            (assoc sym :kind-kw (symbol-kind-lookup (:kind sym))))))))
+  (tap> symbls)
+
+  (def symbls (let [uri (str uri-base "lua/lazy-lsp/helpers.lua")]
+                (->> (server-request! server "textDocument/documentSymbol"
+                                      {:position {:character 0, :line 0}, :textDocument {:uri uri}})
+                     (map (fn [sym]
+                            (assoc sym :kind-kw (symbol-kind-lookup (:kind sym))))))))
+  (tap> symbls)
+
+  (let [uri (str uri-base #_"lua/lazy-lsp/init.lua"
+                 "lua/main.lua")
+        response (server-request! server "textDocument/semanticTokens/full"
+                                  {:textDocument {:uri uri}})
+        {:keys [tokenTypes tokenModifiers]} (->> @(::!initialization server)
+                                                 :capabilities :semanticTokensProvider :legend)]
+    (decode-semantic-tokens response tokenTypes tokenModifiers))
+
+  (extract-graph {:server server
+                  :root-path root-path
+                  :source-paths ["lua"]
+                  :source-pattern "**.lua"})
+
+  (server-stop! server)
+
+  (let [data (->dgml {:root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-lua"))
+                      :server-args ["lua-language-server"]
+                      :source-paths ["."]
+                      :source-pattern "**.lua"})]
+    (sdgml/write-to-file "../../../../shared/lsp-sample-lua.dgml" data))
+
+  (let [data (graph->dgml (extract-lua {:root-path (.getCanonicalPath (io/file "/home/me/code/lazy-lsp.nvim"))}))]
+    (sdgml/write-to-file "../../../../shared/lsp-lua-lazy-lsp.dgml" data)))
+
+(comment
+  (def root-path (.getCanonicalPath (io/file "../scip/test/resources/sample-ts")))
+  (def uri-base (str "file://" root-path "/"))
+
+  (def server (start-server {:args ["typescript-language-server" "--stdio"]}))
+
+  (server-initialize! server {:root-path root-path})
+
+  (extract-graph {:server server
+                  :root-path root-path
+                  :source-paths ["."]
+                  :source-pattern "**.{j,t}s{,x}"})
+
+  (let [uri (str uri-base "src/main.ts")]
+    (->> (server-request! server "textDocument/documentSymbol"
+                          {:position {:character 0, :line 0}, :textDocument {:uri uri}})))
+
+  (server-stop! server)
+
+  (let [data (->dgml {:root-path root-path
+                      :server-args ["typescript-language-server" "--stdio"]
+                      :source-paths ["src"]
+                      :source-pattern "**.{j,t}s{,x}"})]
+    (sdgml/write-to-file "../../../../shared/lsp-sample-ts.dgml" data)))
