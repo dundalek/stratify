@@ -1,12 +1,12 @@
 (ns io.github.dundalek.stratify.scip
   {:clj-kondo/config '{:lint-as {pronto.core/defmapper clojure.core/def}}}
   (:require
+   [clojure.data.xml :as xml]
    [clojure.java.io :as io]
    [clojure.string :as str]
+   [io.github.dundalek.stratify.scip.extractors :as extractors]
    [pronto.core :as p]
-   [clojure.data.xml :as xml]
-   [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]
-   [io.github.dundalek.stratify.scip.extractors :as extractors])
+   [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml])
   (:import
    (com.sourcegraph Scip$Index Scip$SymbolRole)
    (java.nio.file Files)))
@@ -104,7 +104,16 @@
   (->dgml index)
 
   (extract {:index-file "target/scip/go.scip"
-            :output-file "target/dgml/scip-go.dgml"}))
+            :output-file "target/dgml/scip-go.dgml"})
+
+  (extract {:index-file "index.scip"
+            :output-file "target/dgml/scip-clang-postgress.dgml"})
+
+  (extract {:index-file "/home/me/Downloads/git/postgres/index.scip"
+            :output-file "target/dgml/scip-clang-postgres.dgml"})
+
+  (extract {:index-file "/home/me/Downloads/git/neovim/index.scip"
+            :output-file "target/dgml/scip-clang-neovim.dgml"}))
 
 (comment
   ;; Symbol identifier grammar: https://github.com/sourcegraph/scip/blob/b469406e85b91a947c266ec84835ab81eaa6150e/scip.proto#L156
@@ -127,4 +136,3 @@
   (let [descriptor #_"`sample-go/greet`/"
         "`sample-go/greet`/TheWorld()."]
     (str/split (unescape descriptor) #"/" -1)))
-
