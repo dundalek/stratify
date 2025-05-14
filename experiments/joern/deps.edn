@@ -1,0 +1,8 @@
+{:deps
+ {stratify/stratify {:local/root "../.."}}
+
+ :aliases
+ {:test
+  {:extra-deps {lambdaisland/kaocha {:mvn/version "1.87.1366"}}
+   :extra-paths ["test/src" "../../test/src"]
+   :main-opts ["-m" "kaocha.runner"]}}}

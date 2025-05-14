@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="111669149700" Label="&lt;operator&gt;.assignment" Name="&lt;operator&gt;.assignment" Category="Function"/>
+    <Node Id="111669149703" Label="log" Name="__whatwg.console:log" Category="Function"/>
+    <Node Id="111669149697" Label=":program" Name="src/greeting.ts::program" Category="Function"/>
+    <Node Id="111669149698" Label="main" Name="src/main.ts::program:main" Category="Function"/>
+    <Node Id="111669149701" Label="&lt;operator&gt;.fieldAccess" Name="&lt;operator&gt;.fieldAccess" Category="Function"/>
+    <Node Id="111669149696" Label="greet" Name="src/greeting.ts::program:greet" Category="Function"/>
+    <Node Id="111669149702" Label="require" Name="src/main.ts::program:require" Category="Function"/>
+    <Node Id="111669149699" Label=":program" Name="src/main.ts::program" Category="Function"/>
+    <Node Id="&lt;empty&gt;" Label="&lt;empty&gt;" Category="Namespace" Group="Expanded"/>
+    <Node Id="src/greeting.ts" Label="src/greeting.ts" Category="Namespace" Group="Expanded"/>
+    <Node Id="src/main.ts" Label="src/main.ts" Category="Namespace" Group="Expanded"/>
+  </Nodes>
+  <Links>
+    <Link Source="111669149698" Target="111669149701"/>
+    <Link Source="111669149698" Target="111669149696"/>
+    <Link Source="111669149697" Target="111669149700"/>
+    <Link Source="111669149699" Target="111669149700"/>
+    <Link Source="111669149699" Target="111669149701"/>
+    <Link Source="111669149699" Target="111669149698"/>
+    <Link Source="111669149697" Target="111669149700"/>
+    <Link Source="111669149699" Target="111669149702"/>
+    <Link Source="111669149697" Target="111669149701"/>
+    <Link Source="111669149699" Target="111669149700"/>
+    <Link Source="111669149698" Target="111669149703"/>
+    <Link Source="&lt;empty&gt;" Target="111669149700" Category="Contains"/>
+    <Link Source="&lt;empty&gt;" Target="111669149703" Category="Contains"/>
+    <Link Source="src/greeting.ts" Target="111669149697" Category="Contains"/>
+    <Link Source="src/main.ts" Target="111669149698" Category="Contains"/>
+    <Link Source="&lt;empty&gt;" Target="111669149701" Category="Contains"/>
+    <Link Source="src/greeting.ts" Target="111669149696" Category="Contains"/>
+    <Link Source="&lt;empty&gt;" Target="111669149702" Category="Contains"/>
+    <Link Source="src/main.ts" Target="111669149699" Category="Contains"/>
+  </Links>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Namespace" ValueLabel="True">
+      <Condition Expression="HasCategory('Namespace')"/>
+      <Setter Property="Background" Value="#295B71"/>
+      <Setter Property="Stroke" Value="#34749A"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Function" ValueLabel="Public">
+      <Condition Expression="HasCategory('Function') and Access = 'Public'"/>
+      <Setter Property="Background" Value="#A75529"/>
+      <Setter Property="Stroke" Value="#C4632F"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Function" ValueLabel="Private">
+      <Condition Expression="HasCategory('Function') and  Access = 'Private'"/>
+      <Setter Property="Background" Value="#66A75529"/>
+      <Setter Property="Stroke" Value="#C4632F"/>
+      <Setter Property="StrokeDashArray" Value="3,6"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Macro" ValueLabel="Public">
+      <Condition Expression="HasCategory('Macro') and Access = 'Public'"/>
+      <Setter Property="Background" Value="#714164"/>
+      <Setter Property="Stroke" Value="#874381"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Macro" ValueLabel="Private">
+      <Condition Expression="HasCategory('Macro') and Access = 'Private'"/>
+      <Setter Property="Background" Value="#66714164"/>
+      <Setter Property="Stroke" Value="#874381"/>
+      <Setter Property="StrokeDashArray" Value="3,6"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Var" ValueLabel="Public">
+      <Condition Expression="HasCategory('Var') and Access = 'Public'"/>
+      <Setter Property="Background" Value="#3A6C5F"/>
+      <Setter Property="Stroke" Value="#2A8469"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Var" ValueLabel="Private">
+      <Condition Expression="HasCategory('Var') and Access = 'Private'"/>
+      <Setter Property="Background" Value="#663A6C5F"/>
+      <Setter Property="Stroke" Value="#2A8469"/>
+      <Setter Property="StrokeDashArray" Value="3,6"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Link" GroupLabel="Link" ValueLabel="Private Reference">
+      <Condition Expression="Target.Access = 'Private'"/>
+      <Setter Property="StrokeDashArray" Value="4,2"/>
+    </Style>
+  </Styles>
+</DirectedGraph>

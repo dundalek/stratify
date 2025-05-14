@@ -1,0 +1,2910 @@
+<graphml 
+xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd" xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <key id="labelV" for="node" attr.name="labelV" attr.type="string"/>
+  <key id="labelE" for="edge" attr.name="labelE" attr.type="string"/>
+  <key id="node__METHOD_REF__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__METHOD__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__IMPORT__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__FIELD_IDENTIFIER__ARGUMENT_INDEX" for="node" attr.name="ARGUMENT_INDEX" attr.type="int"/>
+  <key id="node__RETURN__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_OUT__INDEX" for="node" attr.name="INDEX" attr.type="int"/>
+  <key id="node__METHOD__IS_EXTERNAL" for="node" attr.name="IS_EXTERNAL" attr.type="boolean"/>
+  <key id="node__MODIFIER__MODIFIER_TYPE" for="node" attr.name="MODIFIER_TYPE" attr.type="string"/>
+  <key id="node__METHOD__FULL_NAME" for="node" attr.name="FULL_NAME" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_OUT__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__METHOD__LINE_NUMBER_END" for="node" attr.name="LINE_NUMBER_END" attr.type="int"/>
+  <key id="node__TYPE_DECL__FULL_NAME" for="node" attr.name="FULL_NAME" attr.type="string"/>
+  <key id="node__CALL__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__METHOD__GENERIC_SIGNATURE" for="node" attr.name="GENERIC_SIGNATURE" attr.type="string"/>
+  <key id="node__IMPORT__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__CALL__METHOD_FULL_NAME" for="node" attr.name="METHOD_FULL_NAME" attr.type="string"/>
+  <key id="node__METHOD_RETURN__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__FILE__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__TYPE__FULL_NAME" for="node" attr.name="FULL_NAME" attr.type="string"/>
+  <key id="node__METHOD__AST_PARENT_TYPE" for="node" attr.name="AST_PARENT_TYPE" attr.type="string"/>
+  <key id="node__METHOD__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__IMPORT__IMPORTED_ENTITY" for="node" attr.name="IMPORTED_ENTITY" attr.type="string"/>
+  <key id="node__LITERAL__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__MODIFIER__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__TYPE_DECL__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__RETURN__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY" for="node" attr.name="EVALUATION_STRATEGY" attr.type="string">
+  </key>
+  <key id="node__FILE__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__METHOD_RETURN__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__DEPENDENCY__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__CALL__SIGNATURE" for="node" attr.name="SIGNATURE" attr.type="string"/>
+  <key id="node__NAMESPACE_BLOCK__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__CALL__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__IDENTIFIER__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__METHOD_RETURN__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__METHOD__COLUMN_NUMBER_END" for="node" attr.name="COLUMN_NUMBER_END" attr.type="int"/>
+  <key id="node__LOCAL__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__MODIFIER__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__TYPE_DECL__AST_PARENT_FULL_NAME" for="node" attr.name="AST_PARENT_FULL_NAME" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_IN__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__LOCAL__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__IDENTIFIER__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__METHOD_REF__METHOD_FULL_NAME" for="node" attr.name="METHOD_FULL_NAME" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_OUT__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__BLOCK__ARGUMENT_INDEX" for="node" attr.name="ARGUMENT_INDEX" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_OUT__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__CALL__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__NAMESPACE_BLOCK__FILENAME" for="node" attr.name="FILENAME" attr.type="string"/>
+  <key id="node__TYPE_DECL__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__LOCAL__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_IN__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__CONFIG_FILE__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__NAMESPACE__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__METHOD_RETURN__EVALUATION_STRATEGY" for="node" attr.name="EVALUATION_STRATEGY" attr.type="string"/>
+  <key id="node__CLOSURE_BINDING__CLOSURE_BINDING_ID" for="node" attr.name="CLOSURE_BINDING_ID" attr.type="string"/>
+  <key id="node__FIELD_IDENTIFIER__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__IMPORT__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__BLOCK__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__BLOCK__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__NAMESPACE_BLOCK__FULL_NAME" for="node" attr.name="FULL_NAME" attr.type="string"/>
+  <key id="node__BINDING__SIGNATURE" for="node" attr.name="SIGNATURE" attr.type="string"/>
+  <key id="node__BLOCK__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__META_DATA__ROOT" for="node" attr.name="ROOT" attr.type="string"/>
+  <key id="node__METHOD_REF__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__METHOD_RETURN__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__METHOD_REF__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__CLOSURE_BINDING__EVALUATION_STRATEGY" for="node" attr.name="EVALUATION_STRATEGY" attr.type="string"/>
+  <key id="node__NAMESPACE_BLOCK__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__META_DATA__HASH" for="node" attr.name="HASH" attr.type="string"/>
+  <key id="node__CALL__ARGUMENT_INDEX" for="node" attr.name="ARGUMENT_INDEX" attr.type="int"/>
+  <key id="node__TYPE_DECL__IS_EXTERNAL" for="node" attr.name="IS_EXTERNAL" attr.type="boolean"/>
+  <key id="node__LOCAL__CLOSURE_BINDING_ID" for="node" attr.name="CLOSURE_BINDING_ID" attr.type="string"/>
+  <key id="node__META_DATA__VERSION" for="node" attr.name="VERSION" attr.type="string"/>
+  <key id="node__CALL__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__IDENTIFIER__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__LITERAL__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__TYPE_DECL__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__IDENTIFIER__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_OUT__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__LOCAL__GENERIC_SIGNATURE" for="node" attr.name="GENERIC_SIGNATURE" attr.type="string"/>
+  <key id="node__TAG__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_IN__INDEX" for="node" attr.name="INDEX" attr.type="int"/>
+  <key id="node__FIELD_IDENTIFIER__CANONICAL_NAME" for="node" attr.name="CANONICAL_NAME" attr.type="string"/>
+  <key id="node__LOCAL__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key 
+  id="node__METHOD_PARAMETER_OUT__EVALUATION_STRATEGY" for="node" attr.name="EVALUATION_STRATEGY" attr.type="string">
+</key>
+  <key id="node__METHOD_PARAMETER_IN__IS_VARIADIC" for="node" attr.name="IS_VARIADIC" attr.type="boolean"/>
+  <key id="node__FIELD_IDENTIFIER__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__CLOSURE_BINDING__CLOSURE_ORIGINAL_NAME" for="node" attr.name="CLOSURE_ORIGINAL_NAME" attr.type="string">
+  </key>
+  <key id="node__LITERAL__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__MODIFIER__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__LOCAL__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__IMPORT__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__TYPE_DECL__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__NAMESPACE__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_IN__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__METHOD__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__IDENTIFIER__ARGUMENT_INDEX" for="node" attr.name="ARGUMENT_INDEX" attr.type="int"/>
+  <key id="node__METHOD__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__BLOCK__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__METHOD__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__RETURN__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__FIELD_IDENTIFIER__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__RETURN__ARGUMENT_INDEX" for="node" attr.name="ARGUMENT_INDEX" attr.type="int"/>
+  <key id="node__CALL__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__TYPE__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__CONFIG_FILE__CONTENT" for="node" attr.name="CONTENT" attr.type="string"/>
+  <key id="node__BINDING__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__BINDING__METHOD_FULL_NAME" for="node" attr.name="METHOD_FULL_NAME" attr.type="string"/>
+  <key id="node__IDENTIFIER__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__METHOD__SIGNATURE" for="node" attr.name="SIGNATURE" attr.type="string"/>
+  <key id="node__NAMESPACE_BLOCK__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__FILE__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__TYPE__TYPE_DECL_FULL_NAME" for="node" attr.name="TYPE_DECL_FULL_NAME" attr.type="string"/>
+  <key id="node__METHOD_REF__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__TYPE_DECL__GENERIC_SIGNATURE" for="node" attr.name="GENERIC_SIGNATURE" attr.type="string"/>
+  <key id="node__TYPE_DECL__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_IN__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__BLOCK__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__RETURN__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__METHOD_REF__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__CALL__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__TAG__VALUE" for="node" attr.name="VALUE" attr.type="string"/>
+  <key id="node__MODIFIER__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__IDENTIFIER__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__DEPENDENCY__DEPENDENCY_GROUP_ID" for="node" attr.name="DEPENDENCY_GROUP_ID" attr.type="string"/>
+  <key id="node__DEPENDENCY__VERSION" for="node" attr.name="VERSION" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_OUT__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__LOCAL__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_OUT__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__TYPE_DECL__FILENAME" for="node" attr.name="FILENAME" attr.type="string"/>
+  <key id="node__FILE__CONTENT" for="node" attr.name="CONTENT" attr.type="string"/>
+  <key id="node__LITERAL__ARGUMENT_INDEX" for="node" attr.name="ARGUMENT_INDEX" attr.type="int"/>
+  <key id="node__METHOD_REF__ARGUMENT_INDEX" for="node" attr.name="ARGUMENT_INDEX" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_OUT__IS_VARIADIC" for="node" attr.name="IS_VARIADIC" attr.type="boolean"/>
+  <key id="node__METHOD__FILENAME" for="node" attr.name="FILENAME" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_IN__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__METHOD__AST_PARENT_FULL_NAME" for="node" attr.name="AST_PARENT_FULL_NAME" attr.type="string"/>
+  <key id="node__CALL__DISPATCH_TYPE" for="node" attr.name="DISPATCH_TYPE" attr.type="string"/>
+  <key id="node__META_DATA__LANGUAGE" for="node" attr.name="LANGUAGE" attr.type="string"/>
+  <key id="node__METHOD_RETURN__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__LITERAL__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__TYPE_DECL__AST_PARENT_TYPE" for="node" attr.name="AST_PARENT_TYPE" attr.type="string"/>
+  <key id="node__NAMESPACE__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__IMPORT__IMPORTED_AS" for="node" attr.name="IMPORTED_AS" attr.type="string"/>
+  <key id="node__FIELD_IDENTIFIER__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__LITERAL__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="edge__REACHING_DEF__property" for="edge" attr.name="property" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="21474836480">
+      <data key="labelV">BINDING</data>
+      <data key="node__BINDING__METHOD_FULL_NAME">&lt;empty&gt;</data>
+      <data key="node__BINDING__NAME"/>
+      <data key="node__BINDING__SIGNATURE"/>
+    </node>
+    <node id="21474836481">
+      <data key="labelV">BINDING</data>
+      <data key="node__BINDING__METHOD_FULL_NAME">&lt;empty&gt;</data>
+      <data key="node__BINDING__NAME"/>
+      <data key="node__BINDING__SIGNATURE"/>
+    </node>
+    <node id="21474836482">
+      <data key="labelV">BINDING</data>
+      <data key="node__BINDING__METHOD_FULL_NAME">&lt;empty&gt;</data>
+      <data key="node__BINDING__NAME"/>
+      <data key="node__BINDING__SIGNATURE"/>
+    </node>
+    <node id="21474836483">
+      <data key="labelV">BINDING</data>
+      <data key="node__BINDING__METHOD_FULL_NAME">&lt;empty&gt;</data>
+      <data key="node__BINDING__NAME"/>
+      <data key="node__BINDING__SIGNATURE"/>
+    </node>
+    <node id="25769803776">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">-1</data>
+      <data key="node__BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__BLOCK__ORDER">2</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="25769803777">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">-1</data>
+      <data key="node__BLOCK__CODE">{ return 'Hello, World!'; }</data>
+      <data key="node__BLOCK__COLUMN_NUMBER">24</data>
+      <data key="node__BLOCK__LINE_NUMBER">1</data>
+      <data key="node__BLOCK__ORDER">2</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="25769803778">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">1</data>
+      <data key="node__BLOCK__CODE">export function greet() { return 'Hello, World!'; }</data>
+      <data key="node__BLOCK__COLUMN_NUMBER">0</data>
+      <data key="node__BLOCK__LINE_NUMBER">1</data>
+      <data key="node__BLOCK__ORDER">1</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="25769803779">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">-1</data>
+      <data key="node__BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__BLOCK__ORDER">2</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="25769803780">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">-1</data>
+      <data key="node__BLOCK__CODE">{ console.log(greet()); }</data>
+      <data key="node__BLOCK__COLUMN_NUMBER">16</data>
+      <data key="node__BLOCK__LINE_NUMBER">3</data>
+      <data key="node__BLOCK__ORDER">2</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="25769803781">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">1</data>
+      <data key="node__BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__BLOCK__ORDER">1</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="25769803782">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">1</data>
+      <data key="node__BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__BLOCK__ORDER">1</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="25769803783">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">1</data>
+      <data key="node__BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__BLOCK__ORDER">1</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="25769803784">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">1</data>
+      <data key="node__BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__BLOCK__ORDER">1</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="30064771072">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">1</data>
+      <data key="node__CALL__CODE">function greet = function greet() { return 'Hello, World!'; }</data>
+      <data key="node__CALL__COLUMN_NUMBER">7</data>
+      <data key="node__CALL__DISPATCH_TYPE">STATIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">1</data>
+      <data key="node__CALL__METHOD_FULL_NAME">&lt;operator&gt;.assignment</data>
+      <data key="node__CALL__NAME">&lt;operator&gt;.assignment</data>
+      <data key="node__CALL__ORDER">1</data>
+      <data key="node__CALL__SIGNATURE"/>
+      <data key="node__CALL__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="30064771073">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">2</data>
+      <data key="node__CALL__CODE">exports.greet = greet</data>
+      <data key="node__CALL__COLUMN_NUMBER">0</data>
+      <data key="node__CALL__DISPATCH_TYPE">STATIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">1</data>
+      <data key="node__CALL__METHOD_FULL_NAME">&lt;operator&gt;.assignment</data>
+      <data key="node__CALL__NAME">&lt;operator&gt;.assignment</data>
+      <data key="node__CALL__ORDER">2</data>
+      <data key="node__CALL__SIGNATURE"/>
+      <data key="node__CALL__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="30064771074">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">1</data>
+      <data key="node__CALL__CODE">exports.greet</data>
+      <data key="node__CALL__COLUMN_NUMBER">0</data>
+      <data key="node__CALL__DISPATCH_TYPE">STATIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">1</data>
+      <data key="node__CALL__METHOD_FULL_NAME">&lt;operator&gt;.fieldAccess</data>
+      <data key="node__CALL__NAME">&lt;operator&gt;.fieldAccess</data>
+      <data key="node__CALL__ORDER">1</data>
+      <data key="node__CALL__SIGNATURE"/>
+      <data key="node__CALL__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="30064771075">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">1</data>
+      <data key="node__CALL__CODE">require(&quot;./greeting&quot;)</data>
+      <data key="node__CALL__COLUMN_NUMBER">0</data>
+      <data key="node__CALL__DISPATCH_TYPE">DYNAMIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">1</data>
+      <data key="node__CALL__METHOD_FULL_NAME">src/main.ts::program:require</data>
+      <data key="node__CALL__NAME">require</data>
+      <data key="node__CALL__ORDER">1</data>
+      <data key="node__CALL__SIGNATURE"/>
+      <data key="node__CALL__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="30064771076">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">1</data>
+      <data key="node__CALL__CODE">console.log(greet())</data>
+      <data key="node__CALL__COLUMN_NUMBER">2</data>
+      <data key="node__CALL__DISPATCH_TYPE">DYNAMIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">4</data>
+      <data key="node__CALL__METHOD_FULL_NAME">__whatwg.console:log</data>
+      <data key="node__CALL__NAME">log</data>
+      <data key="node__CALL__ORDER">1</data>
+      <data key="node__CALL__SIGNATURE"/>
+      <data key="node__CALL__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="30064771077">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">-1</data>
+      <data key="node__CALL__CODE">console.log</data>
+      <data key="node__CALL__COLUMN_NUMBER">2</data>
+      <data key="node__CALL__DISPATCH_TYPE">STATIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">4</data>
+      <data key="node__CALL__METHOD_FULL_NAME">&lt;operator&gt;.fieldAccess</data>
+      <data key="node__CALL__NAME">&lt;operator&gt;.fieldAccess</data>
+      <data key="node__CALL__ORDER">1</data>
+      <data key="node__CALL__SIGNATURE"/>
+      <data key="node__CALL__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="30064771078">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">1</data>
+      <data key="node__CALL__CODE">greet()</data>
+      <data key="node__CALL__COLUMN_NUMBER">14</data>
+      <data key="node__CALL__DISPATCH_TYPE">DYNAMIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">4</data>
+      <data key="node__CALL__METHOD_FULL_NAME">src/greeting.ts::program:greet</data>
+      <data key="node__CALL__NAME">greet</data>
+      <data key="node__CALL__ORDER">3</data>
+      <data key="node__CALL__SIGNATURE"/>
+      <data key="node__CALL__TYPE_FULL_NAME">__ecma.String</data>
+    </node>
+    <node id="30064771079">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">1</data>
+      <data key="node__CALL__CODE">var greet = require(&quot;./greeting&quot;).greet</data>
+      <data key="node__CALL__COLUMN_NUMBER">0</data>
+      <data key="node__CALL__DISPATCH_TYPE">STATIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">1</data>
+      <data key="node__CALL__METHOD_FULL_NAME">&lt;operator&gt;.assignment</data>
+      <data key="node__CALL__NAME">&lt;operator&gt;.assignment</data>
+      <data key="node__CALL__ORDER">1</data>
+      <data key="node__CALL__SIGNATURE"/>
+      <data key="node__CALL__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="30064771080">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">2</data>
+      <data key="node__CALL__CODE">require(&quot;./greeting&quot;).greet</data>
+      <data key="node__CALL__COLUMN_NUMBER">0</data>
+      <data key="node__CALL__DISPATCH_TYPE">STATIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">1</data>
+      <data key="node__CALL__METHOD_FULL_NAME">&lt;operator&gt;.fieldAccess</data>
+      <data key="node__CALL__NAME">&lt;operator&gt;.fieldAccess</data>
+      <data key="node__CALL__ORDER">2</data>
+      <data key="node__CALL__SIGNATURE"/>
+      <data key="node__CALL__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="30064771081">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">2</data>
+      <data key="node__CALL__CODE">function main = function main() { console.log(greet()); }</data>
+      <data key="node__CALL__COLUMN_NUMBER">0</data>
+      <data key="node__CALL__DISPATCH_TYPE">STATIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">3</data>
+      <data key="node__CALL__METHOD_FULL_NAME">&lt;operator&gt;.assignment</data>
+      <data key="node__CALL__NAME">&lt;operator&gt;.assignment</data>
+      <data key="node__CALL__ORDER">2</data>
+      <data key="node__CALL__SIGNATURE"/>
+      <data key="node__CALL__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="30064771082">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">3</data>
+      <data key="node__CALL__CODE">main()</data>
+      <data key="node__CALL__COLUMN_NUMBER">0</data>
+      <data key="node__CALL__DISPATCH_TYPE">DYNAMIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">7</data>
+      <data key="node__CALL__METHOD_FULL_NAME">src/main.ts::program:main</data>
+      <data key="node__CALL__NAME">main</data>
+      <data key="node__CALL__ORDER">3</data>
+      <data key="node__CALL__SIGNATURE"/>
+      <data key="node__CALL__TYPE_FULL_NAME">void</data>
+    </node>
+    <node id="34359738368">
+      <data key="labelV">CLOSURE_BINDING</data>
+      <data key="node__CLOSURE_BINDING__CLOSURE_BINDING_ID">src/main.ts::program:main:greet</data>
+      <data key="node__CLOSURE_BINDING__CLOSURE_ORIGINAL_NAME">greet</data>
+      <data key="node__CLOSURE_BINDING__EVALUATION_STRATEGY">BY_REFERENCE</data>
+    </node>
+    <node id="42949672960">
+      <data key="labelV">CONFIG_FILE</data>
+      <data key="node__CONFIG_FILE__CONTENT">{}</data>
+      <data key="node__CONFIG_FILE__NAME">tsconfig.json</data>
+    </node>
+    <node id="51539607552">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__DEPENDENCY_GROUP_ID">./greeting</data>
+      <data key="node__DEPENDENCY__NAME">greet</data>
+      <data key="node__DEPENDENCY__VERSION">import</data>
+    </node>
+    <node id="55834574848">
+      <data key="labelV">FIELD_IDENTIFIER</data>
+      <data key="node__FIELD_IDENTIFIER__ARGUMENT_INDEX">2</data>
+      <data key="node__FIELD_IDENTIFIER__CANONICAL_NAME">greet</data>
+      <data key="node__FIELD_IDENTIFIER__CODE">greet</data>
+      <data key="node__FIELD_IDENTIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__FIELD_IDENTIFIER__LINE_NUMBER">1</data>
+      <data key="node__FIELD_IDENTIFIER__ORDER">2</data>
+    </node>
+    <node id="55834574849">
+      <data key="labelV">FIELD_IDENTIFIER</data>
+      <data key="node__FIELD_IDENTIFIER__ARGUMENT_INDEX">2</data>
+      <data key="node__FIELD_IDENTIFIER__CANONICAL_NAME">log</data>
+      <data key="node__FIELD_IDENTIFIER__CODE">log</data>
+      <data key="node__FIELD_IDENTIFIER__COLUMN_NUMBER">10</data>
+      <data key="node__FIELD_IDENTIFIER__LINE_NUMBER">4</data>
+      <data key="node__FIELD_IDENTIFIER__ORDER">2</data>
+    </node>
+    <node id="55834574850">
+      <data key="labelV">FIELD_IDENTIFIER</data>
+      <data key="node__FIELD_IDENTIFIER__ARGUMENT_INDEX">2</data>
+      <data key="node__FIELD_IDENTIFIER__CANONICAL_NAME">greet</data>
+      <data key="node__FIELD_IDENTIFIER__CODE">greet</data>
+      <data key="node__FIELD_IDENTIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__FIELD_IDENTIFIER__LINE_NUMBER">1</data>
+      <data key="node__FIELD_IDENTIFIER__ORDER">2</data>
+    </node>
+    <node id="60129542144">
+      <data key="labelV">FILE</data>
+      <data key="node__FILE__CODE">&lt;empty&gt;</data>
+      <data key="node__FILE__CONTENT">&lt;empty&gt;</data>
+      <data key="node__FILE__NAME">src/greeting.ts</data>
+      <data key="node__FILE__ORDER">0</data>
+    </node>
+    <node id="60129542145">
+      <data key="labelV">FILE</data>
+      <data key="node__FILE__CODE">&lt;empty&gt;</data>
+      <data key="node__FILE__CONTENT">&lt;empty&gt;</data>
+      <data key="node__FILE__NAME">src/main.ts</data>
+      <data key="node__FILE__ORDER">0</data>
+    </node>
+    <node id="68719476736">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">1</data>
+      <data key="node__IDENTIFIER__CODE">greet</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">7</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">1</data>
+      <data key="node__IDENTIFIER__NAME">greet</data>
+      <data key="node__IDENTIFIER__ORDER">1</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">src/greeting.ts::program:greet</data>
+    </node>
+    <node id="68719476737">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">1</data>
+      <data key="node__IDENTIFIER__CODE">exports</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">1</data>
+      <data key="node__IDENTIFIER__NAME">exports</data>
+      <data key="node__IDENTIFIER__ORDER">1</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="68719476738">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">2</data>
+      <data key="node__IDENTIFIER__CODE">greet</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">1</data>
+      <data key="node__IDENTIFIER__NAME">greet</data>
+      <data key="node__IDENTIFIER__ORDER">2</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">src/greeting.ts::program:greet</data>
+    </node>
+    <node id="68719476739">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">1</data>
+      <data key="node__IDENTIFIER__CODE">console</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">2</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">4</data>
+      <data key="node__IDENTIFIER__NAME">console</data>
+      <data key="node__IDENTIFIER__ORDER">1</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">__whatwg.console</data>
+    </node>
+    <node id="68719476740">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">0</data>
+      <data key="node__IDENTIFIER__CODE">console</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">2</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">4</data>
+      <data key="node__IDENTIFIER__NAME">console</data>
+      <data key="node__IDENTIFIER__ORDER">2</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">__whatwg.console</data>
+    </node>
+    <node id="68719476741">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">-1</data>
+      <data key="node__IDENTIFIER__CODE">greet</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">14</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">4</data>
+      <data key="node__IDENTIFIER__NAME">greet</data>
+      <data key="node__IDENTIFIER__ORDER">1</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">() =&gt; __ecma.String</data>
+    </node>
+    <node id="68719476742">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">0</data>
+      <data key="node__IDENTIFIER__CODE">this</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">14</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">4</data>
+      <data key="node__IDENTIFIER__NAME">this</data>
+      <data key="node__IDENTIFIER__ORDER">2</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">src/main.ts::program</data>
+    </node>
+    <node id="68719476743">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">1</data>
+      <data key="node__IDENTIFIER__CODE">greet</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">1</data>
+      <data key="node__IDENTIFIER__NAME">greet</data>
+      <data key="node__IDENTIFIER__ORDER">1</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">() =&gt; __ecma.String</data>
+    </node>
+    <node id="68719476744">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">-1</data>
+      <data key="node__IDENTIFIER__CODE">require</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">1</data>
+      <data key="node__IDENTIFIER__NAME">require</data>
+      <data key="node__IDENTIFIER__ORDER">1</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">(&quot;./greeting&quot;):&lt;member&gt;(greet)</data>
+    </node>
+    <node id="68719476745">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">0</data>
+      <data key="node__IDENTIFIER__CODE">this</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">1</data>
+      <data key="node__IDENTIFIER__NAME">this</data>
+      <data key="node__IDENTIFIER__ORDER">2</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">src/main.ts::program</data>
+    </node>
+    <node id="68719476746">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">1</data>
+      <data key="node__IDENTIFIER__CODE">main</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">3</data>
+      <data key="node__IDENTIFIER__NAME">main</data>
+      <data key="node__IDENTIFIER__ORDER">1</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">src/main.ts::program:main</data>
+    </node>
+    <node id="68719476747">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">-1</data>
+      <data key="node__IDENTIFIER__CODE">main</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">7</data>
+      <data key="node__IDENTIFIER__NAME">main</data>
+      <data key="node__IDENTIFIER__ORDER">1</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">src/main.ts::program:main</data>
+    </node>
+    <node id="68719476748">
+      <data key="labelV">IDENTIFIER</data>
+      <data key="node__IDENTIFIER__ARGUMENT_INDEX">0</data>
+      <data key="node__IDENTIFIER__CODE">this</data>
+      <data key="node__IDENTIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__IDENTIFIER__LINE_NUMBER">7</data>
+      <data key="node__IDENTIFIER__NAME">this</data>
+      <data key="node__IDENTIFIER__ORDER">2</data>
+      <data key="node__IDENTIFIER__TYPE_FULL_NAME">src/main.ts::program</data>
+    </node>
+    <node id="73014444032">
+      <data key="labelV">IMPORT</data>
+      <data key="node__IMPORT__CODE">import { greet } from './greeting'</data>
+      <data key="node__IMPORT__COLUMN_NUMBER">1</data>
+      <data key="node__IMPORT__IMPORTED_AS">greet</data>
+      <data key="node__IMPORT__IMPORTED_ENTITY">./greeting:greet</data>
+      <data key="node__IMPORT__LINE_NUMBER">1</data>
+      <data key="node__IMPORT__ORDER">-1</data>
+    </node>
+    <node id="90194313216">
+      <data key="labelV">LITERAL</data>
+      <data key="node__LITERAL__ARGUMENT_INDEX">1</data>
+      <data key="node__LITERAL__CODE">&quot;Hello, World!&quot;</data>
+      <data key="node__LITERAL__COLUMN_NUMBER">9</data>
+      <data key="node__LITERAL__LINE_NUMBER">2</data>
+      <data key="node__LITERAL__ORDER">1</data>
+      <data key="node__LITERAL__TYPE_FULL_NAME">__ecma.String</data>
+    </node>
+    <node id="90194313217">
+      <data key="labelV">LITERAL</data>
+      <data key="node__LITERAL__ARGUMENT_INDEX">1</data>
+      <data key="node__LITERAL__CODE">&quot;./greeting&quot;</data>
+      <data key="node__LITERAL__COLUMN_NUMBER">0</data>
+      <data key="node__LITERAL__LINE_NUMBER">1</data>
+      <data key="node__LITERAL__ORDER">3</data>
+      <data key="node__LITERAL__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="94489280512">
+      <data key="labelV">LOCAL</data>
+      <data key="node__LOCAL__CODE">greet</data>
+      <data key="node__LOCAL__COLUMN_NUMBER">7</data>
+      <data key="node__LOCAL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__LOCAL__LINE_NUMBER">1</data>
+      <data key="node__LOCAL__NAME">greet</data>
+      <data key="node__LOCAL__ORDER">0</data>
+      <data key="node__LOCAL__TYPE_FULL_NAME">src/greeting.ts::program:greet</data>
+    </node>
+    <node id="94489280513">
+      <data key="labelV">LOCAL</data>
+      <data key="node__LOCAL__CODE">greet</data>
+      <data key="node__LOCAL__COLUMN_NUMBER">0</data>
+      <data key="node__LOCAL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__LOCAL__LINE_NUMBER">1</data>
+      <data key="node__LOCAL__NAME">greet</data>
+      <data key="node__LOCAL__ORDER">0</data>
+      <data key="node__LOCAL__TYPE_FULL_NAME">() =&gt; __ecma.String</data>
+    </node>
+    <node id="94489280514">
+      <data key="labelV">LOCAL</data>
+      <data key="node__LOCAL__CODE">main</data>
+      <data key="node__LOCAL__COLUMN_NUMBER">0</data>
+      <data key="node__LOCAL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__LOCAL__LINE_NUMBER">3</data>
+      <data key="node__LOCAL__NAME">main</data>
+      <data key="node__LOCAL__ORDER">0</data>
+      <data key="node__LOCAL__TYPE_FULL_NAME">src/main.ts::program:main</data>
+    </node>
+    <node id="94489280515">
+      <data key="labelV">LOCAL</data>
+      <data key="node__LOCAL__CLOSURE_BINDING_ID">src/main.ts::program:main:greet</data>
+      <data key="node__LOCAL__CODE">greet</data>
+      <data key="node__LOCAL__COLUMN_NUMBER">14</data>
+      <data key="node__LOCAL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__LOCAL__LINE_NUMBER">4</data>
+      <data key="node__LOCAL__NAME">greet</data>
+      <data key="node__LOCAL__ORDER">0</data>
+      <data key="node__LOCAL__TYPE_FULL_NAME">() =&gt; __ecma.String</data>
+    </node>
+    <node id="94489280516">
+      <data key="labelV">LOCAL</data>
+      <data key="node__LOCAL__CODE">console</data>
+      <data key="node__LOCAL__COLUMN_NUMBER">2</data>
+      <data key="node__LOCAL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__LOCAL__LINE_NUMBER">4</data>
+      <data key="node__LOCAL__NAME">console</data>
+      <data key="node__LOCAL__ORDER">0</data>
+      <data key="node__LOCAL__TYPE_FULL_NAME">__whatwg.console</data>
+    </node>
+    <node id="107374182400">
+      <data key="labelV">META_DATA</data>
+      <data key="node__META_DATA__HASH">5b55fee2fd40d6c834a6452778946d6636a076f4a0a45646cdb14c031568674f</data>
+      <data key="node__META_DATA__LANGUAGE">JSSRC</data>
+      <data key="node__META_DATA__ROOT">
+        /home/me/projects/nanaban/code/stratify/experiments/scip/test/resources/sample-ts
+      </data>
+      <data key="node__META_DATA__VERSION">0.1</data>
+    </node>
+    <node id="111669149696">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">&lt;empty&gt;</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">&lt;empty&gt;</data>
+      <data key="node__METHOD__CODE">function greet() { return 'Hello, World!'; }</data>
+      <data key="node__METHOD__COLUMN_NUMBER">7</data>
+      <data key="node__METHOD__COLUMN_NUMBER_END">1</data>
+      <data key="node__METHOD__FILENAME">src/greeting.ts</data>
+      <data key="node__METHOD__FULL_NAME">src/greeting.ts::program:greet</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">false</data>
+      <data key="node__METHOD__LINE_NUMBER">1</data>
+      <data key="node__METHOD__LINE_NUMBER_END">3</data>
+      <data key="node__METHOD__NAME">greet</data>
+      <data key="node__METHOD__ORDER">1</data>
+      <data key="node__METHOD__SIGNATURE"/>
+    </node>
+    <node id="111669149697">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">src/greeting.ts::program</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">TYPE_DECL</data>
+      <data key="node__METHOD__CODE">:program</data>
+      <data key="node__METHOD__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD__COLUMN_NUMBER_END">0</data>
+      <data key="node__METHOD__FILENAME">src/greeting.ts</data>
+      <data key="node__METHOD__FULL_NAME">src/greeting.ts::program</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">false</data>
+      <data key="node__METHOD__LINE_NUMBER">1</data>
+      <data key="node__METHOD__LINE_NUMBER_END">4</data>
+      <data key="node__METHOD__NAME">:program</data>
+      <data key="node__METHOD__ORDER">1</data>
+      <data key="node__METHOD__SIGNATURE"/>
+    </node>
+    <node id="111669149698">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">&lt;empty&gt;</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">&lt;empty&gt;</data>
+      <data key="node__METHOD__CODE">function main() { console.log(greet()); }</data>
+      <data key="node__METHOD__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD__COLUMN_NUMBER_END">1</data>
+      <data key="node__METHOD__FILENAME">src/main.ts</data>
+      <data key="node__METHOD__FULL_NAME">src/main.ts::program:main</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">false</data>
+      <data key="node__METHOD__LINE_NUMBER">3</data>
+      <data key="node__METHOD__LINE_NUMBER_END">5</data>
+      <data key="node__METHOD__NAME">main</data>
+      <data key="node__METHOD__ORDER">1</data>
+      <data key="node__METHOD__SIGNATURE"/>
+    </node>
+    <node id="111669149699">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">src/main.ts::program</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">TYPE_DECL</data>
+      <data key="node__METHOD__CODE">:program</data>
+      <data key="node__METHOD__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD__COLUMN_NUMBER_END">0</data>
+      <data key="node__METHOD__FILENAME">src/main.ts</data>
+      <data key="node__METHOD__FULL_NAME">src/main.ts::program</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">false</data>
+      <data key="node__METHOD__LINE_NUMBER">1</data>
+      <data key="node__METHOD__LINE_NUMBER_END">10</data>
+      <data key="node__METHOD__NAME">:program</data>
+      <data key="node__METHOD__ORDER">1</data>
+      <data key="node__METHOD__SIGNATURE"/>
+    </node>
+    <node id="111669149700">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">&lt;global&gt;</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">NAMESPACE_BLOCK</data>
+      <data key="node__METHOD__CODE">&lt;empty&gt;</data>
+      <data key="node__METHOD__FILENAME">&lt;empty&gt;</data>
+      <data key="node__METHOD__FULL_NAME">&lt;operator&gt;.assignment</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">true</data>
+      <data key="node__METHOD__NAME">&lt;operator&gt;.assignment</data>
+      <data key="node__METHOD__ORDER">0</data>
+      <data key="node__METHOD__SIGNATURE"/>
+    </node>
+    <node id="111669149701">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">&lt;global&gt;</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">NAMESPACE_BLOCK</data>
+      <data key="node__METHOD__CODE">&lt;empty&gt;</data>
+      <data key="node__METHOD__FILENAME">&lt;empty&gt;</data>
+      <data key="node__METHOD__FULL_NAME">&lt;operator&gt;.fieldAccess</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">true</data>
+      <data key="node__METHOD__NAME">&lt;operator&gt;.fieldAccess</data>
+      <data key="node__METHOD__ORDER">0</data>
+      <data key="node__METHOD__SIGNATURE"/>
+    </node>
+    <node id="111669149702">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">src/main.ts::program</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">TYPE_DECL</data>
+      <data key="node__METHOD__CODE">&lt;empty&gt;</data>
+      <data key="node__METHOD__FILENAME">&lt;empty&gt;</data>
+      <data key="node__METHOD__FULL_NAME">src/main.ts::program:require</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">true</data>
+      <data key="node__METHOD__NAME">require</data>
+      <data key="node__METHOD__ORDER">0</data>
+      <data key="node__METHOD__SIGNATURE"/>
+    </node>
+    <node id="111669149703">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">&lt;speculatedMethods&gt;</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">NAMESPACE_BLOCK</data>
+      <data key="node__METHOD__CODE">&lt;empty&gt;</data>
+      <data key="node__METHOD__FILENAME">&lt;empty&gt;</data>
+      <data key="node__METHOD__FULL_NAME">__whatwg.console:log</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">true</data>
+      <data key="node__METHOD__NAME">log</data>
+      <data key="node__METHOD__ORDER">0</data>
+      <data key="node__METHOD__SIGNATURE"/>
+    </node>
+    <node id="115964116992">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">this</data>
+      <data key="node__METHOD_PARAMETER_IN__COLUMN_NUMBER">7</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">0</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__LINE_NUMBER">1</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">this</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">0</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">src/greeting.ts::program</data>
+    </node>
+    <node id="115964116993">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">this</data>
+      <data key="node__METHOD_PARAMETER_IN__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">0</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__LINE_NUMBER">1</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">this</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">0</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">src/greeting.ts::program</data>
+    </node>
+    <node id="115964116994">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">this</data>
+      <data key="node__METHOD_PARAMETER_IN__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">0</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__LINE_NUMBER">3</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">this</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">0</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">src/main.ts::program</data>
+    </node>
+    <node id="115964116995">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">this</data>
+      <data key="node__METHOD_PARAMETER_IN__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">0</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__LINE_NUMBER">1</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">this</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">0</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">src/main.ts::program</data>
+    </node>
+    <node id="115964116996">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">p1</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">1</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">p1</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">1</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="115964116997">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">p2</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">2</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">p2</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">2</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="115964116998">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">p1</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">1</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">p1</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">1</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="115964116999">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">p2</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">2</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">p2</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">2</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="115964117000">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">p0</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">1</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">p0</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">0</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="115964117001">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">p1</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">2</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">p1</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">1</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="115964117002">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">p2</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">3</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">p2</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">2</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="115964117003">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">p0</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">1</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">p0</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">0</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="115964117004">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">p1</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">2</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">p1</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">1</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="115964117005">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">p2</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">3</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">p2</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">2</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="120259084288">
+      <data key="labelV">METHOD_PARAMETER_OUT</data>
+      <data key="node__METHOD_PARAMETER_OUT__CODE">this</data>
+      <data key="node__METHOD_PARAMETER_OUT__COLUMN_NUMBER">7</data>
+      <data key="node__METHOD_PARAMETER_OUT__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_OUT__INDEX">0</data>
+      <data key="node__METHOD_PARAMETER_OUT__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_OUT__LINE_NUMBER">1</data>
+      <data key="node__METHOD_PARAMETER_OUT__NAME">this</data>
+      <data key="node__METHOD_PARAMETER_OUT__ORDER">0</data>
+      <data key="node__METHOD_PARAMETER_OUT__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="120259084289">
+      <data key="labelV">METHOD_PARAMETER_OUT</data>
+      <data key="node__METHOD_PARAMETER_OUT__CODE">this</data>
+      <data key="node__METHOD_PARAMETER_OUT__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD_PARAMETER_OUT__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_OUT__INDEX">0</data>
+      <data key="node__METHOD_PARAMETER_OUT__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_OUT__LINE_NUMBER">1</data>
+      <data key="node__METHOD_PARAMETER_OUT__NAME">this</data>
+      <data key="node__METHOD_PARAMETER_OUT__ORDER">0</data>
+      <data key="node__METHOD_PARAMETER_OUT__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="120259084290">
+      <data key="labelV">METHOD_PARAMETER_OUT</data>
+      <data key="node__METHOD_PARAMETER_OUT__CODE">this</data>
+      <data key="node__METHOD_PARAMETER_OUT__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD_PARAMETER_OUT__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_OUT__INDEX">0</data>
+      <data key="node__METHOD_PARAMETER_OUT__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_OUT__LINE_NUMBER">3</data>
+      <data key="node__METHOD_PARAMETER_OUT__NAME">this</data>
+      <data key="node__METHOD_PARAMETER_OUT__ORDER">0</data>
+      <data key="node__METHOD_PARAMETER_OUT__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="120259084291">
+      <data key="labelV">METHOD_PARAMETER_OUT</data>
+      <data key="node__METHOD_PARAMETER_OUT__CODE">this</data>
+      <data key="node__METHOD_PARAMETER_OUT__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD_PARAMETER_OUT__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_OUT__INDEX">0</data>
+      <data key="node__METHOD_PARAMETER_OUT__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_OUT__LINE_NUMBER">1</data>
+      <data key="node__METHOD_PARAMETER_OUT__NAME">this</data>
+      <data key="node__METHOD_PARAMETER_OUT__ORDER">0</data>
+      <data key="node__METHOD_PARAMETER_OUT__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="120259084292">
+      <data key="labelV">METHOD_PARAMETER_OUT</data>
+      <data key="node__METHOD_PARAMETER_OUT__CODE">p1</data>
+      <data key="node__METHOD_PARAMETER_OUT__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_OUT__INDEX">1</data>
+      <data key="node__METHOD_PARAMETER_OUT__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_OUT__NAME">p1</data>
+      <data key="node__METHOD_PARAMETER_OUT__ORDER">1</data>
+      <data key="node__METHOD_PARAMETER_OUT__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="120259084293">
+      <data key="labelV">METHOD_PARAMETER_OUT</data>
+      <data key="node__METHOD_PARAMETER_OUT__CODE">p2</data>
+      <data key="node__METHOD_PARAMETER_OUT__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_OUT__INDEX">2</data>
+      <data key="node__METHOD_PARAMETER_OUT__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_OUT__NAME">p2</data>
+      <data key="node__METHOD_PARAMETER_OUT__ORDER">2</data>
+      <data key="node__METHOD_PARAMETER_OUT__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="120259084294">
+      <data key="labelV">METHOD_PARAMETER_OUT</data>
+      <data key="node__METHOD_PARAMETER_OUT__CODE">p1</data>
+      <data key="node__METHOD_PARAMETER_OUT__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_OUT__INDEX">1</data>
+      <data key="node__METHOD_PARAMETER_OUT__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_OUT__NAME">p1</data>
+      <data key="node__METHOD_PARAMETER_OUT__ORDER">1</data>
+      <data key="node__METHOD_PARAMETER_OUT__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="120259084295">
+      <data key="labelV">METHOD_PARAMETER_OUT</data>
+      <data key="node__METHOD_PARAMETER_OUT__CODE">p2</data>
+      <data key="node__METHOD_PARAMETER_OUT__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_OUT__INDEX">2</data>
+      <data key="node__METHOD_PARAMETER_OUT__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_OUT__NAME">p2</data>
+      <data key="node__METHOD_PARAMETER_OUT__ORDER">2</data>
+      <data key="node__METHOD_PARAMETER_OUT__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="124554051584">
+      <data key="labelV">METHOD_REF</data>
+      <data key="node__METHOD_REF__ARGUMENT_INDEX">2</data>
+      <data key="node__METHOD_REF__CODE">greet</data>
+      <data key="node__METHOD_REF__COLUMN_NUMBER">7</data>
+      <data key="node__METHOD_REF__LINE_NUMBER">1</data>
+      <data key="node__METHOD_REF__METHOD_FULL_NAME">src/greeting.ts::program:greet</data>
+      <data key="node__METHOD_REF__ORDER">2</data>
+      <data key="node__METHOD_REF__TYPE_FULL_NAME">src/greeting.ts::program:greet</data>
+    </node>
+    <node id="124554051585">
+      <data key="labelV">METHOD_REF</data>
+      <data key="node__METHOD_REF__ARGUMENT_INDEX">2</data>
+      <data key="node__METHOD_REF__CODE">main</data>
+      <data key="node__METHOD_REF__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD_REF__LINE_NUMBER">3</data>
+      <data key="node__METHOD_REF__METHOD_FULL_NAME">src/main.ts::program:main</data>
+      <data key="node__METHOD_REF__ORDER">2</data>
+      <data key="node__METHOD_REF__TYPE_FULL_NAME">src/main.ts::program:main</data>
+    </node>
+    <node id="128849018880">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__COLUMN_NUMBER">7</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__LINE_NUMBER">1</data>
+      <data key="node__METHOD_RETURN__ORDER">4</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">__ecma.String</data>
+    </node>
+    <node id="128849018881">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__LINE_NUMBER">1</data>
+      <data key="node__METHOD_RETURN__ORDER">4</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="128849018882">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__LINE_NUMBER">3</data>
+      <data key="node__METHOD_RETURN__ORDER">4</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">void</data>
+    </node>
+    <node id="128849018883">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__COLUMN_NUMBER">0</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__LINE_NUMBER">1</data>
+      <data key="node__METHOD_RETURN__ORDER">4</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="128849018884">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__ORDER">2</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="128849018885">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__ORDER">2</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="128849018886">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__ORDER">2</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="128849018887">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__ORDER">2</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="133143986176">
+      <data key="labelV">MODIFIER</data>
+      <data key="node__MODIFIER__CODE">&lt;empty&gt;</data>
+      <data key="node__MODIFIER__COLUMN_NUMBER">7</data>
+      <data key="node__MODIFIER__LINE_NUMBER">1</data>
+      <data key="node__MODIFIER__MODIFIER_TYPE">VIRTUAL</data>
+      <data key="node__MODIFIER__ORDER">3</data>
+    </node>
+    <node id="133143986177">
+      <data key="labelV">MODIFIER</data>
+      <data key="node__MODIFIER__CODE">&lt;empty&gt;</data>
+      <data key="node__MODIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__MODIFIER__LINE_NUMBER">1</data>
+      <data key="node__MODIFIER__MODIFIER_TYPE">MODULE</data>
+      <data key="node__MODIFIER__ORDER">3</data>
+    </node>
+    <node id="133143986178">
+      <data key="labelV">MODIFIER</data>
+      <data key="node__MODIFIER__CODE">&lt;empty&gt;</data>
+      <data key="node__MODIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__MODIFIER__LINE_NUMBER">3</data>
+      <data key="node__MODIFIER__MODIFIER_TYPE">VIRTUAL</data>
+      <data key="node__MODIFIER__ORDER">3</data>
+    </node>
+    <node id="133143986179">
+      <data key="labelV">MODIFIER</data>
+      <data key="node__MODIFIER__CODE">&lt;empty&gt;</data>
+      <data key="node__MODIFIER__COLUMN_NUMBER">0</data>
+      <data key="node__MODIFIER__LINE_NUMBER">1</data>
+      <data key="node__MODIFIER__MODIFIER_TYPE">MODULE</data>
+      <data key="node__MODIFIER__ORDER">3</data>
+    </node>
+    <node id="137438953472">
+      <data key="labelV">NAMESPACE</data>
+      <data key="node__NAMESPACE__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE__NAME">&lt;global&gt;</data>
+      <data key="node__NAMESPACE__ORDER">-1</data>
+    </node>
+    <node id="141733920768">
+      <data key="labelV">NAMESPACE_BLOCK</data>
+      <data key="node__NAMESPACE_BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__FILENAME">src/greeting.ts</data>
+      <data key="node__NAMESPACE_BLOCK__FULL_NAME">src/greeting.ts:&lt;global&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__NAME">&lt;global&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__ORDER">1</data>
+    </node>
+    <node id="141733920769">
+      <data key="labelV">NAMESPACE_BLOCK</data>
+      <data key="node__NAMESPACE_BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__FILENAME">src/main.ts</data>
+      <data key="node__NAMESPACE_BLOCK__FULL_NAME">src/main.ts:&lt;global&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__NAME">&lt;global&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__ORDER">1</data>
+    </node>
+    <node id="141733920770">
+      <data key="labelV">NAMESPACE_BLOCK</data>
+      <data key="node__NAMESPACE_BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__FILENAME">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__FULL_NAME">&lt;speculatedMethods&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__NAME">&lt;speculatedMethods&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__ORDER">-1</data>
+    </node>
+    <node id="146028888064">
+      <data key="labelV">RETURN</data>
+      <data key="node__RETURN__ARGUMENT_INDEX">1</data>
+      <data key="node__RETURN__CODE">return 'Hello, World!'</data>
+      <data key="node__RETURN__COLUMN_NUMBER">2</data>
+      <data key="node__RETURN__LINE_NUMBER">2</data>
+      <data key="node__RETURN__ORDER">1</data>
+    </node>
+    <node id="150323855360">
+      <data key="labelV">TAG</data>
+      <data key="node__TAG__NAME">RESOLVED_METHOD</data>
+      <data key="node__TAG__VALUE">FULL_NAME,c3JjL2dyZWV0aW5nLnRzOjpwcm9ncmFtOmdyZWV0,ALIAS,Z3JlZXQ=,RECEIVER,dGhpcw==</data>
+    </node>
+    <node id="150323855361">
+      <data key="labelV">TAG</data>
+      <data key="node__TAG__NAME">RESOLVED_TYPE_DECL</data>
+      <data key="node__TAG__VALUE">src/greeting.ts::program:greet</data>
+    </node>
+    <node id="163208757248">
+      <data key="labelV">TYPE</data>
+      <data key="node__TYPE__FULL_NAME">ANY</data>
+      <data key="node__TYPE__NAME">ANY</data>
+      <data key="node__TYPE__TYPE_DECL_FULL_NAME">ANY</data>
+    </node>
+    <node id="163208757249">
+      <data key="labelV">TYPE</data>
+      <data key="node__TYPE__FULL_NAME">Console</data>
+      <data key="node__TYPE__NAME">Console</data>
+      <data key="node__TYPE__TYPE_DECL_FULL_NAME">Console</data>
+    </node>
+    <node id="163208757250">
+      <data key="labelV">TYPE</data>
+      <data key="node__TYPE__FULL_NAME">src/greeting.ts::program</data>
+      <data key="node__TYPE__NAME">:program</data>
+      <data key="node__TYPE__TYPE_DECL_FULL_NAME">src/greeting.ts::program</data>
+    </node>
+    <node id="163208757251">
+      <data key="labelV">TYPE</data>
+      <data key="node__TYPE__FULL_NAME">src/greeting.ts::program:greet</data>
+      <data key="node__TYPE__NAME">greet</data>
+      <data key="node__TYPE__TYPE_DECL_FULL_NAME">src/greeting.ts::program:greet</data>
+    </node>
+    <node id="163208757252">
+      <data key="labelV">TYPE</data>
+      <data key="node__TYPE__FULL_NAME">src/main.ts::program</data>
+      <data key="node__TYPE__NAME">:program</data>
+      <data key="node__TYPE__TYPE_DECL_FULL_NAME">src/main.ts::program</data>
+    </node>
+    <node id="163208757253">
+      <data key="labelV">TYPE</data>
+      <data key="node__TYPE__FULL_NAME">src/main.ts::program:main</data>
+      <data key="node__TYPE__NAME">main</data>
+      <data key="node__TYPE__TYPE_DECL_FULL_NAME">src/main.ts::program:main</data>
+    </node>
+    <node id="163208757254">
+      <data key="labelV">TYPE</data>
+      <data key="node__TYPE__FULL_NAME">void</data>
+      <data key="node__TYPE__NAME">void</data>
+      <data key="node__TYPE__TYPE_DECL_FULL_NAME">void</data>
+    </node>
+    <node id="171798691840">
+      <data key="labelV">TYPE_DECL</data>
+      <data key="node__TYPE_DECL__AST_PARENT_FULL_NAME">src/greeting.ts::program</data>
+      <data key="node__TYPE_DECL__AST_PARENT_TYPE">METHOD</data>
+      <data key="node__TYPE_DECL__CODE">greet</data>
+      <data key="node__TYPE_DECL__COLUMN_NUMBER">7</data>
+      <data key="node__TYPE_DECL__FILENAME">src/greeting.ts</data>
+      <data key="node__TYPE_DECL__FULL_NAME">src/greeting.ts::program:greet</data>
+      <data key="node__TYPE_DECL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__IS_EXTERNAL">false</data>
+      <data key="node__TYPE_DECL__LINE_NUMBER">1</data>
+      <data key="node__TYPE_DECL__NAME">greet</data>
+      <data key="node__TYPE_DECL__ORDER">1</data>
+    </node>
+    <node id="171798691841">
+      <data key="labelV">TYPE_DECL</data>
+      <data key="node__TYPE_DECL__AST_PARENT_FULL_NAME">src/greeting.ts:&lt;global&gt;</data>
+      <data key="node__TYPE_DECL__AST_PARENT_TYPE">NAMESPACE_BLOCK</data>
+      <data key="node__TYPE_DECL__CODE">:program</data>
+      <data key="node__TYPE_DECL__COLUMN_NUMBER">0</data>
+      <data key="node__TYPE_DECL__FILENAME">src/greeting.ts</data>
+      <data key="node__TYPE_DECL__FULL_NAME">src/greeting.ts::program</data>
+      <data key="node__TYPE_DECL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__IS_EXTERNAL">false</data>
+      <data key="node__TYPE_DECL__LINE_NUMBER">1</data>
+      <data key="node__TYPE_DECL__NAME">:program</data>
+      <data key="node__TYPE_DECL__ORDER">1</data>
+    </node>
+    <node id="171798691842">
+      <data key="labelV">TYPE_DECL</data>
+      <data key="node__TYPE_DECL__AST_PARENT_FULL_NAME">src/main.ts::program</data>
+      <data key="node__TYPE_DECL__AST_PARENT_TYPE">METHOD</data>
+      <data key="node__TYPE_DECL__CODE">main</data>
+      <data key="node__TYPE_DECL__COLUMN_NUMBER">0</data>
+      <data key="node__TYPE_DECL__FILENAME">src/main.ts</data>
+      <data key="node__TYPE_DECL__FULL_NAME">src/main.ts::program:main</data>
+      <data key="node__TYPE_DECL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__IS_EXTERNAL">false</data>
+      <data key="node__TYPE_DECL__LINE_NUMBER">3</data>
+      <data key="node__TYPE_DECL__NAME">main</data>
+      <data key="node__TYPE_DECL__ORDER">1</data>
+    </node>
+    <node id="171798691843">
+      <data key="labelV">TYPE_DECL</data>
+      <data key="node__TYPE_DECL__AST_PARENT_FULL_NAME">src/main.ts:&lt;global&gt;</data>
+      <data key="node__TYPE_DECL__AST_PARENT_TYPE">NAMESPACE_BLOCK</data>
+      <data key="node__TYPE_DECL__CODE">:program</data>
+      <data key="node__TYPE_DECL__COLUMN_NUMBER">0</data>
+      <data key="node__TYPE_DECL__FILENAME">src/main.ts</data>
+      <data key="node__TYPE_DECL__FULL_NAME">src/main.ts::program</data>
+      <data key="node__TYPE_DECL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__IS_EXTERNAL">false</data>
+      <data key="node__TYPE_DECL__LINE_NUMBER">1</data>
+      <data key="node__TYPE_DECL__NAME">:program</data>
+      <data key="node__TYPE_DECL__ORDER">1</data>
+    </node>
+    <node id="171798691844">
+      <data key="labelV">TYPE_DECL</data>
+      <data key="node__TYPE_DECL__AST_PARENT_FULL_NAME">&lt;global&gt;</data>
+      <data key="node__TYPE_DECL__AST_PARENT_TYPE">NAMESPACE_BLOCK</data>
+      <data key="node__TYPE_DECL__CODE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__FILENAME">&lt;unknown&gt;</data>
+      <data key="node__TYPE_DECL__FULL_NAME">ANY</data>
+      <data key="node__TYPE_DECL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__IS_EXTERNAL">true</data>
+      <data key="node__TYPE_DECL__NAME">ANY</data>
+      <data key="node__TYPE_DECL__ORDER">-1</data>
+    </node>
+    <node id="171798691845">
+      <data key="labelV">TYPE_DECL</data>
+      <data key="node__TYPE_DECL__AST_PARENT_FULL_NAME">&lt;global&gt;</data>
+      <data key="node__TYPE_DECL__AST_PARENT_TYPE">NAMESPACE_BLOCK</data>
+      <data key="node__TYPE_DECL__CODE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__FILENAME">&lt;unknown&gt;</data>
+      <data key="node__TYPE_DECL__FULL_NAME">Console</data>
+      <data key="node__TYPE_DECL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__IS_EXTERNAL">true</data>
+      <data key="node__TYPE_DECL__NAME">Console</data>
+      <data key="node__TYPE_DECL__ORDER">-1</data>
+    </node>
+    <node id="171798691846">
+      <data key="labelV">TYPE_DECL</data>
+      <data key="node__TYPE_DECL__AST_PARENT_FULL_NAME">&lt;global&gt;</data>
+      <data key="node__TYPE_DECL__AST_PARENT_TYPE">NAMESPACE_BLOCK</data>
+      <data key="node__TYPE_DECL__CODE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__FILENAME">&lt;unknown&gt;</data>
+      <data key="node__TYPE_DECL__FULL_NAME">void</data>
+      <data key="node__TYPE_DECL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__IS_EXTERNAL">true</data>
+      <data key="node__TYPE_DECL__NAME">void</data>
+      <data key="node__TYPE_DECL__ORDER">-1</data>
+    </node>
+    <edge source="21474836480" target="111669149696">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="21474836481" target="111669149697">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="21474836482" target="111669149698">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="21474836483" target="111669149699">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="25769803776" target="94489280512">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803776" target="25769803778">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803776" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="25769803777" target="146028888064">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803777" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="25769803778" target="30064771072">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803778" target="30064771073">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803778" target="128849018881">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="25769803778" target="128849018881">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="25769803778" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="25769803778" target="30064771073">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="25769803779" target="94489280513">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803779" target="94489280514">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803779" target="30064771079">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803779" target="30064771081">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803779" target="30064771082">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803779" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="25769803780" target="30064771076">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803780" target="94489280515">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803780" target="94489280516">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803780" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="25769803781" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="25769803782" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="30064771072" target="68719476736">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771072" target="124554051584">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771072" target="68719476736">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771072" target="124554051584">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771072" target="111669149700">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771072" target="68719476737">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771072" target="68719476737">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771072" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="30064771072" target="124554051584">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771072" target="128849018881">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">function greet = function greet() { return 'Hello, World!'; }</data>
+    </edge>
+    <edge source="30064771073" target="30064771074">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771073" target="68719476738">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771073" target="30064771074">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771073" target="68719476738">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771073" target="111669149700">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771073" target="25769803778">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771073" target="25769803778">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771073" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="30064771073" target="68719476738">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771073" target="128849018881">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">exports.greet = greet</data>
+    </edge>
+    <edge source="30064771074" target="68719476737">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771074" target="55834574848">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771074" target="68719476737">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771074" target="55834574848">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771074" target="111669149701">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771074" target="68719476738">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771074" target="68719476738">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771074" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="30064771074" target="55834574848">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771074" target="30064771073">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">exports.greet</data>
+    </edge>
+    <edge source="30064771074" target="128849018881">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">exports.greet</data>
+    </edge>
+    <edge source="30064771075" target="68719476745">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771075" target="90194313217">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771075" target="68719476744">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771075" target="68719476745">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771075" target="90194313217">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771075" target="111669149702">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771075" target="55834574850">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771075" target="55834574850">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771075" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="30064771075" target="73014444032">
+      <data key="labelE">IS_CALL_FOR_IMPORT</data>
+    </edge>
+    <edge source="30064771075" target="90194313217">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771075" target="128849018883">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">require(&quot;./greeting&quot;)</data>
+    </edge>
+    <edge source="30064771075" target="68719476744">
+      <data key="labelE">RECEIVER</data>
+    </edge>
+    <edge source="30064771075" target="150323855360">
+      <data key="labelE">TAGGED_BY</data>
+    </edge>
+    <edge source="30064771075" target="150323855361">
+      <data key="labelE">TAGGED_BY</data>
+    </edge>
+    <edge source="30064771076" target="68719476740">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771076" target="30064771078">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771076" target="30064771077">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771076" target="68719476740">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771076" target="30064771078">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771076" target="111669149703">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771076" target="128849018882">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771076" target="128849018882">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771076" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="30064771076" target="30064771078">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771076" target="128849018882">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">console.log(greet())</data>
+    </edge>
+    <edge source="30064771076" target="30064771077">
+      <data key="labelE">RECEIVER</data>
+    </edge>
+    <edge source="30064771077" target="68719476739">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771077" target="55834574849">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771077" target="68719476739">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771077" target="55834574849">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771077" target="111669149701">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771077" target="68719476740">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771077" target="68719476740">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771077" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="30064771077" target="55834574849">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771078" target="68719476742">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771078" target="68719476741">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771078" target="68719476742">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771078" target="111669149696">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771078" target="30064771076">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771078" target="30064771076">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771078" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="30064771078" target="68719476742">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771078" target="68719476740">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet()</data>
+    </edge>
+    <edge source="30064771078" target="30064771076">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet()</data>
+    </edge>
+    <edge source="30064771078" target="128849018882">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet()</data>
+    </edge>
+    <edge source="30064771078" target="68719476741">
+      <data key="labelE">RECEIVER</data>
+    </edge>
+    <edge source="30064771079" target="68719476743">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771079" target="30064771080">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771079" target="68719476743">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771079" target="30064771080">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771079" target="111669149700">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771079" target="68719476746">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771079" target="68719476746">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771079" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="30064771079" target="30064771080">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771079" target="128849018883">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">var greet = require(&quot;./greeting&quot;).greet</data>
+    </edge>
+    <edge source="30064771080" target="30064771075">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771080" target="55834574850">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771080" target="30064771075">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771080" target="55834574850">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771080" target="111669149701">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771080" target="30064771079">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771080" target="30064771079">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771080" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="30064771080" target="55834574850">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771080" target="68719476743">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">require(&quot;./greeting&quot;).greet</data>
+    </edge>
+    <edge source="30064771080" target="30064771079">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">require(&quot;./greeting&quot;).greet</data>
+    </edge>
+    <edge source="30064771081" target="68719476746">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771081" target="124554051585">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771081" target="68719476746">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771081" target="124554051585">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771081" target="111669149700">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771081" target="68719476747">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771081" target="68719476747">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771081" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="30064771081" target="124554051585">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771081" target="128849018883">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">function main = function main() { console.log(greet()); }</data>
+    </edge>
+    <edge source="30064771082" target="68719476748">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771082" target="68719476747">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771082" target="68719476748">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771082" target="111669149698">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771082" target="128849018883">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771082" target="128849018883">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771082" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="30064771082" target="68719476748">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771082" target="128849018883">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">main()</data>
+    </edge>
+    <edge source="30064771082" target="68719476747">
+      <data key="labelE">RECEIVER</data>
+    </edge>
+    <edge source="34359738368" target="94489280513">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="55834574848" target="30064771074">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="55834574848" target="30064771074">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="55834574848" target="68719476737">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="55834574849" target="30064771077">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="55834574849" target="30064771077">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="55834574849" target="68719476739">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="55834574850" target="30064771080">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="55834574850" target="30064771080">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="55834574850" target="30064771075">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="60129542144" target="141733920768">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="60129542144" target="171798691841">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="60129542145" target="141733920769">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="60129542145" target="171798691843">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="68719476736" target="124554051584">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476736" target="124554051584">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476736" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476736" target="111669149697">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476736" target="30064771072">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="68719476736" target="68719476738">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="68719476736" target="94489280512">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="68719476737" target="55834574848">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476737" target="55834574848">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476737" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476737" target="30064771072">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476737" target="128849018881">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">exports</data>
+    </edge>
+    <edge source="68719476738" target="30064771073">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476738" target="30064771073">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476738" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476738" target="30064771074">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476738" target="30064771074">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="68719476738" target="30064771073">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="68719476738" target="128849018881">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="68719476738" target="94489280512">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="68719476739" target="55834574849">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476739" target="55834574849">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476739" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476739" target="111669149698">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476739" target="94489280516">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="68719476740" target="68719476741">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476740" target="68719476741">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476740" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476740" target="30064771077">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476740" target="30064771078">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">console</data>
+    </edge>
+    <edge source="68719476740" target="30064771076">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">console</data>
+    </edge>
+    <edge source="68719476740" target="128849018882">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">console</data>
+    </edge>
+    <edge source="68719476740" target="94489280516">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="68719476741" target="68719476742">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476741" target="68719476742">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476741" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476741" target="68719476740">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476741" target="94489280515">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="68719476742" target="30064771078">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476742" target="30064771078">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476742" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476742" target="68719476741">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476742" target="30064771078">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="68719476742" target="120259084290">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="68719476742" target="128849018882">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="68719476742" target="115964116994">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="68719476743" target="68719476744">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476743" target="68719476744">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476743" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476743" target="111669149699">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476743" target="30064771079">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="68719476743" target="68719476741">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="68719476743" target="68719476741">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="68719476743" target="68719476741">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="68719476743" target="68719476741">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="68719476743" target="128849018883">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="68719476743" target="94489280513">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="68719476744" target="68719476745">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476744" target="68719476745">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476744" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476744" target="68719476743">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476745" target="90194313217">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476745" target="90194313217">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476745" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476745" target="68719476744">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476745" target="30064771075">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="68719476745" target="68719476748">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="68719476745" target="115964116995">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="68719476746" target="124554051585">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476746" target="124554051585">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476746" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476746" target="30064771079">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476746" target="30064771081">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">main</data>
+    </edge>
+    <edge source="68719476746" target="128849018883">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">main</data>
+    </edge>
+    <edge source="68719476746" target="94489280514">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="68719476747" target="68719476748">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476747" target="68719476748">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476747" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476747" target="30064771081">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476747" target="94489280514">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="68719476748" target="30064771082">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="68719476748" target="30064771082">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="68719476748" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="68719476748" target="68719476747">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="68719476748" target="30064771082">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="68719476748" target="120259084291">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="68719476748" target="128849018883">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="68719476748" target="115964116995">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="73014444032" target="51539607552">
+      <data key="labelE">IMPORTS</data>
+    </edge>
+    <edge source="90194313216" target="146028888064">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="90194313216" target="146028888064">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="90194313216" target="111669149696">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="90194313216" target="146028888064">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">&quot;Hello, World!&quot;</data>
+    </edge>
+    <edge source="90194313217" target="30064771075">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="90194313217" target="30064771075">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="90194313217" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="90194313217" target="68719476745">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="90194313217" target="68719476745">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">&quot;./greeting&quot;</data>
+    </edge>
+    <edge source="90194313217" target="30064771075">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">&quot;./greeting&quot;</data>
+    </edge>
+    <edge source="94489280512" target="163208757251">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="94489280513" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="94489280514" target="163208757253">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="94489280515" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="94489280516" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="111669149696" target="115964116992">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149696" target="25769803777">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149696" target="133143986176">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149696" target="128849018880">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149696" target="120259084288">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149696" target="90194313216">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="111669149696" target="25769803777">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149696" target="146028888064">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149696" target="90194313216">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149696" target="90194313216">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="111669149696" target="115964116992">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149696" target="90194313216">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149696" target="146028888064">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149696" target="60129542144">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="111669149697" target="111669149696">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149697" target="115964116993">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149697" target="25769803776">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149697" target="133143986177">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149697" target="128849018881">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149697" target="120259084289">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149697" target="171798691840">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149697" target="68719476736">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="111669149697" target="111669149696">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="25769803776">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="171798691840">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="25769803778">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="30064771072">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="30064771073">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="68719476736">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="124554051584">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="30064771074">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="68719476738">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="68719476737">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="55834574848">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="68719476736">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="111669149697" target="68719476738">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149697" target="115964116993">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149697" target="25769803778">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149697" target="124554051584">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149697" target="68719476737">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149697" target="60129542144">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="111669149698" target="115964116994">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149698" target="25769803780">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149698" target="133143986178">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149698" target="128849018882">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149698" target="120259084290">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149698" target="68719476739">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="111669149698" target="25769803780">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149698" target="30064771076">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149698" target="30064771077">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149698" target="68719476740">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149698" target="30064771078">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149698" target="68719476739">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149698" target="55834574849">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149698" target="68719476741">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149698" target="68719476742">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149698" target="68719476739">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="111669149698" target="68719476740">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149698" target="68719476741">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149698" target="115964116994">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149698" target="68719476739">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149698" target="68719476742">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149698" target="60129542145">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="111669149699" target="111669149698">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149699" target="115964116995">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149699" target="25769803779">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149699" target="133143986179">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149699" target="128849018883">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149699" target="120259084291">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149699" target="171798691842">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149699" target="68719476743">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="111669149699" target="111669149698">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="25769803779">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="171798691842">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="30064771079">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="30064771081">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="30064771082">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="68719476743">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="30064771080">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="68719476746">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="124554051585">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="68719476747">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="68719476748">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="30064771075">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="55834574850">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="68719476744">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="68719476745">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="90194313217">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="68719476743">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="111669149699" target="68719476747">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149699" target="124554051585">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149699" target="115964116995">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149699" target="68719476748">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149699" target="68719476744">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149699" target="90194313217">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149699" target="68719476745">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149699" target="60129542145">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="111669149700" target="115964116996">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149700" target="115964116997">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149700" target="25769803781">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149700" target="128849018884">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149700" target="120259084292">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149700" target="120259084293">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149700" target="128849018884">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="111669149700" target="25769803781">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149700" target="128849018884">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="111669149700" target="115964116996">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149700" target="115964116997">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149701" target="115964116998">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149701" target="115964116999">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149701" target="25769803782">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149701" target="128849018885">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149701" target="120259084294">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149701" target="120259084295">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149701" target="128849018885">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="111669149701" target="25769803782">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149701" target="128849018885">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="111669149701" target="115964116999">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149701" target="115964116998">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149702" target="115964117000">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149702" target="115964117001">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149702" target="115964117002">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149702" target="25769803783">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149702" target="128849018886">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149703" target="115964117003">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149703" target="115964117004">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149703" target="115964117005">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149703" target="25769803784">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149703" target="128849018887">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="115964116992" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="115964116992" target="120259084288">
+      <data key="labelE">PARAMETER_LINK</data>
+    </edge>
+    <edge source="115964116992" target="120259084288">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="115964116992" target="120259084288">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="115964116992" target="128849018880">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="115964116993" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="115964116993" target="120259084289">
+      <data key="labelE">PARAMETER_LINK</data>
+    </edge>
+    <edge source="115964116993" target="120259084289">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="115964116993" target="120259084289">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="115964116993" target="128849018881">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="115964116994" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="115964116994" target="120259084290">
+      <data key="labelE">PARAMETER_LINK</data>
+    </edge>
+    <edge source="115964116994" target="68719476742">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="115964116994" target="120259084290">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="115964116995" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="115964116995" target="120259084291">
+      <data key="labelE">PARAMETER_LINK</data>
+    </edge>
+    <edge source="115964116995" target="68719476745">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="115964116995" target="120259084291">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">this</data>
+    </edge>
+    <edge source="115964116996" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="115964116996" target="120259084292">
+      <data key="labelE">PARAMETER_LINK</data>
+    </edge>
+    <edge source="115964116996" target="120259084292">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">p1</data>
+    </edge>
+    <edge source="115964116996" target="128849018884">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">p1</data>
+    </edge>
+    <edge source="115964116997" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="115964116997" target="120259084293">
+      <data key="labelE">PARAMETER_LINK</data>
+    </edge>
+    <edge source="115964116997" target="120259084293">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">p2</data>
+    </edge>
+    <edge source="115964116997" target="128849018884">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">p2</data>
+    </edge>
+    <edge source="115964116998" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="115964116998" target="120259084294">
+      <data key="labelE">PARAMETER_LINK</data>
+    </edge>
+    <edge source="115964116998" target="120259084294">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">p1</data>
+    </edge>
+    <edge source="115964116998" target="128849018885">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">p1</data>
+    </edge>
+    <edge source="115964116999" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="115964116999" target="120259084295">
+      <data key="labelE">PARAMETER_LINK</data>
+    </edge>
+    <edge source="115964116999" target="120259084295">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">p2</data>
+    </edge>
+    <edge source="115964116999" target="128849018885">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">p2</data>
+    </edge>
+    <edge source="120259084288" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="120259084289" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="120259084290" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="120259084291" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="120259084292" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="120259084293" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="120259084294" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="120259084295" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="124554051584" target="30064771072">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="124554051584" target="30064771072">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="124554051584" target="163208757251">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="124554051584" target="68719476736">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="124554051584" target="68719476736">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="124554051584" target="30064771072">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet</data>
+    </edge>
+    <edge source="124554051584" target="111669149696">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="124554051585" target="34359738368">
+      <data key="labelE">CAPTURE</data>
+    </edge>
+    <edge source="124554051585" target="30064771081">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="124554051585" target="30064771081">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="124554051585" target="163208757253">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="124554051585" target="68719476746">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="124554051585" target="68719476746">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">main</data>
+    </edge>
+    <edge source="124554051585" target="30064771081">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">main</data>
+    </edge>
+    <edge source="124554051585" target="111669149698">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="128849018880" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="128849018880" target="146028888064">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="128849018881" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="128849018881" target="25769803778">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="128849018882" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="128849018882" target="30064771076">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="128849018883" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="128849018883" target="30064771082">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="128849018884" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="128849018884" target="111669149700">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="128849018885" target="163208757248">
+      <data key="labelE">EVAL_TYPE</data>
+    </edge>
+    <edge source="128849018885" target="111669149701">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="141733920768" target="171798691841">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="141733920768" target="137438953472">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="141733920768" target="60129542144">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="141733920769" target="171798691843">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="141733920769" target="137438953472">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="141733920769" target="60129542145">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="141733920770" target="111669149703">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="146028888064" target="90194313216">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="146028888064" target="90194313216">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="146028888064" target="128849018880">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="146028888064" target="128849018880">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="146028888064" target="90194313216">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="146028888064" target="128849018880">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">&lt;RET&gt;</data>
+    </edge>
+    <edge source="163208757248" target="171798691844">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="163208757249" target="171798691845">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="163208757250" target="171798691841">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="163208757251" target="171798691840">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="163208757252" target="171798691843">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="163208757253" target="171798691842">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="163208757254" target="171798691846">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="171798691840" target="21474836480">
+      <data key="labelE">BINDS</data>
+    </edge>
+    <edge source="171798691840" target="163208757248">
+      <data key="labelE">INHERITS_FROM</data>
+    </edge>
+    <edge source="171798691840" target="60129542144">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="171798691841" target="111669149697">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="171798691841" target="21474836481">
+      <data key="labelE">BINDS</data>
+    </edge>
+    <edge source="171798691841" target="111669149697">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="171798691841" target="163208757248">
+      <data key="labelE">INHERITS_FROM</data>
+    </edge>
+    <edge source="171798691841" target="60129542144">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="171798691842" target="21474836482">
+      <data key="labelE">BINDS</data>
+    </edge>
+    <edge source="171798691842" target="163208757248">
+      <data key="labelE">INHERITS_FROM</data>
+    </edge>
+    <edge source="171798691842" target="60129542145">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="171798691843" target="111669149699">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="171798691843" target="21474836483">
+      <data key="labelE">BINDS</data>
+    </edge>
+    <edge source="171798691843" target="111669149699">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="171798691843" target="163208757248">
+      <data key="labelE">INHERITS_FROM</data>
+    </edge>
+    <edge source="171798691843" target="60129542145">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+  </graph>
+</graphml>

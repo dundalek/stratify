@@ -1,0 +1,782 @@
+<graphml 
+xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd" xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <key id="labelV" for="node" attr.name="labelV" attr.type="string"/>
+  <key id="labelE" for="edge" attr.name="labelE" attr.type="string"/>
+  <key id="node__METHOD__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__IMPORT__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__RETURN__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_OUT__INDEX" for="node" attr.name="INDEX" attr.type="int"/>
+  <key id="node__METHOD__IS_EXTERNAL" for="node" attr.name="IS_EXTERNAL" attr.type="boolean"/>
+  <key id="node__MODIFIER__MODIFIER_TYPE" for="node" attr.name="MODIFIER_TYPE" attr.type="string"/>
+  <key id="node__METHOD__FULL_NAME" for="node" attr.name="FULL_NAME" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_OUT__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__METHOD__LINE_NUMBER_END" for="node" attr.name="LINE_NUMBER_END" attr.type="int"/>
+  <key id="node__TYPE_DECL__FULL_NAME" for="node" attr.name="FULL_NAME" attr.type="string"/>
+  <key id="node__CALL__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__METHOD__GENERIC_SIGNATURE" for="node" attr.name="GENERIC_SIGNATURE" attr.type="string"/>
+  <key id="node__IMPORT__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__CALL__METHOD_FULL_NAME" for="node" attr.name="METHOD_FULL_NAME" attr.type="string"/>
+  <key id="node__METHOD_RETURN__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__FILE__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__METHOD__AST_PARENT_TYPE" for="node" attr.name="AST_PARENT_TYPE" attr.type="string"/>
+  <key id="node__METHOD__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__IMPORT__IMPORTED_ENTITY" for="node" attr.name="IMPORTED_ENTITY" attr.type="string"/>
+  <key id="node__LITERAL__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__MODIFIER__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__TYPE_DECL__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__RETURN__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY" for="node" attr.name="EVALUATION_STRATEGY" attr.type="string">
+  </key>
+  <key id="node__FILE__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__METHOD_RETURN__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__CALL__SIGNATURE" for="node" attr.name="SIGNATURE" attr.type="string"/>
+  <key id="node__NAMESPACE_BLOCK__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__CALL__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__METHOD_RETURN__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__METHOD__COLUMN_NUMBER_END" for="node" attr.name="COLUMN_NUMBER_END" attr.type="int"/>
+  <key id="node__MODIFIER__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__TYPE_DECL__AST_PARENT_FULL_NAME" for="node" attr.name="AST_PARENT_FULL_NAME" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_IN__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_OUT__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__BLOCK__ARGUMENT_INDEX" for="node" attr.name="ARGUMENT_INDEX" attr.type="int"/>
+  <key id="node__CALL__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__NAMESPACE_BLOCK__FILENAME" for="node" attr.name="FILENAME" attr.type="string"/>
+  <key id="node__TYPE_DECL__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__NAMESPACE__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__METHOD_RETURN__EVALUATION_STRATEGY" for="node" attr.name="EVALUATION_STRATEGY" attr.type="string"/>
+  <key id="node__IMPORT__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__BLOCK__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__BLOCK__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__NAMESPACE_BLOCK__FULL_NAME" for="node" attr.name="FULL_NAME" attr.type="string"/>
+  <key id="node__BLOCK__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__META_DATA__ROOT" for="node" attr.name="ROOT" attr.type="string"/>
+  <key id="node__METHOD_RETURN__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__NAMESPACE_BLOCK__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__CALL__ARGUMENT_INDEX" for="node" attr.name="ARGUMENT_INDEX" attr.type="int"/>
+  <key id="node__TYPE_DECL__IS_EXTERNAL" for="node" attr.name="IS_EXTERNAL" attr.type="boolean"/>
+  <key id="node__META_DATA__VERSION" for="node" attr.name="VERSION" attr.type="string"/>
+  <key id="node__CALL__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__LITERAL__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__TYPE_DECL__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_OUT__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_IN__INDEX" for="node" attr.name="INDEX" attr.type="int"/>
+  <key 
+  id="node__METHOD_PARAMETER_OUT__EVALUATION_STRATEGY" for="node" attr.name="EVALUATION_STRATEGY" attr.type="string">
+</key>
+  <key id="node__METHOD_PARAMETER_IN__IS_VARIADIC" for="node" attr.name="IS_VARIADIC" attr.type="boolean"/>
+  <key id="node__LITERAL__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__MODIFIER__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__IMPORT__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__TYPE_DECL__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__NAMESPACE__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_IN__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__METHOD__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__METHOD__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__BLOCK__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__METHOD__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__RETURN__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__RETURN__ARGUMENT_INDEX" for="node" attr.name="ARGUMENT_INDEX" attr.type="int"/>
+  <key id="node__CALL__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__METHOD__SIGNATURE" for="node" attr.name="SIGNATURE" attr.type="string"/>
+  <key id="node__NAMESPACE_BLOCK__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__FILE__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__TYPE_DECL__GENERIC_SIGNATURE" for="node" attr.name="GENERIC_SIGNATURE" attr.type="string"/>
+  <key id="node__TYPE_DECL__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__BLOCK__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__RETURN__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="node__CALL__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__MODIFIER__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_OUT__TYPE_FULL_NAME" for="node" attr.name="TYPE_FULL_NAME" attr.type="string"/>
+  <key id="node__TYPE_DECL__FILENAME" for="node" attr.name="FILENAME" attr.type="string"/>
+  <key id="node__FILE__CONTENT" for="node" attr.name="CONTENT" attr.type="string"/>
+  <key id="node__LITERAL__ARGUMENT_INDEX" for="node" attr.name="ARGUMENT_INDEX" attr.type="int"/>
+  <key id="node__METHOD_PARAMETER_OUT__IS_VARIADIC" for="node" attr.name="IS_VARIADIC" attr.type="boolean"/>
+  <key id="node__METHOD__FILENAME" for="node" attr.name="FILENAME" attr.type="string"/>
+  <key id="node__METHOD_PARAMETER_IN__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__METHOD__AST_PARENT_FULL_NAME" for="node" attr.name="AST_PARENT_FULL_NAME" attr.type="string"/>
+  <key id="node__CALL__DISPATCH_TYPE" for="node" attr.name="DISPATCH_TYPE" attr.type="string"/>
+  <key id="node__META_DATA__LANGUAGE" for="node" attr.name="LANGUAGE" attr.type="string"/>
+  <key id="node__METHOD_RETURN__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__LITERAL__COLUMN_NUMBER" for="node" attr.name="COLUMN_NUMBER" attr.type="int"/>
+  <key id="node__TYPE_DECL__AST_PARENT_TYPE" for="node" attr.name="AST_PARENT_TYPE" attr.type="string"/>
+  <key id="node__NAMESPACE__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__IMPORT__IMPORTED_AS" for="node" attr.name="IMPORTED_AS" attr.type="string"/>
+  <key id="node__LITERAL__LINE_NUMBER" for="node" attr.name="LINE_NUMBER" attr.type="int"/>
+  <key id="edge__REACHING_DEF__property" for="edge" attr.name="property" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="25769803776">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">-1</data>
+      <data key="node__BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__BLOCK__COLUMN_NUMBER">24</data>
+      <data key="node__BLOCK__LINE_NUMBER">3</data>
+      <data key="node__BLOCK__ORDER">1</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">void</data>
+    </node>
+    <node id="25769803777">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">-1</data>
+      <data key="node__BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__BLOCK__COLUMN_NUMBER">1</data>
+      <data key="node__BLOCK__LINE_NUMBER">1</data>
+      <data key="node__BLOCK__ORDER">1</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="25769803778">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">-1</data>
+      <data key="node__BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__BLOCK__COLUMN_NUMBER">13</data>
+      <data key="node__BLOCK__LINE_NUMBER">8</data>
+      <data key="node__BLOCK__ORDER">1</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">void</data>
+    </node>
+    <node id="25769803779">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">-1</data>
+      <data key="node__BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__BLOCK__COLUMN_NUMBER">1</data>
+      <data key="node__BLOCK__LINE_NUMBER">1</data>
+      <data key="node__BLOCK__ORDER">1</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="25769803780">
+      <data key="labelV">BLOCK</data>
+      <data key="node__BLOCK__ARGUMENT_INDEX">1</data>
+      <data key="node__BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__BLOCK__ORDER">1</data>
+      <data key="node__BLOCK__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="30064771072">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">-1</data>
+      <data key="node__CALL__CODE">fmt.Println(greet.TheWorld())</data>
+      <data key="node__CALL__COLUMN_NUMBER">2</data>
+      <data key="node__CALL__DISPATCH_TYPE">STATIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">9</data>
+      <data key="node__CALL__METHOD_FULL_NAME">fmt.Println</data>
+      <data key="node__CALL__NAME">Println</data>
+      <data key="node__CALL__ORDER">1</data>
+      <data key="node__CALL__SIGNATURE">fmt.Println()</data>
+      <data key="node__CALL__TYPE_FULL_NAME">fmt.Println.&lt;ReturnType&gt;.&lt;unknown&gt;</data>
+    </node>
+    <node id="30064771073">
+      <data key="labelV">CALL</data>
+      <data key="node__CALL__ARGUMENT_INDEX">1</data>
+      <data key="node__CALL__CODE">greet.TheWorld()</data>
+      <data key="node__CALL__COLUMN_NUMBER">14</data>
+      <data key="node__CALL__DISPATCH_TYPE">STATIC_DISPATCH</data>
+      <data key="node__CALL__LINE_NUMBER">9</data>
+      <data key="node__CALL__METHOD_FULL_NAME">sample-go/greet.TheWorld</data>
+      <data key="node__CALL__NAME">TheWorld</data>
+      <data key="node__CALL__ORDER">1</data>
+      <data key="node__CALL__SIGNATURE">sample-go/greet.TheWorld()string</data>
+      <data key="node__CALL__TYPE_FULL_NAME">string</data>
+    </node>
+    <node id="60129542144">
+      <data key="labelV">FILE</data>
+      <data key="node__FILE__CODE">&lt;empty&gt;</data>
+      <data key="node__FILE__CONTENT">&lt;empty&gt;</data>
+      <data key="node__FILE__NAME">&lt;unknown&gt;</data>
+      <data key="node__FILE__ORDER">0</data>
+    </node>
+    <node id="60129542145">
+      <data key="labelV">FILE</data>
+      <data key="node__FILE__CODE">&lt;empty&gt;</data>
+      <data key="node__FILE__CONTENT">&lt;empty&gt;</data>
+      <data key="node__FILE__NAME">/greet</data>
+      <data key="node__FILE__ORDER">0</data>
+    </node>
+    <node id="60129542146">
+      <data key="labelV">FILE</data>
+      <data key="node__FILE__CODE">&lt;empty&gt;</data>
+      <data key="node__FILE__CONTENT">&lt;empty&gt;</data>
+      <data key="node__FILE__NAME">/</data>
+      <data key="node__FILE__ORDER">0</data>
+    </node>
+    <node id="60129542147">
+      <data key="labelV">FILE</data>
+      <data key="node__FILE__CODE">&lt;empty&gt;</data>
+      <data key="node__FILE__CONTENT">&lt;empty&gt;</data>
+      <data key="node__FILE__NAME">greet/greet.go</data>
+      <data key="node__FILE__ORDER">0</data>
+    </node>
+    <node id="60129542148">
+      <data key="labelV">FILE</data>
+      <data key="node__FILE__CODE">&lt;empty&gt;</data>
+      <data key="node__FILE__CONTENT">&lt;empty&gt;</data>
+      <data key="node__FILE__NAME">main.go</data>
+      <data key="node__FILE__ORDER">0</data>
+    </node>
+    <node id="73014444032">
+      <data key="labelV">IMPORT</data>
+      <data key="node__IMPORT__CODE">import fmt</data>
+      <data key="node__IMPORT__COLUMN_NUMBER">2</data>
+      <data key="node__IMPORT__IMPORTED_AS">fmt</data>
+      <data key="node__IMPORT__IMPORTED_ENTITY">fmt</data>
+      <data key="node__IMPORT__LINE_NUMBER">4</data>
+      <data key="node__IMPORT__ORDER">1</data>
+    </node>
+    <node id="73014444033">
+      <data key="labelV">IMPORT</data>
+      <data key="node__IMPORT__CODE">import greet sample-go/greet</data>
+      <data key="node__IMPORT__COLUMN_NUMBER">2</data>
+      <data key="node__IMPORT__IMPORTED_AS">greet</data>
+      <data key="node__IMPORT__IMPORTED_ENTITY">sample-go/greet</data>
+      <data key="node__IMPORT__LINE_NUMBER">5</data>
+      <data key="node__IMPORT__ORDER">2</data>
+    </node>
+    <node id="90194313216">
+      <data key="labelV">LITERAL</data>
+      <data key="node__LITERAL__ARGUMENT_INDEX">1</data>
+      <data key="node__LITERAL__CODE">&quot;Hello, World!&quot;</data>
+      <data key="node__LITERAL__COLUMN_NUMBER">9</data>
+      <data key="node__LITERAL__LINE_NUMBER">4</data>
+      <data key="node__LITERAL__ORDER">1</data>
+      <data key="node__LITERAL__TYPE_FULL_NAME">string</data>
+    </node>
+    <node id="107374182400">
+      <data key="labelV">META_DATA</data>
+      <data key="node__META_DATA__LANGUAGE">GOLANG</data>
+      <data key="node__META_DATA__ROOT">
+        /home/me/projects/nanaban/code/stratify/experiments/scip/test/resources/sample-go
+      </data>
+      <data key="node__META_DATA__VERSION">0.1</data>
+    </node>
+    <node id="111669149696">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">sample-go/greet</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">TYPE_DECL</data>
+      <data key="node__METHOD__CODE">func TheWorld() string { return &quot;Hello, World!&quot; }</data>
+      <data key="node__METHOD__COLUMN_NUMBER">1</data>
+      <data key="node__METHOD__COLUMN_NUMBER_END">2</data>
+      <data key="node__METHOD__FILENAME">greet/greet.go</data>
+      <data key="node__METHOD__FULL_NAME">sample-go/greet.TheWorld</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">false</data>
+      <data key="node__METHOD__LINE_NUMBER">3</data>
+      <data key="node__METHOD__LINE_NUMBER_END">5</data>
+      <data key="node__METHOD__NAME">TheWorld</data>
+      <data key="node__METHOD__ORDER">1</data>
+      <data key="node__METHOD__SIGNATURE">sample-go/greet.TheWorld()string</data>
+    </node>
+    <node id="111669149697">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">sample-go/greet</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">TYPE_DECL</data>
+      <data key="node__METHOD__CODE">sample-go/greet.greet.go</data>
+      <data key="node__METHOD__COLUMN_NUMBER">1</data>
+      <data key="node__METHOD__COLUMN_NUMBER_END">2</data>
+      <data key="node__METHOD__FILENAME">greet/greet.go</data>
+      <data key="node__METHOD__FULL_NAME">greet/greet.go:sample-go/greet.greet.go</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">false</data>
+      <data key="node__METHOD__LINE_NUMBER">1</data>
+      <data key="node__METHOD__LINE_NUMBER_END">5</data>
+      <data key="node__METHOD__NAME">sample-go/greet.greet.go</data>
+      <data key="node__METHOD__ORDER">1</data>
+      <data key="node__METHOD__SIGNATURE"/>
+    </node>
+    <node id="111669149698">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">main</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">TYPE_DECL</data>
+      <data key="node__METHOD__CODE">func main() { fmt.Println(greet.TheWorld()) }</data>
+      <data key="node__METHOD__COLUMN_NUMBER">1</data>
+      <data key="node__METHOD__COLUMN_NUMBER_END">2</data>
+      <data key="node__METHOD__FILENAME">main.go</data>
+      <data key="node__METHOD__FULL_NAME">main.main</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">false</data>
+      <data key="node__METHOD__LINE_NUMBER">8</data>
+      <data key="node__METHOD__LINE_NUMBER_END">10</data>
+      <data key="node__METHOD__NAME">main</data>
+      <data key="node__METHOD__ORDER">1</data>
+      <data key="node__METHOD__SIGNATURE">main.main()</data>
+    </node>
+    <node id="111669149699">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">main</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">TYPE_DECL</data>
+      <data key="node__METHOD__CODE">main.main.go</data>
+      <data key="node__METHOD__COLUMN_NUMBER">1</data>
+      <data key="node__METHOD__COLUMN_NUMBER_END">2</data>
+      <data key="node__METHOD__FILENAME">main.go</data>
+      <data key="node__METHOD__FULL_NAME">main.go:main.main.go</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">false</data>
+      <data key="node__METHOD__LINE_NUMBER">1</data>
+      <data key="node__METHOD__LINE_NUMBER_END">10</data>
+      <data key="node__METHOD__NAME">main.main.go</data>
+      <data key="node__METHOD__ORDER">1</data>
+      <data key="node__METHOD__SIGNATURE"/>
+    </node>
+    <node id="111669149700">
+      <data key="labelV">METHOD</data>
+      <data key="node__METHOD__AST_PARENT_FULL_NAME">&lt;global&gt;</data>
+      <data key="node__METHOD__AST_PARENT_TYPE">NAMESPACE_BLOCK</data>
+      <data key="node__METHOD__CODE">&lt;empty&gt;</data>
+      <data key="node__METHOD__FILENAME">&lt;empty&gt;</data>
+      <data key="node__METHOD__FULL_NAME">fmt.Println</data>
+      <data key="node__METHOD__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__METHOD__IS_EXTERNAL">true</data>
+      <data key="node__METHOD__NAME">Println</data>
+      <data key="node__METHOD__ORDER">0</data>
+      <data key="node__METHOD__SIGNATURE">fmt.Println()</data>
+    </node>
+    <node id="115964116992">
+      <data key="labelV">METHOD_PARAMETER_IN</data>
+      <data key="node__METHOD_PARAMETER_IN__CODE">p1</data>
+      <data key="node__METHOD_PARAMETER_IN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_IN__INDEX">1</data>
+      <data key="node__METHOD_PARAMETER_IN__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_IN__NAME">p1</data>
+      <data key="node__METHOD_PARAMETER_IN__ORDER">1</data>
+      <data key="node__METHOD_PARAMETER_IN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="120259084288">
+      <data key="labelV">METHOD_PARAMETER_OUT</data>
+      <data key="node__METHOD_PARAMETER_OUT__CODE">p1</data>
+      <data key="node__METHOD_PARAMETER_OUT__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_PARAMETER_OUT__INDEX">1</data>
+      <data key="node__METHOD_PARAMETER_OUT__IS_VARIADIC">false</data>
+      <data key="node__METHOD_PARAMETER_OUT__NAME">p1</data>
+      <data key="node__METHOD_PARAMETER_OUT__ORDER">1</data>
+      <data key="node__METHOD_PARAMETER_OUT__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="128849018880">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__COLUMN_NUMBER">17</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__LINE_NUMBER">3</data>
+      <data key="node__METHOD_RETURN__ORDER">2</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">string</data>
+    </node>
+    <node id="128849018881">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__COLUMN_NUMBER">1</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__LINE_NUMBER">1</data>
+      <data key="node__METHOD_RETURN__ORDER">3</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="128849018882">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__COLUMN_NUMBER">1</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__LINE_NUMBER">8</data>
+      <data key="node__METHOD_RETURN__ORDER">2</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">void</data>
+    </node>
+    <node id="128849018883">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__COLUMN_NUMBER">1</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__LINE_NUMBER">1</data>
+      <data key="node__METHOD_RETURN__ORDER">3</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="128849018884">
+      <data key="labelV">METHOD_RETURN</data>
+      <data key="node__METHOD_RETURN__CODE">RET</data>
+      <data key="node__METHOD_RETURN__EVALUATION_STRATEGY">BY_VALUE</data>
+      <data key="node__METHOD_RETURN__ORDER">2</data>
+      <data key="node__METHOD_RETURN__TYPE_FULL_NAME">ANY</data>
+    </node>
+    <node id="133143986176">
+      <data key="labelV">MODIFIER</data>
+      <data key="node__MODIFIER__CODE">&lt;empty&gt;</data>
+      <data key="node__MODIFIER__COLUMN_NUMBER">1</data>
+      <data key="node__MODIFIER__LINE_NUMBER">1</data>
+      <data key="node__MODIFIER__MODIFIER_TYPE">MODULE</data>
+      <data key="node__MODIFIER__ORDER">2</data>
+    </node>
+    <node id="133143986177">
+      <data key="labelV">MODIFIER</data>
+      <data key="node__MODIFIER__CODE">&lt;empty&gt;</data>
+      <data key="node__MODIFIER__COLUMN_NUMBER">1</data>
+      <data key="node__MODIFIER__LINE_NUMBER">1</data>
+      <data key="node__MODIFIER__MODIFIER_TYPE">MODULE</data>
+      <data key="node__MODIFIER__ORDER">2</data>
+    </node>
+    <node id="137438953472">
+      <data key="labelV">NAMESPACE</data>
+      <data key="node__NAMESPACE__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE__NAME">main</data>
+      <data key="node__NAMESPACE__ORDER">-1</data>
+    </node>
+    <node id="137438953473">
+      <data key="labelV">NAMESPACE</data>
+      <data key="node__NAMESPACE__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE__NAME">&lt;global&gt;</data>
+      <data key="node__NAMESPACE__ORDER">-1</data>
+    </node>
+    <node id="137438953474">
+      <data key="labelV">NAMESPACE</data>
+      <data key="node__NAMESPACE__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE__NAME">sample-go/greet</data>
+      <data key="node__NAMESPACE__ORDER">-1</data>
+    </node>
+    <node id="141733920768">
+      <data key="labelV">NAMESPACE_BLOCK</data>
+      <data key="node__NAMESPACE_BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__FILENAME">&lt;unknown&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__FULL_NAME">&lt;global&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__NAME">&lt;global&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__ORDER">1</data>
+    </node>
+    <node id="141733920769">
+      <data key="labelV">NAMESPACE_BLOCK</data>
+      <data key="node__NAMESPACE_BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__FILENAME">/greet</data>
+      <data key="node__NAMESPACE_BLOCK__FULL_NAME">sample-go/greet</data>
+      <data key="node__NAMESPACE_BLOCK__NAME">sample-go/greet</data>
+      <data key="node__NAMESPACE_BLOCK__ORDER">1</data>
+    </node>
+    <node id="141733920770">
+      <data key="labelV">NAMESPACE_BLOCK</data>
+      <data key="node__NAMESPACE_BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__FILENAME">/</data>
+      <data key="node__NAMESPACE_BLOCK__FULL_NAME">main</data>
+      <data key="node__NAMESPACE_BLOCK__NAME">main</data>
+      <data key="node__NAMESPACE_BLOCK__ORDER">1</data>
+    </node>
+    <node id="146028888064">
+      <data key="labelV">RETURN</data>
+      <data key="node__RETURN__ARGUMENT_INDEX">-1</data>
+      <data key="node__RETURN__CODE">return &quot;Hello, World!&quot;</data>
+      <data key="node__RETURN__COLUMN_NUMBER">2</data>
+      <data key="node__RETURN__LINE_NUMBER">4</data>
+      <data key="node__RETURN__ORDER">1</data>
+    </node>
+    <node id="171798691840">
+      <data key="labelV">TYPE_DECL</data>
+      <data key="node__TYPE_DECL__AST_PARENT_FULL_NAME"/>
+      <data key="node__TYPE_DECL__AST_PARENT_TYPE"/>
+      <data key="node__TYPE_DECL__CODE">sample-go/greet</data>
+      <data key="node__TYPE_DECL__COLUMN_NUMBER">1</data>
+      <data key="node__TYPE_DECL__FILENAME">/greet</data>
+      <data key="node__TYPE_DECL__FULL_NAME">sample-go/greet</data>
+      <data key="node__TYPE_DECL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__IS_EXTERNAL">false</data>
+      <data key="node__TYPE_DECL__LINE_NUMBER">1</data>
+      <data key="node__TYPE_DECL__NAME">sample-go/greet</data>
+      <data key="node__TYPE_DECL__ORDER">1</data>
+    </node>
+    <node id="171798691841">
+      <data key="labelV">TYPE_DECL</data>
+      <data key="node__TYPE_DECL__AST_PARENT_FULL_NAME"/>
+      <data key="node__TYPE_DECL__AST_PARENT_TYPE"/>
+      <data key="node__TYPE_DECL__CODE">main</data>
+      <data key="node__TYPE_DECL__COLUMN_NUMBER">1</data>
+      <data key="node__TYPE_DECL__FILENAME">/</data>
+      <data key="node__TYPE_DECL__FULL_NAME">main</data>
+      <data key="node__TYPE_DECL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__IS_EXTERNAL">false</data>
+      <data key="node__TYPE_DECL__LINE_NUMBER">1</data>
+      <data key="node__TYPE_DECL__NAME">main</data>
+      <data key="node__TYPE_DECL__ORDER">1</data>
+    </node>
+    <edge source="25769803776" target="146028888064">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803778" target="30064771072">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803779" target="73014444032">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="25769803779" target="73014444033">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771072" target="30064771073">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="30064771072" target="30064771073">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="30064771072" target="111669149700">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771072" target="128849018882">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771072" target="128849018882">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771072" target="30064771073">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771072" target="128849018882">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">fmt.Println(greet.TheWorld())</data>
+    </edge>
+    <edge source="30064771073" target="111669149696">
+      <data key="labelE">CALL</data>
+    </edge>
+    <edge source="30064771073" target="30064771072">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="30064771073" target="30064771072">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="30064771073" target="111669149698">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="30064771073" target="30064771072">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet.TheWorld()</data>
+    </edge>
+    <edge source="30064771073" target="128849018882">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">greet.TheWorld()</data>
+    </edge>
+    <edge source="90194313216" target="146028888064">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="90194313216" target="146028888064">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="90194313216" target="111669149696">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="90194313216" target="146028888064">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">&quot;Hello, World!&quot;</data>
+    </edge>
+    <edge source="111669149696" target="25769803776">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149696" target="128849018880">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149696" target="90194313216">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="111669149696" target="25769803776">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149696" target="146028888064">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149696" target="90194313216">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149696" target="90194313216">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="111669149696" target="90194313216">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149696" target="146028888064">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149696" target="60129542147">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="111669149697" target="25769803777">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149697" target="133143986176">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149697" target="128849018881">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149697" target="128849018881">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="111669149697" target="25769803777">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149697" target="128849018881">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="111669149697" target="60129542147">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="111669149698" target="25769803778">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149698" target="128849018882">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149698" target="30064771073">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="111669149698" target="25769803778">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149698" target="30064771072">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149698" target="30064771073">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149698" target="30064771073">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="111669149698" target="30064771073">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="111669149698" target="60129542148">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="111669149699" target="25769803779">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149699" target="133143986177">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149699" target="128849018883">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149699" target="128849018883">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="111669149699" target="25769803779">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149699" target="128849018883">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="111669149699" target="60129542148">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="111669149700" target="115964116992">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149700" target="25769803780">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149700" target="128849018884">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149700" target="120259084288">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="111669149700" target="128849018884">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="111669149700" target="25769803780">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="111669149700" target="128849018884">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="111669149700" target="115964116992">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property"/>
+    </edge>
+    <edge source="115964116992" target="120259084288">
+      <data key="labelE">PARAMETER_LINK</data>
+    </edge>
+    <edge source="115964116992" target="120259084288">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">p1</data>
+    </edge>
+    <edge source="115964116992" target="128849018884">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">p1</data>
+    </edge>
+    <edge source="128849018880" target="146028888064">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="128849018881" target="111669149697">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="128849018882" target="30064771072">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="128849018883" target="111669149699">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="128849018884" target="111669149700">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="141733920768" target="111669149700">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="141733920768" target="137438953473">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="141733920768" target="60129542144">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="141733920769" target="171798691840">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="141733920769" target="137438953474">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="141733920769" target="60129542145">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="141733920770" target="171798691841">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="141733920770" target="137438953472">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="141733920770" target="60129542146">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="146028888064" target="90194313216">
+      <data key="labelE">ARGUMENT</data>
+    </edge>
+    <edge source="146028888064" target="90194313216">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="146028888064" target="128849018880">
+      <data key="labelE">CFG</data>
+    </edge>
+    <edge source="146028888064" target="128849018880">
+      <data key="labelE">DOMINATE</data>
+    </edge>
+    <edge source="146028888064" target="90194313216">
+      <data key="labelE">POST_DOMINATE</data>
+    </edge>
+    <edge source="146028888064" target="128849018880">
+      <data key="labelE">REACHING_DEF</data>
+      <data key="edge__REACHING_DEF__property">&lt;RET&gt;</data>
+    </edge>
+    <edge source="171798691840" target="111669149696">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="171798691840" target="111669149697">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="171798691840" target="111669149696">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="171798691840" target="111669149697">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="171798691840" target="60129542145">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="171798691841" target="111669149698">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="171798691841" target="111669149699">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="171798691841" target="111669149698">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="171798691841" target="111669149699">
+      <data key="labelE">CONTAINS</data>
+    </edge>
+    <edge source="171798691841" target="60129542146">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+  </graph>
+</graphml>

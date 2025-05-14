@@ -1,0 +1,7 @@
+#kaocha/v1
+ {:tests
+  [{:id :unit
+    :source-paths ["src"]
+    :test-paths ["test/src"]
+    :skip-meta [:skip]
+    :focus-meta [:focus]}]}

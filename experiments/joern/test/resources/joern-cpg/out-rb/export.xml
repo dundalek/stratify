@@ -1,0 +1,610 @@
+<graphml 
+xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd" xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <key id="labelV" for="node" attr.name="labelV" attr.type="string"/>
+  <key id="labelE" for="edge" attr.name="labelE" attr.type="string"/>
+  <key id="node__TYPE_DECL__AST_PARENT_FULL_NAME" for="node" attr.name="AST_PARENT_FULL_NAME" attr.type="string"/>
+  <key id="node__NAMESPACE_BLOCK__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__FILE__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__TYPE__TYPE_DECL_FULL_NAME" for="node" attr.name="TYPE_DECL_FULL_NAME" attr.type="string"/>
+  <key id="node__TYPE_DECL__GENERIC_SIGNATURE" for="node" attr.name="GENERIC_SIGNATURE" attr.type="string"/>
+  <key id="node__TYPE_DECL__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__NAMESPACE_BLOCK__FILENAME" for="node" attr.name="FILENAME" attr.type="string"/>
+  <key id="node__CONFIG_FILE__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__NAMESPACE__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__TYPE_DECL__FULL_NAME" for="node" attr.name="FULL_NAME" attr.type="string"/>
+  <key id="node__NAMESPACE_BLOCK__FULL_NAME" for="node" attr.name="FULL_NAME" attr.type="string"/>
+  <key id="node__DEPENDENCY__VERSION" for="node" attr.name="VERSION" attr.type="string"/>
+  <key id="node__FILE__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__TYPE__FULL_NAME" for="node" attr.name="FULL_NAME" attr.type="string"/>
+  <key id="node__META_DATA__ROOT" for="node" attr.name="ROOT" attr.type="string"/>
+  <key id="node__TYPE_DECL__FILENAME" for="node" attr.name="FILENAME" attr.type="string"/>
+  <key id="node__FILE__CONTENT" for="node" attr.name="CONTENT" attr.type="string"/>
+  <key id="node__TYPE_DECL__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__NAMESPACE__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__NAMESPACE_BLOCK__CODE" for="node" attr.name="CODE" attr.type="string"/>
+  <key id="node__TYPE_DECL__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__TYPE_DECL__IS_EXTERNAL" for="node" attr.name="IS_EXTERNAL" attr.type="boolean"/>
+  <key id="node__META_DATA__VERSION" for="node" attr.name="VERSION" attr.type="string"/>
+  <key id="node__META_DATA__LANGUAGE" for="node" attr.name="LANGUAGE" attr.type="string"/>
+  <key id="node__FILE__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__TYPE_DECL__AST_PARENT_TYPE" for="node" attr.name="AST_PARENT_TYPE" attr.type="string"/>
+  <key id="node__DEPENDENCY__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__NAMESPACE__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__NAMESPACE_BLOCK__ORDER" for="node" attr.name="ORDER" attr.type="int"/>
+  <key id="node__TYPE__NAME" for="node" attr.name="NAME" attr.type="string"/>
+  <key id="node__CONFIG_FILE__CONTENT" for="node" attr.name="CONTENT" attr.type="string"/>
+  <graph id="G" edgedefault="directed">
+    <node id="42949672960">
+      <data key="labelV">CONFIG_FILE</data>
+      <data key="node__CONFIG_FILE__CONTENT">source 'https://rubygems.org' gem 'scip-ruby' </data>
+      <data key="node__CONFIG_FILE__NAME">Gemfile</data>
+    </node>
+    <node id="51539607552">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">getoptlong</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607553">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">optparse</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607554">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">fiddle</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607555">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">rss</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607556">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">open3</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607557">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">gdbm</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607558">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">date</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607559">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">shellwords</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607560">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">net/smtp</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607561">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">tsort</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607562">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">monitor</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607563">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">yaml</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607564">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">prettyprint</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607565">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">dbm</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607566">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">tracer</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607567">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">mutex_m</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607568">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">resolv-replace</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607569">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">tmpdir</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607570">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">extmk</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607571">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">irb</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607572">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">pstore</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607573">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">open-uri</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607574">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">ipaddr</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607575">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">nkf</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607576">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">socket</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607577">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">abbrev</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607578">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">prime</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607579">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">bigdecimal</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607580">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">find</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607581">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">pathname</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607582">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">test-unit</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607583">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">fileutils</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607584">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">racc</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607585">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">ostruct</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607586">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">securerandom</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607587">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">digest</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607588">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">strscan</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607589">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">ripper</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607590">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">English</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607591">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">weakref</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607592">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">io/wait</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607593">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">erb</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607594">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">power_assert</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607595">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">minitest</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607596">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">io/console</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607597">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">base64</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607598">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">rubygems</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607599">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">zlib</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607600">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">cgi</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607601">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">pp</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607602">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">win32ole</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607603">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">net/imap</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607604">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">bundler</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607605">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">time</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607606">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">net/pop</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607607">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">syslog</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607608">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">io/nonblock</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607609">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">net/ftp</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607610">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">coverage</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607611">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">csv</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607612">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">openssl</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607613">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">uri</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607614">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">timeout</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607615">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">rake</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607616">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">rinda</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607617">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">racc/parser</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607618">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">singleton</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607619">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">stringio</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607620">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">readline</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607621">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">matrix</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607622">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">net/http</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607623">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">set</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607624">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">fcntl</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607625">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">reline</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607626">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">psych</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607627">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">json</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607628">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">rbs</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607629">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">pty</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607630">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">drb</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607631">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">did_you_mean</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607632">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">tempfile</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607633">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">debug</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607634">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">etc</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607635">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">observer</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607636">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">mkmf</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607637">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">net/protocol</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607638">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">benchmark</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607639">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">rexml</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607640">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">forwardable</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607641">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">logger</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607642">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">typeprof</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607643">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">un</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607644">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">delegate</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607645">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">objspace</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607646">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">resolv</data>
+      <data key="node__DEPENDENCY__VERSION">3.0.0</data>
+    </node>
+    <node id="51539607647">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">&lt;dependency-resolver&gt;</data>
+      <data key="node__DEPENDENCY__VERSION">https://rubygems.org</data>
+    </node>
+    <node id="51539607648">
+      <data key="labelV">DEPENDENCY</data>
+      <data key="node__DEPENDENCY__NAME">scip-ruby</data>
+      <data key="node__DEPENDENCY__VERSION"/>
+    </node>
+    <node id="60129542144">
+      <data key="labelV">FILE</data>
+      <data key="node__FILE__CODE">&lt;empty&gt;</data>
+      <data key="node__FILE__CONTENT">&lt;empty&gt;</data>
+      <data key="node__FILE__NAME">&lt;unknown&gt;</data>
+      <data key="node__FILE__ORDER">0</data>
+    </node>
+    <node id="107374182400">
+      <data key="labelV">META_DATA</data>
+      <data key="node__META_DATA__LANGUAGE">RUBYSRC</data>
+      <data key="node__META_DATA__ROOT">
+        /home/me/projects/nanaban/code/stratify/experiments/scip/test/resources/sample-rb
+      </data>
+      <data key="node__META_DATA__VERSION">0.1</data>
+    </node>
+    <node id="137438953472">
+      <data key="labelV">NAMESPACE</data>
+      <data key="node__NAMESPACE__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE__NAME">&lt;global&gt;</data>
+      <data key="node__NAMESPACE__ORDER">-1</data>
+    </node>
+    <node id="141733920768">
+      <data key="labelV">NAMESPACE_BLOCK</data>
+      <data key="node__NAMESPACE_BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__FILENAME">&lt;unknown&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__FULL_NAME">&lt;global&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__NAME">&lt;global&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__ORDER">1</data>
+    </node>
+    <node id="141733920769">
+      <data key="labelV">NAMESPACE_BLOCK</data>
+      <data key="node__NAMESPACE_BLOCK__CODE">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__FILENAME">&lt;empty&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__FULL_NAME">&lt;speculatedMethods&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__NAME">&lt;speculatedMethods&gt;</data>
+      <data key="node__NAMESPACE_BLOCK__ORDER">-1</data>
+    </node>
+    <node id="163208757248">
+      <data key="labelV">TYPE</data>
+      <data key="node__TYPE__FULL_NAME">ANY</data>
+      <data key="node__TYPE__NAME">ANY</data>
+      <data key="node__TYPE__TYPE_DECL_FULL_NAME">ANY</data>
+    </node>
+    <node id="171798691840">
+      <data key="labelV">TYPE_DECL</data>
+      <data key="node__TYPE_DECL__AST_PARENT_FULL_NAME">&lt;global&gt;</data>
+      <data key="node__TYPE_DECL__AST_PARENT_TYPE">NAMESPACE_BLOCK</data>
+      <data key="node__TYPE_DECL__CODE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__FILENAME">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__FULL_NAME">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__IS_EXTERNAL">true</data>
+      <data key="node__TYPE_DECL__NAME">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__ORDER">-1</data>
+    </node>
+    <node id="171798691841">
+      <data key="labelV">TYPE_DECL</data>
+      <data key="node__TYPE_DECL__AST_PARENT_FULL_NAME">&lt;global&gt;</data>
+      <data key="node__TYPE_DECL__AST_PARENT_TYPE">NAMESPACE_BLOCK</data>
+      <data key="node__TYPE_DECL__CODE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__FILENAME">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__FULL_NAME">ANY</data>
+      <data key="node__TYPE_DECL__GENERIC_SIGNATURE">&lt;empty&gt;</data>
+      <data key="node__TYPE_DECL__IS_EXTERNAL">true</data>
+      <data key="node__TYPE_DECL__NAME">ANY</data>
+      <data key="node__TYPE_DECL__ORDER">-1</data>
+    </node>
+    <edge source="141733920768" target="171798691840">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="141733920768" target="171798691841">
+      <data key="labelE">AST</data>
+    </edge>
+    <edge source="141733920768" target="137438953472">
+      <data key="labelE">REF</data>
+    </edge>
+    <edge source="141733920768" target="60129542144">
+      <data key="labelE">SOURCE_FILE</data>
+    </edge>
+    <edge source="163208757248" target="171798691841">
+      <data key="labelE">REF</data>
+    </edge>
+  </graph>
+</graphml>
