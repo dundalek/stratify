@@ -1,0 +1,11 @@
+{
+  "name": "stratify",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "portal": "workspace:packages/portal",
+    "studio": "workspace:*"
+  }
+}

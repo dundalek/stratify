@@ -1,13 +1,15 @@
 {:deps {org.clojure/clojure {:mvn/version "1.12.0"}
         clj-kondo/clj-kondo {:mvn/version "2024.05.24"}
         org.clojure/data.xml {:mvn/version "0.2.0-alpha9"}
-        aysylu/loom {:mvn/version "1.0.2"
-                     :exclusions [tailrecursion/cljs-priority-map]}
+        aysylu/loom {:mvn/version "1.0.2"}
+                     ;:exclusions [tailrecursion/cljs-priority-map]}
         org.babashka/cli {:mvn/version "0.8.59"}
         babashka/process {:mvn/version "0.5.22"}
         babashka/fs {:mvn/version "0.5.23"}
         metosin/malli {:mvn/version "0.17.0"}
-        metosin/jsonista {:mvn/version "0.3.12"}}
+        metosin/jsonista {:mvn/version "0.3.12"}
+
+        stratify/studio {:local/root "packages/studio"}}
 
  :paths ["src" "resources"]
 

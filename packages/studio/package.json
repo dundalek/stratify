@@ -1,0 +1,9 @@
+{
+  "name": "studio",
+  "dependencies": {
+    "cytoscape": "^3.31.1",
+    "cytoscape-elk": "^2.3.0",
+    "d3": "^7.9.0",
+    "use-sync-external-store": "1.4.0"
+  }
+}

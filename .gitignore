@@ -3,3 +3,5 @@
 /target
 .clj-kondo
 .clerk/cache
+node_modules
+/packages/portal

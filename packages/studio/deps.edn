@@ -1,0 +1,2 @@
+{:deps
+ {djblue/portal {:local/root "../portal"} #_{:mvn/version "0.58.5"} medley/medley {:mvn/version "1.4.0"}}}
