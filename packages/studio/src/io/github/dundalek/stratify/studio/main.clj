@@ -21,9 +21,11 @@
   (defmethod portal-server/route [:get "/main.js"] [request]
     {:status  200
      :headers {"Content-Type" "text/javascript"}
-     :body (slurp (case (-> request :session :options :mode)
-                    :dev "packages/portal/resources/portal-dev/main.js"
-                    "packages/portal/resources/portal/main.js"))})
+     :body (slurp
+            "packages/portal/resources/portal-dev/main.js"
+            #_(case (-> request :session :options :mode)
+                :dev "packages/portal/resources/portal-dev/main.js"
+                "packages/portal/resources/portal/main.js"))})
 
   (require '[portal.runtime.jvm.server as portal-server])
 

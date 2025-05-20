@@ -104,6 +104,8 @@
       (let [t (-> (.transition svg-selection)
                   (.duration 750))
             [width height] (graph/dimensions graph)
+            width (+ width 20)
+            height (+ height 20)
             ; _ (.attr svg-selection "viewBox"
             ;          (str/join " " [0 0 width height]))
             _ (-> svg-selection

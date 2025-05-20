@@ -6,11 +6,26 @@
    [loom.graph :as lg]
    [portal.ui.api :as pua]))
 
+(defn detect-container-dimensions []
+  {:width (- js/window.innerWidth 80)
+   :height (- js/window.innerHeight 200)})
+
 (defn graph-container [{:keys [element make-layout make-renderer full-graph graph
                                on-node-click on-cluster-click]}]
   (let [element-ref (react/useRef)
         [render set-render!] (react/useState nil)
-        [laidout-graph set-laidout-graph!] (react/useState nil)]
+        [laidout-graph set-laidout-graph!] (react/useState nil)
+        [dimensions set-dimensions!] (react/useState (detect-container-dimensions))
+        handle-resize (react/useCallback
+                       #(set-dimensions! (detect-container-dimensions)))
+        {:keys [width height]} dimensions]
+
+    (react/useEffect
+     (fn []
+       (.addEventListener js/window "resize" handle-resize)
+       #(.removeEventListener js/window "resize" handle-resize))
+     #js [])
+
     (react/useEffect
      (fn []
        (set-render!
@@ -42,7 +57,7 @@
      #js [render laidout-graph full-graph])
 
     [element {:ref element-ref
-              :style #js {:flexGrow 1}}]))
+              :style {:width width :height height} #_{:flexGrow 1}}]))
 
 (defn make-layout [{:keys [graph on-update]}]
   (cytoscape-elk/layout
