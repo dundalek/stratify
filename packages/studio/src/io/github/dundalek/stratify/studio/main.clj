@@ -5,27 +5,33 @@
    [portal.viewer :as pv]
    [portal.runtime.jvm.server :as portal-server]))
 
+(defmethod portal-server/route [:get "/main.js"] [request]
+  {:status  200
+   :headers {"Content-Type" "text/javascript"}
+   :body (slurp
+          "packages/portal/resources/portal-dev/main.js"
+          #_(case (-> request :session :options :mode)
+              :dev "packages/portal/resources/portal-dev/main.js"
+              "packages/portal/resources/portal/main.js"))})
+
+(defn open [g]
+  (p/open)
+  (p/submit
+   (pv/default g :io.github.dundalek.stratify.studio.viewers/viz)))
+
 (comment
   (tap>
    (pv/default
-    {"a" #{"b" "c"}}
+    {:adj {"a" #{"b" "c"}}}
     :io.github.dundalek.stratify.studio.viewers/viz))
 
   (tap>
    (pv/default
-    {"a" #{"b" "c"}
-     "b" #{"d" "e"}}
+    {:adj {"a" #{"b" "c"}
+           "b" #{"d" "e"}}}
     :io.github.dundalek.stratify.studio.viewers/viz)))
 
 (comment
-  (defmethod portal-server/route [:get "/main.js"] [request]
-    {:status  200
-     :headers {"Content-Type" "text/javascript"}
-     :body (slurp
-            "packages/portal/resources/portal-dev/main.js"
-            #_(case (-> request :session :options :mode)
-                :dev "packages/portal/resources/portal-dev/main.js"
-                "packages/portal/resources/portal/main.js"))})
 
   (require '[portal.runtime.jvm.server as portal-server])
 

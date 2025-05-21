@@ -6,6 +6,11 @@
    [loom.graph :as lg]
    [portal.ui.api :as pua]))
 
+(defn- make-digraph [{:keys [adj attrs]}]
+  (-> (lg/digraph adj)
+      (lg/add-nodes* (keys attrs))
+      (assoc :attrs attrs)))
+
 (defn detect-container-dimensions []
   {:width (- js/window.innerWidth 80)
    :height (- js/window.innerHeight 200)})
@@ -68,7 +73,7 @@
 (def make-renderer d3g/make-renderer)
 
 (defn inspect-hello [value]
-  (let [graph (lg/digraph value)]
+  (let [graph (make-digraph value)]
     [graph-container
      {:element :svg
       :make-layout make-layout

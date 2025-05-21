@@ -231,18 +231,28 @@
                                                  coverage-styles
                                                  style/styles)))))
 
-(defn extract [{:keys [source-paths output-file flat-namespaces include-dependencies insert-namespace-node coverage-file]}]
-  (let [data (analysis->dgml {:analysis (kondo/analysis source-paths)
-                              :flat-namespaces (boolean flat-namespaces)
-                              :include-dependencies (boolean include-dependencies)
-                              :insert-namespace-node insert-namespace-node
-                              :line-coverage (when coverage-file
-                                               (codecov/make-line-coverage-lookup
-                                                {:coverage-file coverage-file
-                                                 :strip-prefixes source-paths}))})]
+(defn coerce-options [opts]
+  (let [{:keys [source-paths flat-namespaces include-dependencies insert-namespace-node coverage-file]} opts]
+    {:analysis (kondo/analysis source-paths)
+     :flat-namespaces (boolean flat-namespaces)
+     :include-dependencies (boolean include-dependencies)
+     :insert-namespace-node insert-namespace-node
+     :line-coverage (when coverage-file
+                      (codecov/make-line-coverage-lookup
+                       {:coverage-file coverage-file
+                        :strip-prefixes source-paths}))}))
+
+(defn extract-graph [opts]
+  (:g (analysis->graph (coerce-options opts))))
+
+(defn extract [{:keys [output-file] :as opts}]
+  (let [data (analysis->dgml (coerce-options opts))]
     (sdgml/write-to-file output-file data)))
 
 (comment
+  (extract-graph
+   {:source-paths ["src"]})
+
   (extract
    {:source-paths ["src"]
     :output-file "target/out.dgml"})

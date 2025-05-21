@@ -13,7 +13,8 @@
    [io.github.dundalek.stratify.metrics :as-alias metrics]
    [io.github.dundalek.stratify.overarch :as-alias overarch]
    [io.github.dundalek.stratify.pulumi :as-alias pulumi]
-   [io.github.dundalek.stratify.report :as-alias report]))
+   [io.github.dundalek.stratify.report :as-alias report]
+   [io.github.dundalek.stratify.studio.main :as-alias studio]))
 
 (def ^:private source-formats #{"clj" "dot" "overarch" "pulumi"})
 
@@ -52,6 +53,8 @@
              :desc "Calculate and serve namespace metrics report"}
    :metrics-delta {:coerce :boolean
                    :desc "Calculate and serve metrics delta report"}
+   :studio {:coerce :boolean
+            :desc "Open web-based visualizer"}
    :help {:alias :h
           :desc "Print this help message and exit"}})
 
@@ -82,7 +85,7 @@
         {:keys [opts args]} parsed]
     (if (or (:help opts) (:h opts) (empty? args))
       (print-help)
-      (let [{:keys [out metrics metrics-delta from to coverage-file]} opts
+      (let [{:keys [out metrics metrics-delta from to coverage-file studio]} opts
             output-file (if (= out "-") *out* out)]
         (cond
           (= to "codecharta")
@@ -117,6 +120,10 @@
              {:source-paths args
               :output-path (when (not= out "-") out)
               :notebook-path "io/github/dundalek/stratify/notebook_delta.clj"}))
+
+          studio
+          (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
+            ((requiring-resolve `studio/open) g))
 
           (= from "overarch")
           (do
@@ -193,5 +200,6 @@
 
   (main* "-f" "bla")
 
-  (cli/parse-args [] {:spec cli-spec}))
+  (cli/parse-args [] {:spec cli-spec})
 
+  (main* "--studio" "src"))
