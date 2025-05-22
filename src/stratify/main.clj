@@ -7,16 +7,20 @@
    [clojure.repl.deps :as deps]
    [clojure.string :as str]
    [io.github.dundalek.stratify.codecharta :as-alias codecharta]
+   [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.gabotechs-dep-tree :as-alias dep-tree]
    [io.github.dundalek.stratify.graphviz :as-alias graphviz]
    [io.github.dundalek.stratify.internal :as stratify]
+   [io.github.dundalek.stratify.lsp :as lsp]
    [io.github.dundalek.stratify.metrics :as-alias metrics]
    [io.github.dundalek.stratify.overarch :as-alias overarch]
    [io.github.dundalek.stratify.pulumi :as-alias pulumi]
    [io.github.dundalek.stratify.report :as-alias report]
    [io.github.dundalek.stratify.studio.main :as-alias studio]))
 
-(def ^:private source-formats #{"clj" "dot" "overarch" "pulumi"})
+(def ^:private source-formats
+  #{"clj" "dot" "overarch" "pulumi"
+    "lsp-lua"})
 
 (def ^:private target-formats #{"codecharta" "dep-tree" "dgml"})
 
@@ -125,6 +129,10 @@
           (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
             ((requiring-resolve `studio/open) g))
 
+          (= from "lsp-lua")
+          (let [g (lsp/extract-lua {:root-path (first args)})]
+            (sdgml/write-to-file output-file (lsp/graph->dgml g)))
+
           (= from "overarch")
           (do
             (add-deps "overarch")
@@ -202,4 +210,6 @@
 
   (cli/parse-args [] {:spec cli-spec})
 
-  (main* "--studio" "src"))
+  (main* "--studio" "src")
+
+  (main* "-f" "lsp-lua" "experiments/scip/test/resources/sample-lua"))

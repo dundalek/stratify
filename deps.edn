@@ -31,6 +31,9 @@
                                stratify/graphviz {:local/root "resources/io/github/dundalek/stratify/optional-deps/graphviz"}
                                stratify/report {:local/root "resources/io/github/dundalek/stratify/optional-deps/report"}
 
+                               ;; Explicit dep to prevent "Error building classpath. Unable to compare versions"
+                               djblue/portal {:local/root "packages/portal"}
+
                                ;; for queries experiment
                                datascript/datascript {:mvn/version "1.7.3"}
 

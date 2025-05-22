@@ -1,4 +1,4 @@
-(ns stratify.lsp
+(ns io.github.dundalek.stratify.lsp
   (:require
    [babashka.fs :as fs]
    [clojure.java.io :as io]
