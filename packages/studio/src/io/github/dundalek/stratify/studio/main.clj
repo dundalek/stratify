@@ -49,4 +49,6 @@
                :io.github.dundalek.stratify.studio.viewers/hello2)))
 
 (comment
-  (p/eval-str (slurp (io/resource "io/github/dundalek/stratify/studio/viewers.cljs"))))
+  (p/eval-str (slurp (io/resource "io/github/dundalek/stratify/studio/viewers.cljs")))
+
+  @#'portal.runtime/tap-list)

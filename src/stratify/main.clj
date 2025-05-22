@@ -125,6 +125,10 @@
               :output-path (when (not= out "-") out)
               :notebook-path "io/github/dundalek/stratify/notebook_delta.clj"}))
 
+          (and studio (= from "lsp-lua"))
+          (let [g (lsp/extract-lua {:root-path (first args)})]
+            ((requiring-resolve `studio/open) g))
+
           studio
           (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
             ((requiring-resolve `studio/open) g))
@@ -212,4 +216,6 @@
 
   (main* "--studio" "src")
 
-  (main* "-f" "lsp-lua" "experiments/scip/test/resources/sample-lua"))
+  (main* "-f" "lsp-lua" "experiments/scip/test/resources/sample-lua")
+
+  (main* "--studio" "-f" "lsp-lua" "experiments/scip/test/resources/sample-lua"))

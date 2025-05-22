@@ -6,8 +6,11 @@
    [loom.graph :as lg]
    [portal.ui.api :as pua]))
 
-(defn- make-digraph [{:keys [adj attrs]}]
-  (-> (lg/digraph adj)
+(defn- make-digraph [{:keys [nodeset adj attrs]}]
+  (-> (if (seq adj)
+        (lg/digraph adj)
+        (lg/digraph))
+      (lg/add-nodes* nodeset)
       (lg/add-nodes* (keys attrs))
       (assoc :attrs attrs)))
 

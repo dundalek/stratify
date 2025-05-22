@@ -348,8 +348,12 @@
               (server-stop! server)))]
     (graph->dgml g)))
 
+(defn- normalize-opts [opts]
+  (update opts :root-path #(.getCanonicalPath (io/file %))))
+
 (defn extract-clojure [opts]
-  (let [{:keys [root-path]} opts
+  (let [opts (normalize-opts opts)
+        {:keys [root-path]} opts
         server (start-server {:args ["clojure-lsp"]})]
     (try
       (server-initialize! server {:root-path root-path})
@@ -361,7 +365,8 @@
         (server-stop! server)))))
 
 (defn extract-go [opts]
-  (let [{:keys [root-path]} opts
+  (let [opts (normalize-opts opts)
+        {:keys [root-path]} opts
         server (start-server {:args ["gopls"]})]
     (try
       (server-initialize! server {:root-path root-path})
@@ -373,7 +378,8 @@
         (server-stop! server)))))
 
 (defn extract-lua [opts]
-  (let [{:keys [root-path]} opts
+  (let [opts (normalize-opts opts)
+        {:keys [root-path]} opts
         server (start-server {:args ["lua-language-server"]})]
     (try
       (server-initialize! server {:root-path root-path})
@@ -394,7 +400,8 @@
   (println "custom initialize end"))
 
 (defn extract-rust [opts]
-  (let [{:keys [root-path]} opts
+  (let [opts (normalize-opts opts)
+        {:keys [root-path]} opts
         server (start-server {:args ["rust-analyzer"]})]
     (try
       (initialize-rust-analyzer! server {:root-path root-path})

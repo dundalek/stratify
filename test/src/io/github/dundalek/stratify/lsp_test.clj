@@ -22,9 +22,8 @@
                        (:attrs g))))))
 
 (defn- extract-relative-graph [extract-fn path]
-  (let [root-path (.getCanonicalPath (io/file path))]
-    (relativize-graph root-path
-                      (extract-fn {:root-path root-path}))))
+  (relativize-graph (.getCanonicalPath (io/file path))
+                    (extract-fn {:root-path path})))
 
 (defn- make-digraph [{:keys [adj attrs]}]
   (-> (lg/digraph adj)
