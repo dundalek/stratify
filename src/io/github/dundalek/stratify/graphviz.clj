@@ -10,7 +10,7 @@
    [theodora.core :as theodora]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]))
 
-(defn graphviz->dgml [{:keys [digraph flat-namespaces]}]
+(defn graphviz->loom [{:keys [digraph flat-namespaces]}]
   (let [{:keys [statements]} digraph
         nodes (->> statements
                    (filter #(= ::dc/node (:type %))))
@@ -37,7 +37,12 @@
                       (cond-> g
                         label (la/add-attr (:id id) :label label))))
                   g
-                  nodes)
+                  nodes)]
+    g))
+
+(defn graphviz->dgml [{:keys [digraph flat-namespaces]}]
+  (let [g (graphviz->loom {:digraph digraph
+                           :flat-namespaces flat-namespaces})
         node-with-children? (->> (lg/nodes g)
                                  (map #(la/attr g % :parent))
                                  set)]
