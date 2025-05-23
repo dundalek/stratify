@@ -2,16 +2,12 @@
   (:require
    [clojure.data.xml :as xml]
    [io.github.dundalek.stratify.dgml :as sdgml]
+   [io.github.dundalek.stratify.loom :refer [add-attrs]]
    [io.github.dundalek.stratify.style :as style]
    [loom.attr :as la]
    [loom.graph :as lg]
    [xmlns.http%3A%2F%2Fgraphml.graphdrawing.org%2Fxmlns :as-alias graphml]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]))
-
-(defn- add-attrs [g node-or-edge attrs]
-  (reduce (fn [g [k v]]
-            (la/add-attr g node-or-edge k v))
-          g attrs))
 
 (defn- parse-data-elements [el]
   (->> (:content el)
