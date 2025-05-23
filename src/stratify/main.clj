@@ -129,6 +129,13 @@
           (let [g (lsp/extract-lua {:root-path (first args)})]
             ((requiring-resolve `studio/open) g))
 
+          (and studio (= from "overarch"))
+          (do
+            (add-deps "overarch")
+            (let [g ((requiring-resolve `overarch/extract-graph)
+                     {:source-paths args})]
+              ((requiring-resolve `studio/open) g)))
+
           studio
           (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
             ((requiring-resolve `studio/open) g))
@@ -218,4 +225,6 @@
 
   (main* "-f" "lsp-lua" "experiments/scip/test/resources/sample-lua")
 
-  (main* "--studio" "-f" "lsp-lua" "experiments/scip/test/resources/sample-lua"))
+  (main* "--studio" "-f" "lsp-lua" "experiments/scip/test/resources/sample-lua")
+
+  (main* "--studio" "-f" "overarch" "test/resources/overarch/model.edn"))
