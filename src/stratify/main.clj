@@ -136,6 +136,15 @@
                      {:source-paths args})]
               ((requiring-resolve `studio/open) g)))
 
+          (and studio (= from "dot"))
+          (do
+            (add-deps "graphviz")
+            (let [g ((requiring-resolve `graphviz/extract-graph)
+                     {:input-file (first args)
+                      :output-file output-file
+                      :flat-namespaces (:flat-namespaces opts)})]
+              ((requiring-resolve `studio/open) g)))
+
           studio
           (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
             ((requiring-resolve `studio/open) g))
@@ -227,4 +236,8 @@
 
   (main* "--studio" "-f" "lsp-lua" "experiments/scip/test/resources/sample-lua")
 
-  (main* "--studio" "-f" "overarch" "test/resources/overarch/model.edn"))
+  (main* "--studio" "-f" "overarch" "test/resources/overarch/model.edn")
+
+  (main* "-f" "dot" "test/resources/graphviz/simple.dot")
+  (main* "--studio" "-f" "dot" "test/resources/graphviz/simple.dot"))
+
