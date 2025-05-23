@@ -56,10 +56,3 @@
     (graphviz/extract {:input-file (str file-prefix ".dot")
                        :output-file output-file})
     (is-same? output-file)))
-
-(deftest simple-via-graph
-  (let [file-prefix "test/resources/graphviz/simple"
-        output-file (str file-prefix "-graph.dgml")
-        g (graphviz/extract-graph {:input-file (str file-prefix ".dot")})]
-    (sdgml/write-to-file output-file (graphviz/graph->dgml g))
-    (is-same? output-file)))

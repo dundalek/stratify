@@ -6,7 +6,7 @@
     <Node Id=":example/app" Label="Application" Category="container" name="Application"/>
   </Nodes>
   <Links>
-    <Link Source=":example/software-system" Target=":example/app" Category="Contains" Label="contains"/>
+    <Link Source=":example/software-system" Target=":example/app" Category="Contains"/>
     <Link Source=":example/user" Target=":example/app" Category="uses" Label="uses"/>
   </Links>
   <Styles>

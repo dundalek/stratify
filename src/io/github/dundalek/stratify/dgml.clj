@@ -70,8 +70,7 @@
                                              (when-some [parent (la/attr g node-id :parent)]
                                                (xml/element ::xdgml/Link {:Source (serialize-attr parent)
                                                                           :Target (serialize-attr node-id)
-                                                                          :Category "Contains"
-                                                                          :Label "contains"})))))
+                                                                          :Category "Contains"})))))
                                 (for [[source target] (lg/edges g)]
                                   (xml/element ::xdgml/Link
                                                (merge {:Source (serialize-attr source)

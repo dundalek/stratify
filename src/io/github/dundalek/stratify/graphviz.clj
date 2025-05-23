@@ -42,41 +42,16 @@
         g (reduce (fn [g {:keys [id attrs]}]
                     (let [label (get attrs "label")]
                       (cond-> g
-                        label (la/add-attr (:id id) :Label label)
-                        :always (la/add-attr (:id id) :Name (:id id)))))
+                        label (la/add-attr (:id id) :label label))))
                   g
-                  nodes)]
+                  nodes)
+        g (reduce (fn [g node-id]
+                    (cond-> g
+                      :always (la/add-attr node-id :Name node-id)
+                      (nil? (la/attr g node-id :label)) (la/add-attr node-id :label node-id)))
+                  g
+                  (lg/nodes g))]
     g))
-
-(defn graphviz->dgml [{:keys [digraph flat-namespaces]}]
-  (let [g (graphviz->loom {:digraph digraph
-                           :flat-namespaces flat-namespaces})
-        node-with-children? (->> (lg/nodes g)
-                                 (map #(la/attr g % :parent))
-                                 set)]
-    (xml/element ::dgml/DirectedGraph
-                 {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
-                 (xml/element ::dgml/Nodes {}
-                              (for [node (lg/nodes g)]
-                                (xml/element ::dgml/Node
-                                             (cond-> {:Id node
-                                                      :Label (or (la/attr g node :Label)
-                                                                 (la/attr g node :label)
-                                                                 node)
-                                                      :Name node}
-                                                      ;; add href, color?
-
-                                               (node-with-children? node)
-                                               (assoc :Group "Expanded")))))
-                 (xml/element ::dgml/Links {}
-                              (concat
-                               (for [[source target] (lg/edges g)]
-                                 (xml/element ::dgml/Link {:Source source :Target target}))
-                               (->> (lg/nodes g)
-                                    (keep (fn [node-id]
-                                            (when-some [parent (la/attr g node-id :parent)]
-                                              (xml/element ::dgml/Link {:Source parent :Target node-id :Category "Contains"})))))))
-                 (xml/element ::dgml/Styles {} styles))))
 
 (defn extract-graph [{:keys [input-file flat-namespaces]}]
   (let [digraph (try
@@ -90,19 +65,13 @@
   (sdgml/graph->dgml g {:styles styles}))
 
 (defn extract [{:keys [input-file output-file flat-namespaces]}]
-  (let [digraph (try
-                  (theodora/parse (slurp input-file))
-                  (catch Throwable t
-                    (throw (ex-info "Failed to parse Graphviz file." {:code ::failed-to-parse} t))))
-        data (graphviz->dgml {:digraph digraph
-                              :flat-namespaces (boolean flat-namespaces)})]
-
-    (sdgml/write-to-file output-file data)))
+  (let [g (extract-graph {:input-file input-file
+                          :flat-namespaces flat-namespaces})
+        dgml (graph->dgml g)]
+    (sdgml/write-to-file output-file dgml)))
 
 (comment
   (def digraph (theodora/parse (slurp "test/resources/graphviz/simple.dot")))
   (def digraph (theodora/parse (slurp "test/resources/graphviz/labels.dot")))
 
-  digraph
-
-  (graphviz->dgml {:digraph digraph}))
+  digraph)
