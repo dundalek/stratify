@@ -2,6 +2,7 @@
   (:require
    [clojure.data.xml :as xml]
    [clojure.java.io :as io]
+   [loom.attr :as la]
    [loom.graph :as lg]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias xdgml]))
 
@@ -41,6 +42,40 @@
                              (= from to))))]
     (-> (lg/digraph)
         (lg/add-edges* edges))))
+
+(defn graph->dgml
+  ([g] (graph->dgml g {}))
+  ([g {:keys [styles]}]
+   (let [parent-node? (->> (lg/nodes g)
+                           (keep #(la/attr g % :parent))
+                           set)
+         serialize-attr str]
+     (xml/element ::xdgml/DirectedGraph
+                  {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
+                  (xml/element ::xdgml/Nodes {}
+                               (for [node-id (lg/nodes g)]
+                                 (xml/element ::xdgml/Node
+                                              (merge (cond-> {:Id (serialize-attr node-id)}
+                                                       (parent-node? node-id) (assoc :Group "Expanded"))
+                                                     (-> (la/attrs g node-id)
+                                                         (dissoc :parent)
+                                                         (update-vals  serialize-attr))))))
+                  (xml/element ::xdgml/Links {}
+                               (concat
+                                (->> (lg/nodes g)
+                                     (keep (fn [node-id]
+                                             (when-some [parent (la/attr g node-id :parent)]
+                                               (xml/element ::xdgml/Link {:Source (serialize-attr parent)
+                                                                          :Target (serialize-attr node-id)
+                                                                          :Category "Contains"
+                                                                          :Label "contains"})))))
+                                (for [[source target] (lg/edges g)]
+                                  (xml/element ::xdgml/Link
+                                               (merge {:Source (serialize-attr source)
+                                                       :Target (serialize-attr target)}
+                                                      (la/attrs g source target))))))
+                  (when styles
+                    (xml/element ::xdgml/Styles {} styles))))))
 
 (defn load-graph [input-file]
   (with-open [rdr (io/reader input-file)]

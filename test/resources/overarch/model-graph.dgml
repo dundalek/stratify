@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id=":example/user" Label="User" Category="person" name="User" desc="A user of my software system."/>
+    <Node Id=":example/software-system" Group="Expanded" Label="Software System" Category="system" name="Software System" desc="My software system."/>
+    <Node Id=":example/app" Label="Application" Category="container" name="Application"/>
+  </Nodes>
+  <Links>
+    <Link Source=":example/software-system" Target=":example/app" Category="Contains" Label="contains"/>
+    <Link Source=":example/user" Target=":example/app" Category="uses" Label="uses"/>
+  </Links>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Person" ValueLabel="External">
+      <Condition Expression="HasCategory('person') and external = 'true'"/>
+      <Setter Property="Background" Value="#686868"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Person" ValueLabel="">
+      <Condition Expression="HasCategory('person')"/>
+      <Setter Property="Background" Value="#214377"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="System" ValueLabel="External">
+      <Condition Expression="HasCategory('system') and external = 'true'"/>
+      <Setter Property="Background" Value="#989898"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="System" ValueLabel="">
+      <Condition Expression="HasCategory('system')"/>
+      <Setter Property="Background" Value="#3166B7"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="System" ValueLabel="">
+      <Condition Expression="HasCategory('container')"/>
+      <Setter Property="Background" Value="#568AD0"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="System" ValueLabel="">
+      <Condition Expression="HasCategory('component')"/>
+      <Setter Property="Background" Value="#8EB8EC"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="System" ValueLabel="">
+      <Condition Expression="HasCategory('use-case')"/>
+      <Setter Property="Background" Value="#B9BAFB"/>
+    </Style>
+  </Styles>
+</DirectedGraph>
