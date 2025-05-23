@@ -55,11 +55,14 @@
                   (xml/element ::xdgml/Nodes {}
                                (for [node-id (lg/nodes g)]
                                  (xml/element ::xdgml/Node
-                                              (merge (cond-> {:Id (serialize-attr node-id)}
-                                                       (parent-node? node-id) (assoc :Group "Expanded"))
-                                                     (-> (la/attrs g node-id)
-                                                         (dissoc :parent)
-                                                         (update-vals  serialize-attr))))))
+                                              (let [attrs (la/attrs g node-id)]
+                                                (merge (cond-> {:Id (serialize-attr node-id)}
+                                                         (parent-node? node-id) (assoc :Group "Expanded")
+                                                         ;; hardcoded lowercase label, refactor and remove in the future
+                                                         (:label attrs) (assoc :Label (:label attrs)))
+                                                       (-> attrs
+                                                           (dissoc :parent :label)
+                                                           (update-vals  serialize-attr)))))))
                   (xml/element ::xdgml/Links {}
                                (concat
                                 (->> (lg/nodes g)

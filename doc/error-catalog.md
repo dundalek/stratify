@@ -209,7 +209,7 @@ Code:
 :io.github.dundalek.stratify.graphviz/empty-graph
 
 Caused by:
-Execution error (ExceptionInfo) at io.github.dundalek.stratify.graphviz/graphviz->loom (graphviz.clj:32).
+Execution error (ExceptionInfo) at io.github.dundalek.stratify.graphviz/graphviz->loom (graphviz.clj:39).
 Input graph has no nodes or edges.
 
 Full report at:

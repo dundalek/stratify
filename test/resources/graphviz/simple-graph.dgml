@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="isolated" Label="isolated" Name="isolated"/>
+    <Node Id="a" Label="a"/>
+    <Node Id="b" Label="b"/>
+    <Node Id="c" Label="c"/>
+  </Nodes>
+  <Links>
+    <Link Source="a" Target="b"/>
+    <Link Source="a" Target="c"/>
+  </Links>
+  <Styles>
+    <Style TargetType="Node">
+      <Setter Property="Background" Value="#295B71"/>
+      <Setter Property="Stroke" Value="#34749A"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+  </Styles>
+</DirectedGraph>
