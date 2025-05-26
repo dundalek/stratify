@@ -9,10 +9,10 @@
   {:status  200
    :headers {"Content-Type" "text/javascript"}
    :body (slurp
-          "packages/portal/resources/portal-dev/main.js"
+          (io/resource "portal-dev/main.js")
           #_(case (-> request :session :options :mode)
-              :dev "packages/portal/resources/portal-dev/main.js"
-              "packages/portal/resources/portal/main.js"))})
+              :dev "portal-dev/main.js"
+              "portal/main.js"))})
 
 (defn open [g]
   (p/open)
