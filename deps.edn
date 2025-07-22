@@ -31,6 +31,8 @@
                                stratify/graphviz {:local/root "resources/io/github/dundalek/stratify/optional-deps/graphviz"}
                                stratify/report {:local/root "resources/io/github/dundalek/stratify/optional-deps/report"}
 
+                               stratify/rdfize {:local/root "experiments/rdfize"}
+
                                ;; Explicit dep to prevent "Error building classpath. Unable to compare versions"
                                djblue/portal {:local/root "packages/portal"}
 
