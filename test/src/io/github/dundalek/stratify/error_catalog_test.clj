@@ -24,6 +24,7 @@
         (binding [*err* *out*]
           (main/report-error t)))
       (str/replace #"(?s)Full report at:.*$" "Full report at:\n...\n")
+      (str/replace #"(\.(?:cljc?|java)):\d+" "$1:XXX")
       (print)))
 
 (defn print-catalog-error [code t]
@@ -44,7 +45,13 @@
 (defmacro test-error-code [expected-code & body]
   `(try
      ~@body
-     (is false "did not throw")
+     (binding [*out* *writer*]
+       (println)
+       (println (str "### " ~expected-code))
+       (println)
+       (println "Error during test, did not throw")
+       (println))
+     (is false (str "did not throw " ~expected-code))
      (catch Throwable t#
        (let [actual-code# (:code (ex-data t#))]
          (is (= ~expected-code actual-code#))

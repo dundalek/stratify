@@ -6,7 +6,7 @@ Unknown error
 Please report an issue with details at https://github.com/dundalek/stratify/issues
 
 Caused by:
-Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:56).
+Execution error (Error) at io.github.dundalek.stratify.error-catalog-test/fn$fn (error_catalog_test.clj:XXX).
 Sample message
 
 Full report at:
@@ -24,7 +24,7 @@ Code:
 :io.github.dundalek.stratify.internal/no-source-namespaces
 
 Caused by:
-Execution error (ExceptionInfo) at io.github.dundalek.stratify.internal/analysis->graph (internal.clj:91).
+Execution error (ExceptionInfo) at io.github.dundalek.stratify.internal/analysis->graph (internal.clj:XXX).
 There are no defined namespaces in analysis.
 Did you pass correct source paths?
 
@@ -118,7 +118,7 @@ Code:
 :io.github.dundalek.stratify.codecov/failed-to-parse
 
 Caused by:
-Execution error (JsonEOFException) at com.fasterxml.jackson.core.base.ParserMinimalBase/_reportInvalidEOF (ParserMinimalBase.java:585).
+Execution error (JsonEOFException) at com.fasterxml.jackson.core.base.ParserMinimalBase/_reportInvalidEOF (ParserMinimalBase.java:XXX).
 Unexpected end-of-input: expected close marker for Object (start marker at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 1])
  at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 2, column: 1]
 
@@ -138,7 +138,7 @@ Code:
 :io.github.dundalek.stratify.codecov/invalid-input
 
 Caused by:
-Execution error (ExceptionInfo) at malli.core/-exception (core.cljc:157).
+Execution error (ExceptionInfo) at malli.core/-exception (core.cljc:XXX).
 :malli.core/coercion
 
 Full report at:
@@ -155,7 +155,7 @@ Code:
 :io.github.dundalek.stratify.codecov/coverage-range-out-of-bounds
 
 Caused by:
-Execution error (ExceptionInfo) at io.github.dundalek.stratify.codecov/make-line-coverage-raw-lookup$fn (codecov.clj:80).
+Execution error (ExceptionInfo) at io.github.dundalek.stratify.codecov/make-line-coverage-raw-lookup$fn (codecov.clj:XXX).
 Coverage line range is out of bounds. Please make sure the coverage file is up-to-date with the source code.
 
 Full report at:
@@ -175,7 +175,7 @@ Code:
 :io.github.dundalek.stratify.graphviz/failed-to-parse
 
 Caused by:
-Execution error (ParseError) at clj-antlr.common/parse-error (common.clj:188).
+Execution error (ParseError) at clj-antlr.common/parse-error (common.clj:XXX).
 missing '}' at '<EOF>'
 
 Full report at:
@@ -209,7 +209,7 @@ Code:
 :io.github.dundalek.stratify.graphviz/empty-graph
 
 Caused by:
-Execution error (ExceptionInfo) at io.github.dundalek.stratify.graphviz/graphviz->loom (graphviz.clj:39).
+Execution error (ExceptionInfo) at io.github.dundalek.stratify.graphviz/graphviz->loom (graphviz.clj:XXX).
 Input graph has no nodes or edges.
 
 Full report at:
@@ -246,7 +246,7 @@ Code:
 :io.github.dundalek.stratify.overarch/invalid-input
 
 Caused by:
-Execution error at org.soulspace.overarch.adapter.repository.file-model-repository/read-model-file (file_model_repository.clj:25).
+Execution error at org.soulspace.overarch.adapter.repository.file-model-repository/read-model-file (file_model_repository.clj:XXX).
 Invalid token: //
 
 Full report at:
@@ -283,7 +283,7 @@ Code:
 :io.github.dundalek.stratify.pulumi/failed-to-parse
 
 Caused by:
-Execution error (JsonEOFException) at com.fasterxml.jackson.core.base.ParserMinimalBase/_reportInvalidEOF (ParserMinimalBase.java:585).
+Execution error (JsonEOFException) at com.fasterxml.jackson.core.base.ParserMinimalBase/_reportInvalidEOF (ParserMinimalBase.java:XXX).
 Unexpected end-of-input: expected close marker for Object (start marker at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 1, column: 1])
  at [Source: REDACTED (`StreamReadFeature.INCLUDE_SOURCE_IN_LOCATION` disabled); line: 2, column: 1]
 
@@ -303,7 +303,7 @@ Code:
 :io.github.dundalek.stratify.pulumi/invalid-input
 
 Caused by:
-Execution error (ExceptionInfo) at malli.core/-exception (core.cljc:157).
+Execution error (ExceptionInfo) at malli.core/-exception (core.cljc:XXX).
 :malli.core/coercion
 
 Full report at:
