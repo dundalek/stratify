@@ -1,0 +1,5 @@
+{:tasks 
+ {test {:doc "Run kaocha tests"
+        :task ((requiring-resolve 'kaocha.runner/-main))}
+  test:coverage {:doc "Run tests with coverage"
+                 :task (shell "clojure -M:test:coverage")}}}

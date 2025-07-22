@@ -1,0 +1,15 @@
+{
+  "characters": [
+    {
+      "id": "0",
+      "firstname": "Ash",
+      "lastname": "Ketchum",
+      "hair": "black"
+    },
+    {
+      "id": "1",
+      "firstname": "Misty",
+      "hair": "orange"
+    }
+  ]
+}

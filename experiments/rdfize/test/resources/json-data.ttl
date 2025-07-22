@@ -1,0 +1,16 @@
+@prefix ex: <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:person1
+  ex:name "John" ;
+  ex:age "30"^^xsd:integer ;
+  ex:isStudent "true"^^xsd:boolean ;
+  ex:gpa "3.8"^^xsd:float ;
+  ex:address rdf:nil ;
+  ex:hobbies ("reading" "coding") ;
+  ex:contact [
+      ex:email "john@example.com" ;
+      ex:phone ("123-456-7890" "098-765-4321")
+  ] .
+

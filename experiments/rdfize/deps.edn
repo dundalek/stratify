@@ -1,0 +1,13 @@
+{:deps {org.clojure/clojure {:mvn/version "1.12.0"}
+        cheshire/cheshire {:mvn/version "6.0.0"}
+        org.clojars.quoll/raphael {:mvn/version "0.3.12"}
+        org.clojars.quoll/rudolf {:mvn/version "0.2.4"}}
+        ; ont-app/igraph {:mvn/version "0.2.2"}
+        ; ont-app/igraph-jena {:mvn/version "0.3.1"}
+
+ :aliases {:test {:extra-deps {lambdaisland/kaocha {:mvn/version "1.91.1392"}
+                               lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}
+                               babashka/fs {:mvn/version "0.5.22"}}
+                  :main-opts ["-m" "kaocha.runner"]}
+           :coverage {:extra-deps {lambdaisland/kaocha-cloverage {:mvn/version "1.1.89"}}
+                      :main-opts ["-m" "kaocha.runner" "--plugin" "cloverage"]}}}

@@ -1,0 +1,4 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+# Someone knows someone else, who has the name "Bob".
+[] foaf:knows [ foaf:name "Bob" ] .

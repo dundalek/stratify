@@ -1,0 +1,6 @@
+@prefix : <http://example.org/foo/> .
+# the object of this triple is the RDF collection blank node
+:subject :predicate ( :a :b :c ) .
+
+# an empty collection value - rdf:nil
+:subject :predicate2 () .

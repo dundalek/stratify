@@ -1,0 +1,3 @@
+@prefix ex: <http://example.org/stuff/1.0/> .
+
+ex:doc1 ex:publishedBy [ ex:editor [ ex:fullname "Dave Beckett" ] ] .

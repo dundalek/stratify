@@ -1,0 +1,13 @@
+# https://rml.io/docs/rml/tutorials/json/
+
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix schema: <http://schema.org/> .
+
+<http://example.org/character/_0> a schema:Person;
+  dbo:hairColor "black";
+  schema:givenName "Ash";
+  schema:lastName "Ketchum" .
+
+<http://example.org/character/_1> a schema:Person;
+  dbo:hairColor "orange";
+  schema:givenName "Misty" .
