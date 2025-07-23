@@ -74,4 +74,4 @@
   (def digraph (theodora/parse (slurp "test/resources/graphviz/simple.dot")))
   (def digraph (theodora/parse (slurp "test/resources/graphviz/labels.dot")))
 
-  digraph)
+  (-> digraph))
