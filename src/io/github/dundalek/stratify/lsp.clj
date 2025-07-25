@@ -1,15 +1,16 @@
 (ns io.github.dundalek.stratify.lsp
   (:require
    [babashka.fs :as fs]
+   [babashka.process :refer [shell]]
+   [clojure.data.xml :as xml]
    [clojure.java.io :as io]
    [clojure.main :as clj-main]
    [clojure.string :as str]
+   [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.kondo :as kondo]
-   [jsonista.core :as j]
-   [clojure.data.xml :as xml]
-   [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.style :as style]
+   [jsonista.core :as j]
    [loom.attr :as la]
    [loom.graph :as lg]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml])
@@ -402,6 +403,8 @@
 (defn extract-rust [opts]
   (let [opts (normalize-opts opts)
         {:keys [root-path]} opts
+        ;; Try to prime caches first since waiting for priming mesages seems unreliable
+        _ (shell "rust-analyzer prime-caches" root-path)
         server (start-server {:args ["rust-analyzer"]})]
     (try
       (initialize-rust-analyzer! server {:root-path root-path})
