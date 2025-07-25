@@ -7,9 +7,7 @@
         babashka/process {:mvn/version "0.5.22"}
         babashka/fs {:mvn/version "0.5.23"}
         metosin/malli {:mvn/version "0.17.0"}
-        metosin/jsonista {:mvn/version "0.3.12"}
-
-        stratify/studio {:local/root "packages/studio"}}
+        metosin/jsonista {:mvn/version "0.3.12"}}
 
  :paths ["src" "resources"]
 
@@ -31,10 +29,13 @@
                                stratify/graphviz {:local/root "resources/io/github/dundalek/stratify/optional-deps/graphviz"}
                                stratify/report {:local/root "resources/io/github/dundalek/stratify/optional-deps/report"}
 
+                               stratify/studio {:local/root "packages/studio"}
+
                                stratify/rdfize {:local/root "experiments/rdfize"}
+                               org.clojars.quoll/asami {:mvn/version "2.3.4"}
 
                                ;; Explicit dep to prevent "Error building classpath. Unable to compare versions"
-                               djblue/portal {:local/root "packages/portal"}
+                               djblue/portal {:mvn/version "0.59.2"}
 
                                ;; for queries experiment
                                datascript/datascript {:mvn/version "1.7.3"}
@@ -44,4 +45,5 @@
                                ;                     :git/sha "44f5ecb"}
                                ;                     ; :deps/root "components/workspace"}}
 
-                               polylith/clj-poly {:mvn/version "0.2.21"}}}}}
+                               polylith/clj-poly {:mvn/version "0.2.21"}}}
+  :local {:extra-deps {djblue/portal {:local/root "packages/portal"}}}}}

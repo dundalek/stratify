@@ -75,14 +75,21 @@
     (when-not (instance? clojure.lang.DynamicClassLoader cl)
       (.setContextClassLoader (Thread/currentThread) (clojure.lang.DynamicClassLoader. cl)))))
 
+(defn- add-libs [deps]
+  (binding [*repl* true]
+    (ensure-dynamic-context-classloader!)
+    (deps/add-libs deps)))
+
 (defn- add-deps [feature]
   (let [deps (-> (io/resource (str "io/github/dundalek/stratify/optional-deps/" feature "/deps.edn"))
                  slurp
                  (edn/read-string)
                  :deps)]
-    (binding [*repl* true]
-      (ensure-dynamic-context-classloader!)
-      (deps/add-libs deps))))
+    (add-libs deps)))
+
+(defn- open-studio [g]
+  (add-libs '{stratify/studio {:local/root "packages/studio"}})
+  ((requiring-resolve `studio/open) g))
 
 (defn main* [& args]
   (let [parsed (cli/parse-args args {:spec cli-spec})
@@ -127,14 +134,14 @@
 
           (and studio (= from "lsp-lua"))
           (let [g (lsp/extract-lua {:root-path (first args)})]
-            ((requiring-resolve `studio/open) g))
+            (open-studio g))
 
           (and studio (= from "overarch"))
           (do
             (add-deps "overarch")
             (let [g ((requiring-resolve `overarch/extract-graph)
                      {:source-paths args})]
-              ((requiring-resolve `studio/open) g)))
+              (open-studio g)))
 
           (and studio (= from "dot"))
           (do
@@ -143,11 +150,11 @@
                      {:input-file (first args)
                       :output-file output-file
                       :flat-namespaces (:flat-namespaces opts)})]
-              ((requiring-resolve `studio/open) g)))
+              (open-studio g)))
 
           studio
           (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
-            ((requiring-resolve `studio/open) g))
+            (open-studio g))
 
           (= from "lsp-lua")
           (let [g (lsp/extract-lua {:root-path (first args)})]

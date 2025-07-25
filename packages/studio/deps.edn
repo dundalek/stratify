@@ -1,2 +1,4 @@
 {:deps
- {djblue/portal {:local/root "../portal"} #_{:mvn/version "0.58.5"} medley/medley {:mvn/version "1.4.0"}}}
+ {;djblue/portal {:local/root "../portal"}
+  djblue/portal {:mvn/version "0.59.2"}
+  medley/medley {:mvn/version "1.4.0"}}}
