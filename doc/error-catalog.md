@@ -43,7 +43,7 @@ Code:
 
 Caused by:
 Execution error (FileNotFoundException) at java.io.FileOutputStream/open0 (FileOutputStream.java:-2).
-/output.dgml (Permission denied)
+/NON_EXISTING/output.dgml (No such file or directory)
 
 Full report at:
 ...
@@ -264,7 +264,7 @@ Code:
 
 Caused by:
 Execution error (FileNotFoundException) at java.io.FileOutputStream/open0 (FileOutputStream.java:-2).
-/output.dgml (Permission denied)
+/NON_EXISTING/output.dgml (No such file or directory)
 
 Full report at:
 ...
@@ -321,7 +321,7 @@ Code:
 
 Caused by:
 Execution error (FileNotFoundException) at java.io.FileOutputStream/open0 (FileOutputStream.java:-2).
-/output.dgml (Permission denied)
+/NON_EXISTING/output.dgml (No such file or directory)
 
 Full report at:
 ...

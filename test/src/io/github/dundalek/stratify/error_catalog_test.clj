@@ -68,7 +68,7 @@
 
       (test-error-code
        ::sdgml/failed-to-write
-       (main/main* "-o" "/output.dgml" "test/resources/sample/src"))
+       (main/main* "-o" "/NON_EXISTING/output.dgml" "test/resources/sample/src"))
 
       (print-category-heading "codecharta")
 
@@ -127,7 +127,7 @@
 
       (test-error-code
        ::sdgml/failed-to-write
-       (main/main* "-f" "overarch" "-o" "/output.dgml" "test/resources/overarch/nodel.edn"))
+       (main/main* "-f" "overarch" "-o" "/NON_EXISTING/output.dgml" "test/resources/overarch/nodel.edn"))
 
       (print-category-heading "pulumi")
 
@@ -141,6 +141,6 @@
 
       (test-error-code
        ::sdgml/failed-to-write
-       (main/main* "-f" "pulumi" "-o" "/output.dgml" "test/resources/pulumi/sample-export.json"))))
+       (main/main* "-f" "pulumi" "-o" "/NON_EXISTING/output.dgml" "test/resources/pulumi/sample-export.json"))))
 
   (tu/is-same? catalog-file))
