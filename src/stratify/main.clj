@@ -19,7 +19,7 @@
    [io.github.dundalek.stratify.studio.main :as-alias studio]))
 
 (def ^:private source-formats
-  #{"clj" "dot" "overarch" "pulumi"
+  #{"clj" "dgml" "dot" "overarch" "pulumi"
     "lsp-lua"})
 
 (def ^:private target-formats #{"codecharta" "dep-tree" "dgml"})
@@ -152,6 +152,10 @@
                       :flat-namespaces (:flat-namespaces opts)})]
               (open-studio g)))
 
+          (and studio (= from "dgml"))
+          (let [g (sdgml/load-graph (first args))]
+            (open-studio g))
+
           studio
           (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
             (open-studio g))
@@ -179,6 +183,10 @@
           ((requiring-resolve `pulumi/extract)
            {:input-file (first args)
             :output-file output-file})
+
+          (= from "dgml")
+          (let [g (sdgml/load-graph (first args))]
+            (sdgml/write-to-file output-file (sdgml/graph->dgml g)))
 
           (= from "clj")
           (stratify/extract (merge opts {:source-paths args
