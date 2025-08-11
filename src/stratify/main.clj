@@ -88,7 +88,7 @@
     (add-libs deps)))
 
 (defn- open-studio [g]
-  (add-libs '{stratify/studio {:local/root "packages/studio"}})
+  ; (add-libs '{stratify/studio {:local/root "packages/studio"}})
   ((requiring-resolve `studio/open) g))
 
 (defn main* [& args]

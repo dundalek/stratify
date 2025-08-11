@@ -45,5 +45,4 @@
                                ;                     :git/sha "44f5ecb"}
                                ;                     ; :deps/root "components/workspace"}}
 
-                               polylith/clj-poly {:mvn/version "0.2.21"}}}
-  :local {:extra-deps {djblue/portal {:local/root "packages/portal"}}}}}
+                               polylith/clj-poly {:mvn/version "0.2.21"}}}}}

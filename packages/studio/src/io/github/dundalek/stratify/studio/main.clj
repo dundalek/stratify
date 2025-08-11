@@ -5,14 +5,15 @@
    [portal.viewer :as pv]
    [portal.runtime.jvm.server :as portal-server]))
 
-(defmethod portal-server/route [:get "/main.js"] [request]
+(defmethod portal-server/route [:get "/main.js"] [_request]
   {:status  200
    :headers {"Content-Type" "text/javascript"}
-   :body (slurp
-          (io/resource "portal-dev/main.js")
-          #_(case (-> request :session :options :mode)
-              :dev "portal-dev/main.js"
-              "portal/main.js"))})
+   :body (or (when-some [path (System/getenv "STRATIFY_PORTAL_BUNDLE_PATH")]
+               (slurp path))
+             (slurp (io/resource "portal/main.js"))
+             #_(case (-> request :session :options :mode)
+                 :dev "portal-dev/main.js"
+                 "portal/main.js"))})
 
 (defn open [g]
   (p/open)
