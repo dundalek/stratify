@@ -5,3 +5,4 @@
 .clerk/cache
 node_modules
 /packages/portal
+__pycache__
