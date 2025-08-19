@@ -1,5 +1,7 @@
 {:deps
- {stratify/stratify {:local/root "../.."}}
+ {stratify/stratify {:local/root "../.."}
+  stratify/rdfize {:local/root "../rdfize"}
+  org.clojars.quoll/asami {:mvn/version "2.3.4"}}
 
  :aliases
  {:test
