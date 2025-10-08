@@ -21,7 +21,7 @@
 
 (def ^:private source-formats
   #{"clj" "dgml" "dot" "overarch" "pulumi" "scip"
-    "go-lsp" "lua-lsp" "rust-lsp"})
+    "go-lsp" "lua-lsp" "rust-lsp" "zig-lsp"})
 
 (def ^:private target-formats #{"codecharta" "dep-tree" "dgml"})
 
@@ -145,6 +145,10 @@
           (let [g (lsp/extract-rust {:root-path (first args)})]
             (open-studio g))
 
+          (and studio (= from "zig-lsp"))
+          (let [g (lsp/extract-zig {:root-path (first args)})]
+            (open-studio g))
+
           (and studio (= from "overarch"))
           (do
             (add-deps "overarch")
@@ -185,6 +189,10 @@
 
           (= from "rust-lsp")
           (let [g (lsp/extract-rust {:root-path (first args)})]
+            (sdgml/write-to-file output-file (lsp/graph->dgml g)))
+
+          (= from "zig-lsp")
+          (let [g (lsp/extract-zig {:root-path (first args)})]
             (sdgml/write-to-file output-file (lsp/graph->dgml g)))
 
           (= from "overarch")
@@ -283,6 +291,8 @@
   (main* "--studio" "-f" "lua-lsp" "test/resources/code/lua/greeting")
 
   (main* "-f" "rust-lsp" "test/resources/code/rust/greeting")
+
+  (main* "-f" "zig-lsp" "test/resources/code/zig/greeting")
 
   (main* "--studio" "-f" "overarch" "test/resources/overarch/model.edn")
 

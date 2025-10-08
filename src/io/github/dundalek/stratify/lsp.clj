@@ -242,13 +242,24 @@
   (let [{:keys [start end]} (:selectionRange sym)]
     (str uri "#L" (:line start) "C" (:character start) "-L" (:line end) "C" (:character end))))
 
-(defn extract-graph [{:keys [server root-path source-paths source-pattern]}]
+(defn- send-did-open! [server uri file-path]
+  (server-message! server {:method "textDocument/didOpen"
+                           :params {:textDocument {:uri uri
+                                                   :languageId "zig"
+                                                   :version 1
+                                                   :text (slurp file-path)}}
+                           :jsonrpc "2.0"}))
+
+(defn extract-graph [{:keys [server root-path source-paths source-pattern open-documents?]}]
   (let [uri-base (str "file://" root-path "/")
-        file-uris (->> source-paths
-                       (mapcat (fn [path]
-                                 (fs/glob (fs/file root-path path) source-pattern)))
-                       (map path->uri))
+        file-paths (->> source-paths
+                        (mapcat (fn [path]
+                                  (fs/glob (fs/file root-path path) source-pattern))))
+        file-uris (map path->uri file-paths)
         file-uris-set (set file-uris)
+        _ (when open-documents?
+            (doseq [[uri path] (map vector file-uris file-paths)]
+              (send-did-open! server uri (str path))))
         symbols (->> file-uris
                      (mapcat (fn [uri]
                                (->> (server-request! server "textDocument/documentSymbol"
@@ -410,6 +421,20 @@
       (initialize-rust-analyzer! server {:root-path root-path})
       (extract-graph (merge {:source-paths ["src"]
                              :source-pattern "**.rs"
+                             :server server}
+                            opts))
+      (finally
+        (server-stop! server)))))
+
+(defn extract-zig [opts]
+  (let [opts (normalize-opts opts)
+        {:keys [root-path]} opts
+        server (start-server {:args ["zls"]})]
+    (try
+      (server-initialize! server {:root-path root-path})
+      (extract-graph (merge {:source-paths ["src"]
+                             :source-pattern "**.zig"
+                             :open-documents? true
                              :server server}
                             opts))
       (finally

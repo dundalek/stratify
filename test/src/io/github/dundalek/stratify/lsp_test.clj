@@ -85,6 +85,18 @@
                    "src/main.rs#L2C3-L2C7" {:label "main", :parent "src/main.rs"}}})
          (extract-relative-graph lsp/extract-rust "test/resources/code/rust/greeting"))))
 
+(deftest extract-zig
+  (is (= (make-digraph
+          {:adj {"src/main.zig#L3C7-L3C11" #{"src/main.zig#L0C6-L0C9" "src/main.zig#L1C6-L1C14"}}
+           :attrs {"src" {:category "Namespace", :label "src", :parent nil},
+                   "src/greeting.zig" {:category "Namespace", :label "greeting.zig", :parent "src"},
+                   "src/greeting.zig#L0C7-L0C12" {:label "greet", :parent "src/greeting.zig"},
+                   "src/main.zig" {:category "Namespace", :label "main.zig", :parent "src"},
+                   "src/main.zig#L0C6-L0C9" {:label "std", :parent "src/main.zig"},
+                   "src/main.zig#L1C6-L1C14" {:label "greeting", :parent "src/main.zig"},
+                   "src/main.zig#L3C7-L3C11" {:label "main", :parent "src/main.zig"}}})
+         (extract-relative-graph lsp/extract-zig "test/resources/code/zig/greeting"))))
+
 (deftest location-less-or-equal?
   (is (true? (lsp/location-less-or-equal? {:line 0 :character 0} {:line 0 :character 15})))
   (is (true? (lsp/location-less-or-equal? {:line 0 :character 15} {:line 1 :character 1})))
