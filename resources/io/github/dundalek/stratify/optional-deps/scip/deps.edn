@@ -1,0 +1,3 @@
+{:deps {com.appsflyer/pronto {:mvn/version "2.1.2"}
+        com.google.protobuf/protobuf-java {:mvn/version "3.25.1"}
+        com.sourcegraph/scip-java-proto {:mvn/version "0.9.7"}}}

@@ -4,7 +4,7 @@
    [clojure.data.xml :as xml]
    [clojure.java.io :as io]
    [clojure.string :as str]
-   [io.github.dundalek.stratify.scip.extractors :as extractors]
+   [io.github.dundalek.stratify.scip-extractors :as extractors]
    [pronto.core :as p]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml])
   (:import
@@ -84,26 +84,26 @@
         (xml/indent data out)))))
 
 (comment
-  (extractors/extract-go {:dir "test/resources/sample-go" :output-file "target/scip/go.scip"})
-  ; (extractors/extract-js {:dir "test/resources/sample-js" :output-file "target/scip/js.scip"})
-  (extractors/extract-py {:dir "test/resources/sample-py" :output-file "target/scip/py.scip"})
-  ; (extractors/extract-rb {:dir "test/resources/sample-rb" :output-file "target/scip/rb.scip"})
-  (extractors/extract-rs {:dir "test/resources/sample-rs" :output-file "target/scip/rs.scip"})
-  (extractors/extract-ts {:dir "test/resources/sample-ts" :output-file "target/scip/ts.scip"})
-  (extractors/extract-ts {:dir "test/resources/sample-ts-simple" :output-file "target/scip/ts-simple.scip"})
+  (extractors/extract-go {:dir "test/resources/code/go/greeting" :output-file "test/resources/scip/go.scip"})
+  ; (extractors/extract-js {:dir "test/resources/code/javascript/greeting" :output-file "test/resources/scip/js.scip"})
+  ; (extractors/extract-py {:dir "test/resources/code/python/greeting" :output-file "test/resources/scip/py.scip"})
+  ; (extractors/extract-rb {:dir "test/resources/code/ruby/greeting" :output-file "test/resources/scip/rb.scip"})
+  (extractors/extract-rs {:dir "test/resources/code/rust/greeting" :output-file "test/resources/scip/rust.scip"})
+  (extractors/extract-ts {:dir "test/resources/code/typescript/greeting" :output-file "test/resources/scip/typescript.scip"})
+  (extractors/extract-ts {:dir "test/resources/code/typescript/hello" :output-file "test/resources/scip/ts-simple.scip"})
 
-  (def index (read-scip-index "target/scip/go.scip"))
-  (def index (read-scip-index "target/scip/py.scip"))
-  (def index (read-scip-index "target/scip/rs.scip"))
-  (def index (read-scip-index "target/scip/ts.scip"))
-  (def index (read-scip-index "target/scip/ts-simple.scip"))
+  (def index (read-scip-index "test/resources/scip/go.scip"))
+  (def index (read-scip-index "test/resources/scip/py.scip"))
+  (def index (read-scip-index "test/resources/scip/rs.scip"))
+  (def index (read-scip-index "test/resources/scip/ts.scip"))
+  (def index (read-scip-index "test/resources/scip/ts-simple.scip"))
 
   (tap> index)
 
   (->graph index)
   (->dgml index)
 
-  (extract {:index-file "target/scip/go.scip"
+  (extract {:index-file "test/resources/scip/go.scip"
             :output-file "target/dgml/scip-go.dgml"})
 
   (extract {:index-file "index.scip"

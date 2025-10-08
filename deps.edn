@@ -28,6 +28,7 @@
                                stratify/overarch {:local/root "resources/io/github/dundalek/stratify/optional-deps/overarch"}
                                stratify/graphviz {:local/root "resources/io/github/dundalek/stratify/optional-deps/graphviz"}
                                stratify/report {:local/root "resources/io/github/dundalek/stratify/optional-deps/report"}
+                               stratify/scip {:local/root "resources/io/github/dundalek/stratify/optional-deps/scip"}
 
                                stratify/studio {:local/root "packages/studio"}
 

@@ -1,4 +1,4 @@
-(ns io.github.dundalek.stratify.scip.extractors
+(ns io.github.dundalek.stratify.scip-extractors
   (:require
    [babashka.fs :as fs]
    [babashka.process :refer [shell]]))
