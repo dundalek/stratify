@@ -95,17 +95,17 @@
 
 (comment
   (extractors/extract-go {:dir "test/resources/code/go/greeting" :output-file "test/resources/scip/go.scip"})
-  ; (extractors/extract-js {:dir "test/resources/code/javascript/greeting" :output-file "test/resources/scip/js.scip"})
-  ; (extractors/extract-py {:dir "test/resources/code/python/greeting" :output-file "test/resources/scip/py.scip"})
-  ; (extractors/extract-rb {:dir "test/resources/code/ruby/greeting" :output-file "test/resources/scip/rb.scip"})
+  ; (extractors/extract-js {:dir "test/resources/code/javascript/greeting" :output-file "test/resources/scip/javascript.scip"})
+  (extractors/extract-py {:dir "test/resources/code/python/greeting" :output-file "test/resources/scip/python.scip"})
+  ; (extractors/extract-rb {:dir "test/resources/code/ruby/greeting" :output-file "test/resources/scip/ruby.scip"})
   (extractors/extract-rs {:dir "test/resources/code/rust/greeting" :output-file "test/resources/scip/rust.scip"})
   (extractors/extract-ts {:dir "test/resources/code/typescript/greeting" :output-file "test/resources/scip/typescript.scip"})
   (extractors/extract-ts {:dir "test/resources/code/typescript/hello" :output-file "test/resources/scip/ts-simple.scip"})
 
   (def index (read-scip-index "test/resources/scip/go.scip"))
-  (def index (read-scip-index "test/resources/scip/py.scip"))
-  (def index (read-scip-index "test/resources/scip/rs.scip"))
-  (def index (read-scip-index "test/resources/scip/ts.scip"))
+  (def index (read-scip-index "test/resources/scip/python.scip"))
+  (def index (read-scip-index "test/resources/scip/rust.scip"))
+  (def index (read-scip-index "test/resources/scip/typescript.scip"))
   (def index (read-scip-index "test/resources/scip/ts-simple.scip"))
 
   (tap> index)

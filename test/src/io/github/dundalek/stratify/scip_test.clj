@@ -17,3 +17,8 @@
   (let [index (scip/read-scip-index "test/resources/scip/typescript.scip")]
     (is (= {:adj {"src/main.ts" #{"src/greeting.ts" "src/main.ts"}}}
            (scip/->graph index)))))
+
+(deftest scip-python-graph
+  (let [index (scip/read-scip-index "test/resources/scip/python.scip")]
+    (is (= {:adj {"main.py" #{"greetings.py"}}}
+           (scip/->graph index)))))

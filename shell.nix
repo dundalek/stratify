@@ -22,6 +22,10 @@ rustfmt
 typescript-language-server
 typescript
 
+# == for scip extraction
+
+python3Packages.pip
+
 ];
 shellHook = ''
 '';
