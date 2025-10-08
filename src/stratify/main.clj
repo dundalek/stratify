@@ -21,7 +21,7 @@
 
 (def ^:private source-formats
   #{"clj" "dgml" "dot" "overarch" "pulumi" "scip"
-    "lsp-lua"})
+    "lua-lsp"})
 
 (def ^:private target-formats #{"codecharta" "dep-tree" "dgml"})
 
@@ -133,7 +133,7 @@
               :output-path (when (not= out "-") out)
               :notebook-path "io/github/dundalek/stratify/notebook_delta.clj"}))
 
-          (and studio (= from "lsp-lua"))
+          (and studio (= from "lua-lsp"))
           (let [g (lsp/extract-lua {:root-path (first args)})]
             (open-studio g))
 
@@ -167,7 +167,7 @@
           (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
             (open-studio g))
 
-          (= from "lsp-lua")
+          (= from "lua-lsp")
           (let [g (lsp/extract-lua {:root-path (first args)})]
             (sdgml/write-to-file output-file (lsp/graph->dgml g)))
 
@@ -261,9 +261,9 @@
 
   (main* "--studio" "src")
 
-  (main* "-f" "lsp-lua" "experiments/scip/test/resources/sample-lua")
+  (main* "-f" "lua-lsp" "experiments/scip/test/resources/sample-lua")
 
-  (main* "--studio" "-f" "lsp-lua" "experiments/scip/test/resources/sample-lua")
+  (main* "--studio" "-f" "lua-lsp" "experiments/scip/test/resources/sample-lua")
 
   (main* "--studio" "-f" "overarch" "test/resources/overarch/model.edn")
 
