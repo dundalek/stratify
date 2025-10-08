@@ -5,6 +5,7 @@
    [clojure.java.io :as io]
    [clojure.string :as str]
    [io.github.dundalek.stratify.scip-extractors :as extractors]
+   [loom.graph :as lg]
    [pronto.core :as p]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml])
   (:import
@@ -44,6 +45,15 @@
                            (update m from (fnil conj #{}) to))
                          {}))]
     {:adj adj}))
+
+(defn load-graph [index-file]
+  (let [index (read-scip-index index-file)
+        {:keys [adj]} (->graph index)
+        edges (for [[from tos] adj
+                    to tos]
+                [from to])]
+    (-> (lg/digraph)
+        (lg/add-edges* edges))))
 
 (defn ->dgml [index]
   (let [nodes (->> (:documents index)

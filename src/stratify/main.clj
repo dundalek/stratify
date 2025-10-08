@@ -16,10 +16,11 @@
    [io.github.dundalek.stratify.overarch :as-alias overarch]
    [io.github.dundalek.stratify.pulumi :as-alias pulumi]
    [io.github.dundalek.stratify.report :as-alias report]
+   [io.github.dundalek.stratify.scip :as-alias scip]
    [io.github.dundalek.stratify.studio.main :as-alias studio]))
 
 (def ^:private source-formats
-  #{"clj" "dgml" "dot" "overarch" "pulumi"
+  #{"clj" "dgml" "dot" "overarch" "pulumi" "scip"
     "lsp-lua"})
 
 (def ^:private target-formats #{"codecharta" "dep-tree" "dgml"})
@@ -156,6 +157,12 @@
           (let [g (sdgml/load-graph (first args))]
             (open-studio g))
 
+          (and studio (= from "scip"))
+          (do
+            (add-deps "scip")
+            (let [g ((requiring-resolve `scip/load-graph) (first args))]
+              (open-studio g)))
+
           studio
           (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
             (open-studio g))
@@ -187,6 +194,13 @@
           (= from "dgml")
           (let [g (sdgml/load-graph (first args))]
             (sdgml/write-to-file output-file (sdgml/graph->dgml g)))
+
+          (= from "scip")
+          (do
+            (add-deps "scip")
+            ((requiring-resolve `scip/extract)
+             {:index-file (first args)
+              :output-file output-file}))
 
           (= from "clj")
           (stratify/extract (merge opts {:source-paths args
@@ -254,5 +268,8 @@
   (main* "--studio" "-f" "overarch" "test/resources/overarch/model.edn")
 
   (main* "-f" "dot" "test/resources/graphviz/simple.dot")
-  (main* "--studio" "-f" "dot" "test/resources/graphviz/simple.dot"))
+  (main* "--studio" "-f" "dot" "test/resources/graphviz/simple.dot")
+
+  (main* "-f" "scip" "test/resources/scip/go.scip")
+  (main* "--studio" "-f" "scip" "test/resources/scip/go.scip"))
 
