@@ -7,7 +7,7 @@
    [snap.core :as snap]))
 
 (deftest metrics
-  (let [analysis (kondo/analysis ["test/resources/layered-valid/src"])
+  (let [analysis (kondo/analysis ["test/resources/code/clojure/layered-valid/src"])
         g (lg/digraph (kondo/->graph analysis))]
     (is (snap/match-snapshot
          ::metrics

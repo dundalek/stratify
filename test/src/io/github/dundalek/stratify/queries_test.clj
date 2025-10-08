@@ -1,10 +1,11 @@
 (ns io.github.dundalek.stratify.queries-test
   (:require
    [clojure.test :refer [deftest is]]
+   [datascript.core :as d]
    [io.github.dundalek.stratify.queries :as q]))
 
-(def conn-valid (q/load-sources ["test/resources/layered-valid/src"]))
-(def conn-invalid (q/load-sources ["test/resources/layered-invalid/src"]))
+(def conn-valid (q/load-sources ["test/resources/code/clojure/layered-valid/src"]))
+(def conn-invalid (q/load-sources ["test/resources/code/clojure/layered-invalid/src"]))
 
 (deftest namespace-matcher
   (let [matches? (q/namespace-matcher ".*durable.*")]

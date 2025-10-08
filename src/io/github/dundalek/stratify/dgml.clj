@@ -85,4 +85,4 @@
       (->graph data))))
 
 (comment
-  (load-graph "test/resources/nested/output-default.dgml"))
+  (load-graph "test/resources/code/clojure/nested/output-default.dgml"))

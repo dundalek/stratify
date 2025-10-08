@@ -26,7 +26,7 @@
        (into {})))
 
 (comment
-  (def analysis (kondo/analysis ["test/resources/connected-components/src"]))
+  (def analysis (kondo/analysis ["test/resources/code/clojure/connected-components/src"]))
   (def analysis (kondo/analysis ["src"]))
 
   (namespaces-connected-components-count analysis))

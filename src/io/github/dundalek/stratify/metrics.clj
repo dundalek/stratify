@@ -138,7 +138,7 @@
      :global-relative-visibility (double (metrics-dowalil/global-relative-visibility visibilities))}))
 
 (comment
-  (def analysis (kondo/analysis ["test/resources/nested/src"]))
+  (def analysis (kondo/analysis ["test/resources/code/clojure/nested/src"]))
   (def analysis (kondo/analysis ["src"]))
   (def analysis (kondo/analysis ["target/projects/asami/src"]))
   (def analysis (kondo/analysis ["target/projects/HumbleUI/src"]))

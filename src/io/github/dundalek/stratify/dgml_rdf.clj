@@ -213,7 +213,7 @@
                        :content styles}))}))
 
 (comment
-  (def input-file "test/resources/nested/output-default.dgml")
+  (def input-file "test/resources/code/clojure/nested/output-default.dgml")
   (def data (xml/parse (io/reader input-file)))
 
   (canonicalize-xml data)

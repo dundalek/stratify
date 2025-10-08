@@ -8,8 +8,8 @@
    [loom.graph :as lg]))
 
 (deftest load-graph
-  (is (= (lg/digraph (kondo/->graph (kondo/analysis ["test/resources/nested/src"])))
-         (dgml/load-graph "test/resources/nested/output-default.dgml")))
+  (is (= (lg/digraph (kondo/->graph (kondo/analysis ["test/resources/code/clojure/nested/src"])))
+         (dgml/load-graph "test/resources/code/clojure/nested/output-default.dgml")))
 
   (let [analysis (kondo/analysis ["src"])
         expected (lg/digraph (kondo/->graph analysis))

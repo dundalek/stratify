@@ -8,11 +8,11 @@
 
 ;; Re-generate by running `cd test/resources/coverage; clojure -M:coverage`.
 (def sample-coverage-file
-  "test/resources/coverage/target/coverage/codecov.json")
+  "test/resources/code/clojure/coverage/target/coverage/codecov.json")
 
 (def sample-line-coverage-lookup (codecov/make-line-coverage-lookup
                                   {:coverage-file sample-coverage-file
-                                   :strip-prefixes ["test/resources/coverage/src"]}))
+                                   :strip-prefixes ["test/resources/code/clojure/coverage/src"]}))
 
 (deftest line-coverage
   (is (= {;; == namespaces
@@ -42,7 +42,7 @@
           "example.uncovered/uncovered" 50.0}
 
          (-> (:g (internal/analysis->graph
-                  {:analysis (kondo/analysis ["test/resources/coverage/src"])
+                  {:analysis (kondo/analysis ["test/resources/code/clojure/coverage/src"])
                    :line-coverage sample-line-coverage-lookup}))
              :attrs
              (update-vals #(some-> % :line-coverage (* 100.0) (Math/round) (/ 100.0))))))

@@ -14,41 +14,50 @@
         :attributes {},
         :children
         [{:type "Folder",
-          :name "nested",
+          :name "code",
           :attributes {},
           :children
           [{:type "Folder",
-            :name "src",
+            :name "clojure",
             :attributes {},
             :children
             [{:type "Folder",
-              :name "example",
+              :name "nested",
               :attributes {},
               :children
               [{:type "Folder",
-                :name "foo",
+                :name "src",
                 :attributes {},
                 :children
-                [{:name "bar.clj",
-                  :type "File",
-                  :attributes
-                  {"graph_out_degree" 0,
-                   "graph_in_degree" 1,
-                   "graph_longest_shortest_path" 1,
-                   "graph_transitive_dependencies" 1,
-                   "graph_transitive_dependents" 2,
-                   "graph_betweenness_centrality" 0.0,
-                   "graph_page_rank" 0.6490941366427341}}]}
-               {:name "foo.clj",
-                :type "File",
-                :attributes
-                {"graph_out_degree" 1,
-                 "graph_in_degree" 0,
-                 "graph_longest_shortest_path" 2,
-                 "graph_transitive_dependencies" 2,
-                 "graph_transitive_dependents" 1,
-                 "graph_betweenness_centrality" 0.0,
-                 "graph_page_rank" 0.35090586335726587}}]}]}]}]}]}]}],
+                [{:type "Folder",
+                  :name "example",
+                  :attributes {},
+                  :children
+                  [{:type "Folder",
+                    :name "foo",
+                    :attributes {},
+                    :children
+                    [{:name "bar.clj",
+                      :type "File",
+                      :attributes
+                      {"graph_out_degree" 0,
+                       "graph_in_degree" 1,
+                       "graph_longest_shortest_path" 1,
+                       "graph_transitive_dependencies" 1,
+                       "graph_transitive_dependents" 2,
+                       "graph_betweenness_centrality" 0.0,
+                       "graph_page_rank" 0.6490941366427341}}]}
+                   {:name "foo.clj",
+                    :type "File",
+                    :attributes
+                    {"graph_out_degree" 1,
+                     "graph_in_degree" 0,
+                     "graph_longest_shortest_path" 2,
+                     "graph_transitive_dependencies" 2,
+                     "graph_transitive_dependents" 1,
+                     "graph_betweenness_centrality" 0.0,
+                     "graph_page_rank"
+                     0.35090586335726587}}]}]}]}]}]}]}]}]}],
   :edges [],
   :projectName "",
   :attributeDescriptors

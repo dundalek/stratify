@@ -262,7 +262,7 @@
     :output-file "../../shared/coverage.dgml"
     :coverage-file "target/coverage/codecov.json"})
 
-  (def analysis (kondo/analysis ["test/resources/nested/src"]))
+  (def analysis (kondo/analysis ["test/resources/code/clojure/nested/src"]))
   (def analysis (kondo/analysis ["src"]))
 
   (->> analysis

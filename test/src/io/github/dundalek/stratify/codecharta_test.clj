@@ -40,12 +40,12 @@
 (deftest codecharta
   (is (snap/match-snapshot
        ::codecharta
-       (cc/->codecharta {:analysis (kondo/analysis ["test/resources/nested/src"])}))))
+       (cc/->codecharta {:analysis (kondo/analysis ["test/resources/code/clojure/nested/src"])}))))
 
 (deftest with-coverage
-  (let [output-file "test/resources/coverage/coverage.cc.json"]
-    (cc/extract-clj {:repo-path "test/resources/coverage"
+  (let [output-file "test/resources/code/clojure/coverage/coverage.cc.json"]
+    (cc/extract-clj {:repo-path "test/resources/code/clojure/coverage"
                      :source-paths ["src"]
-                     :coverage-file "test/resources/coverage/target/coverage/codecov.json"
+                     :coverage-file "test/resources/code/clojure/coverage/target/coverage/codecov.json"
                      :output-file output-file})
     (is-same? output-file)))

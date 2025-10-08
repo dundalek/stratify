@@ -51,8 +51,8 @@
   (analysis->conn (kondo/analysis source-paths)))
 
 (comment
-  (def conn-valid (load-sources ["test/resources/layered-valid/src"]))
-  (def conn-invalid (load-sources ["test/resources/layered-invalid/src"])))
+  (def conn-valid (load-sources ["test/resources/code/clojure/layered-valid/src"]))
+  (def conn-invalid (load-sources ["test/resources/code/clojure/layered-invalid/src"])))
 
 ;; Validation checks inspired by ArchUnit examples
 ;; https://www.archunit.org/userguide/html/000_Index.html
@@ -154,7 +154,7 @@
         [?e :defined-by->lint-as clojure.core/defn-])])
 
 (comment
-  (def conn (load-sources ["test/resources/sample/src"]))
+  (def conn (load-sources ["test/resources/code/clojure/example/src"]))
 
   ;; query namespaces
   (d/q '[:find ?name

@@ -161,7 +161,7 @@
                               {:code ::ccsh-failed-to-run} t)))))))))
 
 (comment
-  (def analysis (kondo/analysis ["test/resources/nested/src"]))
+  (def analysis (kondo/analysis ["test/resources/code/clojure/nested/src"]))
   (def analysis (kondo/analysis ["src"]))
 
   (j/write-value (io/file "metrics.cc.json")

@@ -68,38 +68,38 @@
 
       (test-error-code
        ::sdgml/failed-to-write
-       (main/main* "-o" "/NON_EXISTING/output.dgml" "test/resources/sample/src"))
+       (main/main* "-o" "/NON_EXISTING/output.dgml" "test/resources/code/clojure/example/src"))
 
       (print-category-heading "codecharta")
 
       (test-error-code
        ::codecharta/ccsh-not-found
        (binding [codecharta/*ccsh-bin* "NON_EXISTING"]
-         (main/main* "-t" "codecharta" "test/resources/nested/src")))
+         (main/main* "-t" "codecharta" "test/resources/code/clojure/nested/src")))
 
       (test-error-code
        ::codecharta/ccsh-failed-to-run
        ;; Non-executable
        (binding [codecharta/*ccsh-bin* "./LICENSE"]
-         (main/main* "-t" "codecharta" "test/resources/nested/src")))
+         (main/main* "-t" "codecharta" "test/resources/code/clojure/nested/src")))
 
       (print-category-heading "codecov")
 
       (test-error-code
        ::codecov/failed-to-parse
-       (main/main* "--coverage-file" "test/resources/pulumi/NON_EXISTING.json" "test/resources/coverage/src"))
+       (main/main* "--coverage-file" "test/resources/pulumi/NON_EXISTING.json" "test/resources/code/clojure/coverage/src"))
 
       (test-error-code
        ::codecov/failed-to-parse
-       (main/main* "--coverage-file" "test/resources/pulumi/bad.json" "test/resources/coverage/src"))
+       (main/main* "--coverage-file" "test/resources/pulumi/bad.json" "test/resources/code/clojure/coverage/src"))
 
       (test-error-code
        ::codecov/invalid-input
-       (main/main* "--coverage-file" "test/resources/pulumi/empty.json" "test/resources/coverage/src"))
+       (main/main* "--coverage-file" "test/resources/pulumi/empty.json" "test/resources/code/clojure/coverage/src"))
 
       (test-error-code
        :io.github.dundalek.stratify.codecov/coverage-range-out-of-bounds
-       (main/main* "--coverage-file" "test/resources/codecov/empty-coverage.json" "test/resources/coverage/src"))
+       (main/main* "--coverage-file" "test/resources/codecov/empty-coverage.json" "test/resources/code/clojure/coverage/src"))
 
       (print-category-heading "graphviz")
 

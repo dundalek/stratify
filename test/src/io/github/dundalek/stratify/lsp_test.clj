@@ -47,7 +47,7 @@
                    "src/example/foo/bar.clj#L0C4-L0C19" {:label "example.foo.bar",
                                                          :parent "src/example/foo/bar.clj"},
                    "src/example/foo/bar.clj#L2C6-L2C7" {:label "y", :parent "src/example/foo/bar.clj"}}})
-         (extract-relative-graph lsp/extract-clojure "test/resources/nested"))))
+         (extract-relative-graph lsp/extract-clojure "test/resources/code/clojure/nested"))))
 
 (deftest extract-go
   (is (= (make-digraph
@@ -57,7 +57,7 @@
                    "greet/greet.go#L2C5-L2C13" {:label "TheWorld", :parent "greet/greet.go"},
                    "main.go" {:category "Namespace", :label "main.go", :parent nil},
                    "main.go#L7C5-L7C9" {:label "main", :parent "main.go"}}})
-         (extract-relative-graph lsp/extract-go "experiments/scip/test/resources/sample-go"))))
+         (extract-relative-graph lsp/extract-go "test/resources/code/go/greeting"))))
 
 (deftest extract-lua
   (is (= (make-digraph
@@ -72,7 +72,7 @@
                    "lua/main.lua" {:category "Namespace", :label "main.lua", :parent "lua"},
                    "lua/main.lua#L0C6-L0C14" {:label "greeting", :parent "lua/main.lua"},
                    "lua/main.lua#L2C15-L2C19" {:label "main", :parent "lua/main.lua"}}})
-         (extract-relative-graph lsp/extract-lua "experiments/scip/test/resources/sample-lua"))))
+         (extract-relative-graph lsp/extract-lua "test/resources/code/lua/greeting"))))
 
 (deftest extract-rust
   (is (= (make-digraph
@@ -83,7 +83,7 @@
                    "src/main.rs" {:category "Namespace", :label "main.rs", :parent "src"},
                    "src/main.rs#L0C4-L0C12" {:label "greeting", :parent "src/main.rs"},
                    "src/main.rs#L2C3-L2C7" {:label "main", :parent "src/main.rs"}}})
-         (extract-relative-graph lsp/extract-rust "experiments/scip/test/resources/sample-rs"))))
+         (extract-relative-graph lsp/extract-rust "test/resources/code/rust/greeting"))))
 
 (deftest location-less-or-equal?
   (is (true? (lsp/location-less-or-equal? {:line 0 :character 0} {:line 0 :character 15})))

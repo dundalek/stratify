@@ -16,7 +16,7 @@
                                  :a {:x #{3}}}))))
 
 (deftest canonicalize-xml-roundtrip-test
-  (let [sample-dgml "test/resources/nested/output-default.dgml"
+  (let [sample-dgml "test/resources/code/clojure/nested/output-default.dgml"
         original (xml/parse (io/reader sample-dgml))
         canonicalized (-> original
                           dgf/canonicalize-xml
@@ -26,7 +26,7 @@
            canonicalized))))
 
 (deftest rdf-dgml-roundtrip-test
-  (let [sample-dgml "test/resources/nested/output-default.dgml"
+  (let [sample-dgml "test/resources/code/clojure/nested/output-default.dgml"
         prefix "http://example.org/mydgml/"
         original (xml/parse (io/reader sample-dgml))
         rdf-graph (dgf/dgml->rdf original {:prefix prefix})
@@ -36,7 +36,7 @@
            (dgf/canonicalize-xml reconstructed)))))
 
 (comment
-  (xml/parse (io/reader "test/resources/nested/output-default.dgml")))
+  (xml/parse (io/reader "test/resources/code/clojure/nested/output-default.dgml")))
 
 (deftest rdf-dgml-styles-roundtrip-test
   (let [sample-dgml "test/resources/pulumi/sample-preview-deletes.dgml"

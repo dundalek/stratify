@@ -18,8 +18,8 @@
 
 (comment
   (reset! *source-paths ["src"])
-  (reset! *source-paths ["test/resources/nested/src"])
-  (reset! *source-paths ["test/resources/connected-components/src"])
+  (reset! *source-paths ["test/resources/code/clojure/nested/src"])
+  (reset! *source-paths ["test/resources/code/clojure/connected-components/src"])
 
   (clerk/serve! {:browse true
                  :port 7788
@@ -28,5 +28,5 @@
 
   (clerk/halt!)
 
-  (reset! *source-paths ["test/resources/nested/output-default.dgml"])
+  (reset! *source-paths ["test/resources/code/clojure/nested/output-default.dgml"])
   (reset! *source-paths ["stratify.dgml"]))
