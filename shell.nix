@@ -22,6 +22,9 @@ rustfmt
 typescript-language-server
 typescript
 
+zig
+zls
+
 # == for scip extraction
 
 python3Packages.pip
