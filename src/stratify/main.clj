@@ -21,7 +21,7 @@
 
 (def ^:private source-formats
   #{"clj" "dgml" "dot" "overarch" "pulumi" "scip"
-    "lua-lsp"})
+    "go-lsp" "lua-lsp" "rust-lsp"})
 
 (def ^:private target-formats #{"codecharta" "dep-tree" "dgml"})
 
@@ -133,8 +133,16 @@
               :output-path (when (not= out "-") out)
               :notebook-path "io/github/dundalek/stratify/notebook_delta.clj"}))
 
+          (and studio (= from "go-lsp"))
+          (let [g (lsp/extract-go {:root-path (first args)})]
+            (open-studio g))
+
           (and studio (= from "lua-lsp"))
           (let [g (lsp/extract-lua {:root-path (first args)})]
+            (open-studio g))
+
+          (and studio (= from "rust-lsp"))
+          (let [g (lsp/extract-rust {:root-path (first args)})]
             (open-studio g))
 
           (and studio (= from "overarch"))
@@ -167,8 +175,16 @@
           (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
             (open-studio g))
 
+          (= from "go-lsp")
+          (let [g (lsp/extract-go {:root-path (first args)})]
+            (sdgml/write-to-file output-file (lsp/graph->dgml g)))
+
           (= from "lua-lsp")
           (let [g (lsp/extract-lua {:root-path (first args)})]
+            (sdgml/write-to-file output-file (lsp/graph->dgml g)))
+
+          (= from "rust-lsp")
+          (let [g (lsp/extract-rust {:root-path (first args)})]
             (sdgml/write-to-file output-file (lsp/graph->dgml g)))
 
           (= from "overarch")
@@ -261,9 +277,12 @@
 
   (main* "--studio" "src")
 
-  (main* "-f" "lua-lsp" "experiments/scip/test/resources/sample-lua")
+  (main* "-f" "go-lsp" "test/resources/code/go/greeting")
 
-  (main* "--studio" "-f" "lua-lsp" "experiments/scip/test/resources/sample-lua")
+  (main* "-f" "lua-lsp" "test/resources/code/lua/greeting")
+  (main* "--studio" "-f" "lua-lsp" "test/resources/code/lua/greeting")
+
+  (main* "-f" "rust-lsp" "test/resources/code/rust/greeting")
 
   (main* "--studio" "-f" "overarch" "test/resources/overarch/model.edn")
 
