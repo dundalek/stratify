@@ -12,12 +12,16 @@
                (or (= arg2 "scip") (= arg2 "ts-scip"))))
         (partition 2 1 args)))
 
+(defn get-base-deps [project-path args]
+  (cond-> {'org.clojure/clojure {:mvn/version "1.12.0"}
+           'io.github.dundalek/stratify {:local/root (str project-path)}}
+    ;; Preload scip dependencies upfront, because lazy loading using add-libs does not work with protobuf classes
+    (needs-scip-deps? args)
+    (assoc 'stratify/scip {:local/root (str project-path "/resources/io/github/dundalek/stratify/optional-deps/scip")})))
+
 (defn -main [& args]
   (let [project-path (-> (fs/real-path *file*) fs/parent fs/parent)
-        deps-map (cond-> {'org.clojure/clojure {:mvn/version "1.12.0"}
-                          'io.github.dundalek/stratify {:local/root (str project-path)}}
-                   ;; Preload scip dependencies upfront, because lazy loading using add-libs does not work with protobuf classes
-                   (needs-scip-deps? args) (assoc 'stratify/scip {:local/root (str project-path "/resources/io/github/dundalek/stratify/optional-deps/scip")}))
+        deps-map (get-base-deps project-path args)
         ;; Specifying deps via alias and :replace-deps to prevent fetching deps from deps.edn of the analyzed project
         deps {:aliases
               {:stratify-bin

@@ -9,13 +9,16 @@
 
 (defn -main [& args]
   (let [project-path (-> (fs/real-path *file*) fs/parent fs/parent)
-        deps (pr-str {:deps {'org.clojure/clojure {:mvn/version "1.12.0"}
-                             'io.github.dundalek/stratify {:local/root (str project-path)}
-                             'stratify/studio {:local/root (str project-path "/packages/studio")}}})
+        _ (load-file (str project-path "/bin/stratify"))
+        deps-map (assoc ((resolve 'get-base-deps) project-path args)
+                        'stratify/studio {:local/root (str project-path "/packages/studio")})
+        deps {:aliases
+              {:stratify-bin
+               {:replace-deps deps-map}}}
         proc (apply process {:inherit true
                              :extra-env {"STRATIFY_PORTAL_BUNDLE_PATH" (str project-path "/packages/portal/resources/portal-dev/main.js")}}
-                    "clojure" "-Sdeps" deps
-                    "-M" "-m" "stratify.main" args)]
+                    "clojure" "-Sdeps" (pr-str deps)
+                    "-M:stratify-bin" "-m" "stratify.main" args)]
     (System/exit (:exit @proc))))
 
 (when (= *file* (System/getProperty "babashka.file"))
