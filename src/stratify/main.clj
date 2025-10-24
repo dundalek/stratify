@@ -21,7 +21,7 @@
 
 (def ^:private source-formats
   #{"clj" "dgml" "dot" "overarch" "pulumi" "scip"
-    "go-lsp" "lua-lsp" "rust-lsp" "zig-lsp" "ts-scip"})
+    "go-lsp" "lua-lsp" "rust-lsp" "ts-scip" "ts-lsp" "zig-lsp"})
 
 (def ^:private target-formats #{"codecharta" "dep-tree" "dgml"})
 
@@ -145,6 +145,10 @@
           (let [g (lsp/extract-rust {:root-path (first args)})]
             (open-studio g))
 
+          (and studio (= from "ts-lsp"))
+          (let [g (lsp/extract-typescript {:root-path (first args)})]
+            (open-studio g))
+
           (and studio (= from "zig-lsp"))
           (let [g (lsp/extract-zig {:root-path (first args)})]
             (open-studio g))
@@ -191,6 +195,10 @@
 
           (= from "rust-lsp")
           (let [g (lsp/extract-rust {:root-path (first args)})]
+            (sdgml/write-to-file output-file (lsp/graph->dgml g)))
+
+          (= from "ts-lsp")
+          (let [g (lsp/extract-typescript {:root-path (first args)})]
             (sdgml/write-to-file output-file (lsp/graph->dgml g)))
 
           (= from "zig-lsp")

@@ -97,6 +97,17 @@
                    "src/main.zig#L3C7-L3C11" {:label "main", :parent "src/main.zig"}}})
          (extract-relative-graph lsp/extract-zig "test/resources/code/zig/greeting"))))
 
+(deftest extract-typescript
+  (is (= (make-digraph
+          {:adj {"src/main.ts#L2C9-L2C13" #{"src/greeting.ts#L0C16-L0C21"}
+                 "src/main.ts" #{"src/greeting.ts#L0C16-L0C21" "src/main.ts#L2C9-L2C13"}}
+           :attrs {"src" {:category "Namespace", :label "src", :parent nil},
+                   "src/greeting.ts" {:category "Namespace", :label "greeting.ts", :parent "src"},
+                   "src/greeting.ts#L0C16-L0C21" {:label "greet", :parent "src/greeting.ts"},
+                   "src/main.ts" {:category "Namespace", :label "main.ts", :parent "src"},
+                   "src/main.ts#L2C9-L2C13" {:label "main", :parent "src/main.ts"}}})
+         (extract-relative-graph lsp/extract-typescript "test/resources/code/typescript/greeting"))))
+
 (deftest location-less-or-equal?
   (is (true? (lsp/location-less-or-equal? {:line 0 :character 0} {:line 0 :character 15})))
   (is (true? (lsp/location-less-or-equal? {:line 0 :character 15} {:line 1 :character 1})))

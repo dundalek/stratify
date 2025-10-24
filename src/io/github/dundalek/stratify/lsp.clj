@@ -440,6 +440,20 @@
       (finally
         (server-stop! server)))))
 
+(defn extract-typescript [opts]
+  (let [opts (normalize-opts opts)
+        {:keys [root-path]} opts
+        server (start-server {:args ["typescript-language-server" "--stdio"]})]
+    (try
+      (server-initialize! server {:root-path root-path})
+      (extract-graph (merge {:source-paths ["src"]
+                             :source-pattern "**.{j,t}s{,x}"
+                             :open-documents? true
+                             :server server}
+                            opts))
+      (finally
+        (server-stop! server)))))
+
 (defn decode-semantic-tokens [payload token-types token-modifiers]
   (let [{:keys [data]} payload]
     (loop [[delta-line delta-start-char length token-type-id token-modifiers-bits & remaining] data
