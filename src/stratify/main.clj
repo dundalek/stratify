@@ -170,16 +170,12 @@
             (open-studio g))
 
           (and studio (= from "scip"))
-          (do
-            (add-deps "scip")
-            (let [g ((requiring-resolve `scip/load-graph) (first args))]
-              (open-studio g)))
+          (let [g ((requiring-resolve `scip/load-graph) (first args))]
+            (open-studio g))
 
           (and studio (= from "ts-scip"))
-          (do
-            (add-deps "scip")
-            (let [g ((requiring-resolve `scip/load-graph-ts-scip) {:dir (first args)})]
-              (open-studio g)))
+          (let [g ((requiring-resolve `scip/load-graph-ts-scip) {:dir (first args)})]
+            (open-studio g))
 
           studio
           (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
@@ -226,18 +222,14 @@
             (sdgml/write-to-file output-file (sdgml/graph->dgml g)))
 
           (= from "scip")
-          (do
-            (add-deps "scip")
-            ((requiring-resolve `scip/extract)
-             {:index-file (first args)
-              :output-file output-file}))
+          ((requiring-resolve `scip/extract)
+           {:index-file (first args)
+            :output-file output-file})
 
           (= from "ts-scip")
-          (do
-            (add-deps "scip")
-            ((requiring-resolve `scip/extract-ts-scip)
-             {:dir (first args)
-              :output-file output-file}))
+          ((requiring-resolve `scip/extract-ts-scip)
+           {:dir (first args)
+            :output-file output-file})
 
           (= from "clj")
           (stratify/extract (merge opts {:source-paths args
