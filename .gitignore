@@ -1,8 +1,11 @@
+.beads
+.claude/settings.local.json
+.clerk/cache
+.clj-kondo
 .cpcache
 .nrepl-port
-/target
-.clj-kondo
-.clerk/cache
-node_modules
+.tmp
 /packages/portal
+/target
 __pycache__
+node_modules

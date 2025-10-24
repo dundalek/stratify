@@ -1,6 +1,7 @@
 (ns io.github.dundalek.stratify.scip
   {:clj-kondo/config '{:lint-as {pronto.core/defmapper clojure.core/def}}}
   (:require
+   [babashka.fs :as fs]
    [clojure.data.xml :as xml]
    [clojure.java.io :as io]
    [clojure.string :as str]
@@ -92,6 +93,27 @@
       (xml/indent data output-file)
       (with-open [out (io/writer output-file)]
         (xml/indent data out)))))
+
+(defn extract-ts-scip [{:keys [dir output-file args]}]
+  (let [temp-index (fs/file (fs/temp-dir) (str "scip-ts-" (random-uuid) ".scip"))]
+    (try
+      (extractors/extract-ts {:dir dir
+                              :args (or args [])
+                              :output-file temp-index})
+      (extract {:index-file temp-index
+                :output-file output-file})
+      (finally
+        (fs/delete-if-exists temp-index)))))
+
+(defn load-graph-ts-scip [{:keys [dir args]}]
+  (let [temp-index (fs/file (fs/temp-dir) (str "scip-ts-" (random-uuid) ".scip"))]
+    (try
+      (extractors/extract-ts {:dir dir
+                              :args (or args [])
+                              :output-file temp-index})
+      (load-graph temp-index)
+      (finally
+        (fs/delete-if-exists temp-index)))))
 
 (comment
   (extractors/extract-go {:dir "test/resources/code/go/greeting" :output-file "test/resources/scip/go.scip"})

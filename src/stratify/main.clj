@@ -21,7 +21,7 @@
 
 (def ^:private source-formats
   #{"clj" "dgml" "dot" "overarch" "pulumi" "scip"
-    "go-lsp" "lua-lsp" "rust-lsp" "zig-lsp"})
+    "go-lsp" "lua-lsp" "rust-lsp" "zig-lsp" "ts-scip"})
 
 (def ^:private target-formats #{"codecharta" "dep-tree" "dgml"})
 
@@ -175,6 +175,12 @@
             (let [g ((requiring-resolve `scip/load-graph) (first args))]
               (open-studio g)))
 
+          (and studio (= from "ts-scip"))
+          (do
+            (add-deps "scip")
+            (let [g ((requiring-resolve `scip/load-graph-ts-scip) {:dir (first args)})]
+              (open-studio g)))
+
           studio
           (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
             (open-studio g))
@@ -224,6 +230,13 @@
             (add-deps "scip")
             ((requiring-resolve `scip/extract)
              {:index-file (first args)
+              :output-file output-file}))
+
+          (= from "ts-scip")
+          (do
+            (add-deps "scip")
+            ((requiring-resolve `scip/extract-ts-scip)
+             {:dir (first args)
               :output-file output-file}))
 
           (= from "clj")
