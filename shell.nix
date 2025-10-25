@@ -1,7 +1,9 @@
 with import <nixpkgs> { };
 let
   scip-clang = callPackage ./nix/scip-clang.nix { };
+  scip-go = callPackage ./nix/scip-go.nix { };
   scip-python = callPackage ./nix/scip-python.nix { };
+  scip-ruby = callPackage ./nix/scip-ruby.nix { };
   scip-typescript = callPackage ./nix/scip-typescript.nix { };
 in
 mkShell {
@@ -32,9 +34,10 @@ zls
 
 # == for scip extraction
 
-python3Packages.pip
 scip-clang
+scip-go
 scip-python
+scip-ruby
 scip-typescript
 
 ];
