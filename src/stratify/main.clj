@@ -19,9 +19,14 @@
    [io.github.dundalek.stratify.scip :as-alias scip]
    [io.github.dundalek.stratify.studio.main :as-alias studio]))
 
+(def ^:private language-extractors
+  #{"clj" "go-lsp" "go-scip" "lua-lsp" "python-scip" "ruby-scip" "rust-lsp" "ts-scip" "ts-lsp" "zig-lsp"})
+
+(def ^:private other-formats
+  #{"dgml" "dot" "overarch" "pulumi" "scip"})
+
 (def ^:private source-formats
-  #{"clj" "dgml" "dot" "overarch" "pulumi" "scip"
-    "go-lsp" "go-scip" "lua-lsp" "python-scip" "ruby-scip" "rust-lsp" "ts-scip" "ts-lsp" "zig-lsp"})
+  (into language-extractors other-formats))
 
 (def ^:private target-formats #{"codecharta" "dep-tree" "dgml"})
 
@@ -31,6 +36,11 @@
        (map #(str "\"" % "\""))
        (str/join ", ")))
 
+(defn- format-categorized-source-formats []
+  (str "Source format, choices:\n"
+       "                Language extractors: " (format-choice-list language-extractors) "\n"
+       "                Other formats: " (format-choice-list other-formats)))
+
 (def ^:private cli-spec
   {:out {:alias :o
          :ref "<file>"
@@ -38,7 +48,7 @@
          :default "-"}
    :from {:alias :f
           :ref "<format>"
-          :desc (str "Source format, choices: " (format-choice-list source-formats))
+          :desc (format-categorized-source-formats)
           :validate source-formats
           :default "clj"}
    :to {:alias :t
