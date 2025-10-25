@@ -4,6 +4,7 @@
 , nodejs
 , makeWrapper
 , python3
+, python3Packages
 }:
 
 stdenv.mkDerivation rec {
@@ -27,7 +28,7 @@ stdenv.mkDerivation rec {
 
     makeWrapper ${nodejs}/bin/node $out/bin/scip-python \
       --add-flags "$out/lib/scip-python/index.js" \
-      --prefix PATH : ${lib.makeBinPath [ python3 ]}
+      --prefix PATH : ${lib.makeBinPath [ python3 python3Packages.pip ]}
 
     runHook postInstall
   '';
