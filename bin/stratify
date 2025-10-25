@@ -4,12 +4,13 @@
 (ns stratify
   (:require
    [babashka.fs :as fs]
-   [babashka.process :refer [process]]))
+   [babashka.process :refer [process]]
+   [clojure.string :as str]))
 
 (defn- needs-scip-deps? [args]
   (some (fn [[arg1 arg2]]
           (and (or (= arg1 "-f") (= arg1 "--from"))
-               (or (= arg2 "scip") (= arg2 "ts-scip"))))
+               (str/includes? arg2 "scip")))
         (partition 2 1 args)))
 
 (defn get-base-deps [project-path args]

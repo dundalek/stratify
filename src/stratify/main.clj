@@ -21,7 +21,7 @@
 
 (def ^:private source-formats
   #{"clj" "dgml" "dot" "overarch" "pulumi" "scip"
-    "go-lsp" "lua-lsp" "rust-lsp" "ts-scip" "ts-lsp" "zig-lsp"})
+    "go-lsp" "go-scip" "lua-lsp" "python-scip" "ruby-scip" "rust-lsp" "ts-scip" "ts-lsp" "zig-lsp"})
 
 (def ^:private target-formats #{"codecharta" "dep-tree" "dgml"})
 
@@ -174,11 +174,23 @@
             (open-studio g))
 
           (and studio (= from "scip"))
-          (let [g ((requiring-resolve `scip/load-graph) (first args))]
+          (let [g ((requiring-resolve `scip/load-graph) {:index-file (first args)})]
             (open-studio g))
 
           (and studio (= from "ts-scip"))
           (let [g ((requiring-resolve `scip/load-graph-ts-scip) {:dir (first args)})]
+            (open-studio g))
+
+          (and studio (= from "go-scip"))
+          (let [g ((requiring-resolve `scip/load-graph-scip-go) {:dir (first args)})]
+            (open-studio g))
+
+          (and studio (= from "python-scip"))
+          (let [g ((requiring-resolve `scip/load-graph-scip-py) {:dir (first args)})]
+            (open-studio g))
+
+          (and studio (= from "ruby-scip"))
+          (let [g ((requiring-resolve `scip/load-graph-scip-rb) {:dir (first args)})]
             (open-studio g))
 
           studio
@@ -236,6 +248,21 @@
 
           (= from "ts-scip")
           ((requiring-resolve `scip/extract-ts-scip)
+           {:dir (first args)
+            :output-file output-file})
+
+          (= from "go-scip")
+          ((requiring-resolve `scip/extract-scip-go)
+           {:dir (first args)
+            :output-file output-file})
+
+          (= from "python-scip")
+          ((requiring-resolve `scip/extract-scip-py)
+           {:dir (first args)
+            :output-file output-file})
+
+          (= from "ruby-scip")
+          ((requiring-resolve `scip/extract-scip-rb)
            {:dir (first args)
             :output-file output-file})
 

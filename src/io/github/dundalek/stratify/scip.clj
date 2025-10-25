@@ -47,7 +47,7 @@
                          {}))]
     {:adj adj}))
 
-(defn load-graph [index-file]
+(defn load-graph [{:keys [index-file]}]
   (let [index (read-scip-index index-file)
         {:keys [adj]} (->graph index)
         edges (for [[from tos] adj
@@ -94,26 +94,41 @@
       (with-open [out (io/writer output-file)]
         (xml/indent data out)))))
 
-(defn extract-ts-scip [{:keys [dir output-file args]}]
-  (let [temp-index (fs/file (fs/temp-dir) (str "scip-ts-" (random-uuid) ".scip"))]
+(defn- with-temp-scip
+  "Helper function to handle temp file creation, extraction, processing, and cleanup."
+  [extractor-fn process-fn {:keys [dir output-file args] :as opts}]
+  (let [temp-index (fs/file (fs/temp-dir) (str "scip-" (random-uuid) ".scip"))]
     (try
-      (extractors/extract-ts {:dir dir
-                              :args (or args [])
-                              :output-file temp-index})
-      (extract {:index-file temp-index
-                :output-file output-file})
+      (extractor-fn {:dir dir
+                     :args (or args [])
+                     :output-file temp-index})
+      (process-fn {:index-file temp-index :output-file output-file})
       (finally
         (fs/delete-if-exists temp-index)))))
 
-(defn load-graph-ts-scip [{:keys [dir args]}]
-  (let [temp-index (fs/file (fs/temp-dir) (str "scip-ts-" (random-uuid) ".scip"))]
-    (try
-      (extractors/extract-ts {:dir dir
-                              :args (or args [])
-                              :output-file temp-index})
-      (load-graph temp-index)
-      (finally
-        (fs/delete-if-exists temp-index)))))
+(defn extract-ts-scip [opts]
+  (with-temp-scip extractors/extract-ts extract opts))
+
+(defn load-graph-ts-scip [opts]
+  (with-temp-scip extractors/extract-ts load-graph opts))
+
+(defn extract-scip-go [opts]
+  (with-temp-scip extractors/extract-go extract opts))
+
+(defn load-graph-scip-go [opts]
+  (with-temp-scip extractors/extract-go load-graph opts))
+
+(defn extract-scip-py [opts]
+  (with-temp-scip extractors/extract-py extract opts))
+
+(defn load-graph-scip-py [opts]
+  (with-temp-scip extractors/extract-py load-graph opts))
+
+(defn extract-scip-rb [opts]
+  (with-temp-scip extractors/extract-rb extract opts))
+
+(defn load-graph-scip-rb [opts]
+  (with-temp-scip extractors/extract-rb load-graph opts))
 
 (comment
   (extractors/extract-go {:dir "test/resources/code/go/greeting" :output-file "test/resources/scip/go.scip"})
