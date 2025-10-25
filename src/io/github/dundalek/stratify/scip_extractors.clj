@@ -5,19 +5,19 @@
 
 (defn extract-go [{:keys [dir args output-file]}]
   (apply shell {:dir dir}
-         "go run github.com/sourcegraph/scip-go/cmd/scip-go@latest"
+         "scip-go"
          "--output" (fs/absolutize output-file)
          args))
 
 (defn extract-py [{:keys [dir args output-file]}]
   (apply shell {:dir dir}
-         "npm exec --package=@sourcegraph/scip-python -y -- scip-python index"
+         "scip-python index"
          "--output" (fs/absolutize output-file)
          args))
 
 (defn extract-rb [{:keys [dir args output-file]}]
   (apply shell {:dir dir}
-         "bundle exec scip-ruby "
+         "scip-ruby"
          "--index-file" (fs/absolutize output-file)
          args))
 
@@ -30,6 +30,6 @@
 
 (defn extract-ts [{:keys [dir args output-file]}]
   (apply shell {:dir dir}
-         "npm exec --package=@sourcegraph/scip-typescript -y -- scip-typescript index"
+         "scip-typescript index"
          "--output" (fs/absolutize output-file)
          args))
