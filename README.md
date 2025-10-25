@@ -7,7 +7,7 @@ Gain big picture understanding to make better decisions how to grow your system.
 Features and sources:
 
 - Code maps - Visualize structure and dependencies of codebases, supports following sources:
-  - [Clojure/Script](#usage) code
+  - [Source code](#source-code-extraction) - Clojure, Go, Lua, Python, Rust, TypeScript, Zig
   - [Graphviz](#graphviz-visualization) - Interactive visualization of outputs produced by other tools  
     (e.g. Go, JavaSript/TypeScript dependencies or others)
   - [Architecture maps](#architecture-maps) - Explore C4 models
@@ -131,16 +131,35 @@ Could not locate clojure/repl/deps__init.class, clojure/repl/deps.clj or clojure
 Usage: stratify <options> <src-paths>
 
 Options:
+      --metrics-delta                       Calculate and serve metrics delta report
       --include-dependencies                Include links to library dependencies
       --insert-namespace-node <label>       Group vars mixed among namespaces under a node with a given label
       --flat-namespaces                     Render flat namespaces instead of a nested hierarchy
       --coverage-file         <file>        Include line coverage metric from given Codecov file
   -o, --out                   <file>   -    Output file, default "-" standard output
-  -f, --from                  <format> clj  Source format, choices: "clj", "dot", "overarch", "pulumi"
+  -f, --from                  <format> clj  Source format, choices:
+                Language extractors: "clj", "go-lsp", "go-scip", "lua-lsp", "python-scip", "ruby-scip", "rust-lsp", "ts-lsp", "ts-scip", "zig-lsp"
+                Other formats: "dgml", "dot", "overarch", "pulumi", "scip"
   -h, --help                                Print this help message and exit
       --metrics                             Calculate and serve namespace metrics report
-  -t, --to                    <format> dgml Target format, choices: "codecharta", "dgml"
+  -t, --to                    <format> dgml Target format, choices: "codecharta", "dep-tree", "dgml"
 ```
+
+### Source Code extraction
+
+| Language | Namespace Dependencies | Function Dependencies | Test Coverage |
+|----------|----------|------------|----------|
+| Clojure |  | clj-kondo | codecov (cloverage) |
+| Go | scip | lsp (gopls) | |
+| Lua |  | lsp (lua-language-server) | |
+| Python | scip |  | |
+| Ruby | scip | | |
+| Rust | | lsp (rust-analyzer) | |
+| TypeScript | scip | lsp (typescript-language-server) | |
+| Zig |  | lsp (zls) | |
+
+- Namespace dependencies - Coarser-grained dependencies only between modules/files
+- Function dependencies - Finer-grained including dependencies between functions/methods within modules/files
 
 ### Using Visual Studio DGML Editor
 
