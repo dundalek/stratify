@@ -158,8 +158,38 @@ Options:
 | TypeScript | scip | lsp (typescript-language-server) | |
 | Zig |  | lsp (zls) | |
 
+Granularity of extractions:
+
 - Namespace dependencies - Coarser-grained dependencies only between modules/files
 - Function dependencies - Finer-grained including dependencies between functions/methods within modules/files
+
+##### LSP-based extractors
+
+[LSP](https://langserver.org/) language servers are used to analyze code.
+The corresponding language server must be installed and available on the PATH.
+
+For example to extract TypeScript dependencies using typescript-language-server (installed with `npm install -g typescript-language-server`):
+
+```bash
+clojure -M:stratify -f ts-lsp -o graph.dgml src
+```
+
+##### SCIP-based extractors
+
+This approach leverages [SCIP](https://github.com/sourcegraph/scip) index files.
+
+For selected languages SCIP indexers can be invoked automatically.
+For example to extract Python dependencies (`scip-python` must be installed and available on PATH):
+
+```bash
+clojure -M:stratify -f python-scip -o graph.dgml src
+```
+
+For additional languages generate the index first, the use `-f scip` to extract the index file:
+```bash
+scip-python index # creates index.scip
+clojure -M:stratify -f scip -o graph.dgml index.scip
+```
 
 ### Using Visual Studio DGML Editor
 
