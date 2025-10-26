@@ -5,6 +5,7 @@
    [clojure.data.xml :as xml]
    [clojure.java.io :as io]
    [clojure.string :as str]
+   [io.github.dundalek.stratify.internal :as stratify]
    [io.github.dundalek.stratify.scip-extractors :as extractors]
    [loom.graph :as lg]
    [pronto.core :as p]
@@ -47,14 +48,15 @@
                          {}))]
     {:adj adj}))
 
-(defn load-graph [{:keys [index-file]}]
+(defn load-graph [{:keys [index-file flat-namespaces]}]
   (let [index (read-scip-index index-file)
         {:keys [adj]} (->graph index)
         edges (for [[from tos] adj
                     to tos]
                 [from to])]
-    (-> (lg/digraph)
-        (lg/add-edges* edges))))
+    (cond-> (lg/digraph)
+      true (lg/add-edges* edges)
+      (not flat-namespaces) (stratify/add-clustered-namespace-hierarchy "/"))))
 
 (defn ->dgml [index]
   (let [nodes (->> (:documents index)
@@ -96,13 +98,15 @@
 
 (defn- with-temp-scip
   "Helper function to handle temp file creation, extraction, processing, and cleanup."
-  [extractor-fn process-fn {:keys [dir output-file args] :as opts}]
+  [extractor-fn process-fn {:keys [dir output-file args flat-namespaces] :as opts}]
   (let [temp-index (fs/file (fs/temp-dir) (str "scip-" (random-uuid) ".scip"))]
     (try
       (extractor-fn {:dir dir
                      :args (or args [])
                      :output-file temp-index})
-      (process-fn {:index-file temp-index :output-file output-file})
+      (process-fn {:index-file temp-index
+                   :output-file output-file
+                   :flat-namespaces flat-namespaces})
       (finally
         (fs/delete-if-exists temp-index)))))
 

@@ -188,19 +188,27 @@
             (open-studio g))
 
           (and studio (= from "ts-scip"))
-          (let [g ((requiring-resolve `scip/load-graph-ts-scip) {:dir (first args)})]
+          (let [g ((requiring-resolve `scip/load-graph-ts-scip)
+                   {:dir (first args)
+                    :flat-namespaces (:flat-namespaces opts)})]
             (open-studio g))
 
           (and studio (= from "go-scip"))
-          (let [g ((requiring-resolve `scip/load-graph-scip-go) {:dir (first args)})]
+          (let [g ((requiring-resolve `scip/load-graph-scip-go)
+                   {:dir (first args)
+                    :flat-namespaces (:flat-namespaces opts)})]
             (open-studio g))
 
           (and studio (= from "python-scip"))
-          (let [g ((requiring-resolve `scip/load-graph-scip-py) {:dir (first args)})]
+          (let [g ((requiring-resolve `scip/load-graph-scip-py)
+                   {:dir (first args)
+                    :flat-namespaces (:flat-namespaces opts)})]
             (open-studio g))
 
           (and studio (= from "ruby-scip"))
-          (let [g ((requiring-resolve `scip/load-graph-scip-rb) {:dir (first args)})]
+          (let [g ((requiring-resolve `scip/load-graph-scip-rb)
+                   {:dir (first args)
+                    :flat-namespaces (:flat-namespaces opts)})]
             (open-studio g))
 
           studio
