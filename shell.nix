@@ -16,6 +16,9 @@ clojure
 
 clojure-lsp
 
+# for clangd
+clang-tools
+
 gopls
 go
 

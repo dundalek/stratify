@@ -59,6 +59,17 @@
                    "main.go#L7C5-L7C9" {:label "main", :parent "main.go"}}})
          (extract-relative-graph lsp/extract-go "test/resources/code/go/greeting"))))
 
+(deftest extract-c
+  (is (= (make-digraph
+          {:adj {"main.c#L3C4-L3C8" #{"greeting.c#L2C12-L2C17"}},
+           :attrs {"greeting.c" {:category "Namespace", :label "greeting.c", :parent nil},
+                   "greeting.c#L2C12-L2C17" {:label "greet", :parent "greeting.c"},
+                   "greeting.h" {:category "Namespace", :label "greeting.h", :parent nil},
+                   "greeting.h#L3C12-L3C17" {:label "greet", :parent "greeting.h"},
+                   "main.c" {:category "Namespace", :label "main.c", :parent nil},
+                   "main.c#L3C4-L3C8" {:label "main", :parent "main.c"}}})
+         (extract-relative-graph lsp/extract-c "test/resources/code/c/greeting"))))
+
 (deftest extract-lua
   (is (= (make-digraph
           {:adj {"lua/greeting.lua" #{"lua/greeting.lua#L0C6-L0C7"},

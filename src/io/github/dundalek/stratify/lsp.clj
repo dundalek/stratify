@@ -242,15 +242,16 @@
   (let [{:keys [start end]} (:selectionRange sym)]
     (str uri "#L" (:line start) "C" (:character start) "-L" (:line end) "C" (:character end))))
 
-(defn- send-did-open! [server uri file-path]
+(defn- send-did-open! [server uri file-path language-id]
+  (assert language-id "Must specify langauge-id when opening documents")
   (server-message! server {:method "textDocument/didOpen"
                            :params {:textDocument {:uri uri
-                                                   :languageId "zig"
+                                                   :languageId language-id
                                                    :version 1
                                                    :text (slurp file-path)}}
                            :jsonrpc "2.0"}))
 
-(defn extract-graph [{:keys [server root-path source-paths source-pattern open-documents?]}]
+(defn extract-graph [{:keys [server root-path source-paths source-pattern open-documents? language-id]}]
   (let [uri-base (str "file://" root-path "/")
         file-paths (->> source-paths
                         (mapcat (fn [path]
@@ -259,7 +260,7 @@
         file-uris-set (set file-uris)
         _ (when open-documents?
             (doseq [[uri path] (map vector file-uris file-paths)]
-              (send-did-open! server uri (str path))))
+              (send-did-open! server uri (str path) language-id)))
         symbols (->> file-uris
                      (mapcat (fn [uri]
                                (->> (server-request! server "textDocument/documentSymbol"
@@ -389,6 +390,21 @@
       (finally
         (server-stop! server)))))
 
+(defn extract-c [opts]
+  (let [opts (normalize-opts opts)
+        {:keys [root-path]} opts
+        server (start-server {:args ["clangd"]})]
+    (try
+      (server-initialize! server {:root-path root-path})
+      (extract-graph (merge {:source-paths ["."]
+                             :source-pattern "**.{c,h}"
+                             :open-documents? true
+                             :language-id "c"
+                             :server server}
+                            opts))
+      (finally
+        (server-stop! server)))))
+
 (defn extract-lua [opts]
   (let [opts (normalize-opts opts)
         {:keys [root-path]} opts
@@ -435,6 +451,7 @@
       (extract-graph (merge {:source-paths ["src"]
                              :source-pattern "**.zig"
                              :open-documents? true
+                             :language-id "zig"
                              :server server}
                             opts))
       (finally
@@ -449,6 +466,7 @@
       (extract-graph (merge {:source-paths ["src"]
                              :source-pattern "**.{j,t}s{,x}"
                              :open-documents? true
+                             :language-id "typescript"
                              :server server}
                             opts))
       (finally

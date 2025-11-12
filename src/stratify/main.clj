@@ -20,7 +20,7 @@
    [io.github.dundalek.stratify.studio.main :as-alias studio]))
 
 (def ^:private language-extractors
-  #{"clj" "go-lsp" "go-scip" "lua-lsp" "python-scip" "ruby-scip" "rust-lsp" "ts-scip" "ts-lsp" "zig-lsp"})
+  #{"c-lsp" "clj" "go-lsp" "go-scip" "lua-lsp" "python-scip" "ruby-scip" "rust-lsp" "ts-scip" "ts-lsp" "zig-lsp"})
 
 (def ^:private other-formats
   #{"dgml" "dot" "overarch" "pulumi" "scip"})
@@ -143,6 +143,10 @@
               :output-path (when (not= out "-") out)
               :notebook-path "io/github/dundalek/stratify/notebook_delta.clj"}))
 
+          (and studio (= from "c-lsp"))
+          (let [g (lsp/extract-c {:root-path (first args)})]
+            (open-studio g))
+
           (and studio (= from "go-lsp"))
           (let [g (lsp/extract-go {:root-path (first args)})]
             (open-studio g))
@@ -214,6 +218,10 @@
           studio
           (let [g (stratify/extract-graph (merge opts {:source-paths args}))]
             (open-studio g))
+
+          (= from "c-lsp")
+          (let [g (lsp/extract-c {:root-path (first args)})]
+            (sdgml/write-to-file output-file (lsp/graph->dgml g)))
 
           (= from "go-lsp")
           (let [g (lsp/extract-go {:root-path (first args)})]

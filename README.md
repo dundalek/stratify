@@ -149,6 +149,7 @@ Options:
 
 | Language | Namespace Dependencies | Function Dependencies | Test Coverage |
 |----------|----------|------------|----------|
+| C |  | lsp (clangd) |  |
 | Clojure |  | clj-kondo | codecov (cloverage) |
 | Go | scip | lsp (gopls) | |
 | Lua |  | lsp (lua-language-server) | |
