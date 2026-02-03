@@ -17,10 +17,19 @@
    [io.github.dundalek.stratify.pulumi :as-alias pulumi]
    [io.github.dundalek.stratify.report :as-alias report]
    [io.github.dundalek.stratify.scip :as-alias scip]
-   [io.github.dundalek.stratify.studio.main :as-alias studio]))
+   [io.github.dundalek.stratify.studio.main :as-alias studio]
+   [io.github.dundalek.stratify.treesitter-lua :as-alias treesitter-lua]))
 
 (def ^:private language-extractors
-  #{"c-lsp" "clj" "go-lsp" "go-scip" "lua-lsp" "python-scip" "ruby-scip" "rust-lsp" "ts-scip" "ts-lsp" "zig-lsp"})
+  #{"c-lsp"
+    "clj"
+    "go-lsp" "go-scip"
+    "lua-lsp" "lua-ts"
+    "python-scip"
+    "ruby-scip"
+    "rust-lsp"
+    "ts-scip" "ts-lsp"
+    "zig-lsp"})
 
 (def ^:private other-formats
   #{"dgml" "dot" "overarch" "pulumi" "scip"})
@@ -155,6 +164,13 @@
           (let [g (lsp/extract-lua {:root-path (first args)})]
             (open-studio g))
 
+          (and studio (= from "lua-ts"))
+          (do
+            (add-deps "treesitter")
+            (let [g ((requiring-resolve `treesitter-lua/extract-lua)
+                     {:root-path (first args)})]
+              (open-studio g)))
+
           (and studio (= from "rust-lsp"))
           (let [g (lsp/extract-rust {:root-path (first args)})]
             (open-studio g))
@@ -230,6 +246,13 @@
           (= from "lua-lsp")
           (let [g (lsp/extract-lua {:root-path (first args)})]
             (sdgml/write-to-file output-file (lsp/graph->dgml g)))
+
+          (= from "lua-ts")
+          (do
+            (add-deps "treesitter")
+            (let [g ((requiring-resolve `treesitter-lua/extract-lua)
+                     {:root-path (first args)})]
+              (sdgml/write-to-file output-file (lsp/graph->dgml g))))
 
           (= from "rust-lsp")
           (let [g (lsp/extract-rust {:root-path (first args)})]

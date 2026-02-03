@@ -1,34 +1,8 @@
 (ns io.github.dundalek.stratify.lsp-test
   (:require
-   [clojure.java.io :as io]
-   [clojure.string :as str]
    [clojure.test :refer [deftest is]]
    [io.github.dundalek.stratify.lsp :as lsp]
-   [loom.graph :as lg]))
-
-(defn- relativize-graph [root-path g]
-  (let [uri-base (str "file://" root-path "/")
-        transform-id #(some-> % (str/replace-first uri-base ""))]
-    (-> (lg/digraph)
-        (lg/add-nodes* (->> (lg/nodes g) (map transform-id)))
-        (lg/add-edges* (->> (lg/edges g) (map (fn [[source target]]
-                                                [(transform-id source) (transform-id target)]))))
-        (assoc :attrs (reduce-kv
-                       (fn [m k v]
-                         (assoc m
-                                (transform-id k)
-                                (update v :parent transform-id)))
-                       {}
-                       (:attrs g))))))
-
-(defn- extract-relative-graph [extract-fn path]
-  (relativize-graph (.getCanonicalPath (io/file path))
-                    (extract-fn {:root-path path})))
-
-(defn- make-digraph [{:keys [adj attrs]}]
-  (-> (lg/digraph adj)
-      (lg/add-nodes* (keys attrs))
-      (assoc :attrs attrs)))
+   [io.github.dundalek.stratify.test-utils :refer [extract-relative-graph make-digraph]]))
 
 (deftest extract-clojure
   (is (= (make-digraph

@@ -1,0 +1,2 @@
+{:deps {io.github.bonede/tree-sitter {:mvn/version "0.25.3"}
+        io.github.bonede/tree-sitter-lua {:mvn/version "2.1.3a"}}}
