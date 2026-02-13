@@ -1,4 +1,4 @@
-(ns stratify.main
+(ns stratify.main-jvm
   (:require
    [babashka.cli :as cli]
    [clojure.edn :as edn]
