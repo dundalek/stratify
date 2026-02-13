@@ -1,5 +1,6 @@
 with import <nixpkgs> { };
 let
+  goastgen = callPackage ./nix/goastgen.nix { };
   scip-clang = callPackage ./nix/scip-clang.nix { };
   scip-go = callPackage ./nix/scip-go.nix { };
   scip-python = callPackage ./nix/scip-python.nix { };
@@ -41,7 +42,11 @@ scip-clang
 scip-go
 scip-python
 scip-ruby
-scip-typescript
+# scip-typescript
+
+# == for joern extraction
+
+goastgen
 
 ];
 shellHook = ''

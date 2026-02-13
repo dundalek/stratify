@@ -8,6 +8,7 @@
    [io.github.dundalek.stratify.codecharta :as-alias codecharta]
    [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.graphviz :as-alias graphviz]
+   [io.github.dundalek.stratify.joern :as-alias joern]
    [io.github.dundalek.stratify.lsp :as lsp]
    [io.github.dundalek.stratify.overarch :as-alias overarch]
    [io.github.dundalek.stratify.report :as-alias report]
@@ -167,6 +168,13 @@
       ((requiring-resolve `scip/extract-scip-rb)
        {:dir (first args)
         :output-file output-file})
+
+      (= from "go-joern")
+      (do
+        (add-deps "joern-go")
+        ((requiring-resolve `joern/extract-go)
+         {:root-path (first args)
+          :output-file output-file}))
 
       :else (main-clj/print-help))))
 

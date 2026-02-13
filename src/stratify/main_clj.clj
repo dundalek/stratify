@@ -17,7 +17,7 @@
 (def ^:private language-extractors
   #{"c-lsp"
     "clj"
-    "go-lsp" "go-scip"
+    "go-joern" "go-lsp" "go-scip"
     "lua-lsp" "lua-ts"
     "python-scip"
     "ruby-scip"

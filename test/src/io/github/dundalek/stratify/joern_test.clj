@@ -5,7 +5,8 @@
    [io.github.dundalek.stratify.joern :as joern]
    [io.github.dundalek.stratify.test-utils :as tu]
    [malli.core :as m]
-   [malli.transform :as mt]))
+   [malli.transform :as mt]
+   [stratify.main-jvm :as main]))
 
 (deftest malli-schema-validation
   (let [input-file "test/resources/joern-cpg/out-go/export.json"
@@ -18,5 +19,11 @@
   (let [input-file "test/resources/joern-cpg/out-go/export.json"
         output-file "test/resources/joern-cpg/out-go/graph.dgml"]
     (joern/extract {:input-file input-file :output-file output-file})
+    (tu/is-same? output-file)))
+
+(deftest extract-go-test
+  (let [root-path "test/resources/code/go/greeting"
+        output-file "test/resources/joern-cpg/out-go/extracted.dgml"]
+    (main/main* "-f" "go-joern" "-o" output-file root-path)
     (tu/is-same? output-file)))
 

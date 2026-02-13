@@ -1,4 +1,8 @@
 (ns io.github.dundalek.stratify.joern
+  "Extract code dependency graphs using Joern CPG (Code Property Graph) library.
+   Supports both:
+   - Parsing pre-exported GraphSON files
+   - Running Joern directly via JAR (JVM only)"
   (:require
    [babashka.json :as json]
    [clojure.data.xml :as xml]
@@ -196,6 +200,59 @@
         graph (build-method-call-graph parsed)
         dgml (graph->dgml graph)]
     (sdgml/write-to-file output-file dgml)))
+
+;; JAR-based extraction (JVM only)
+
+(def ^:private frontend-main-classes
+  {:go "io.joern.gosrc2cpg.Main"})
+
+(defn- invoke-main [class-name args]
+  (let [clazz (Class/forName class-name)
+        main-method (.getMethod clazz "main" (into-array Class [(Class/forName "[Ljava.lang.String;")]))]
+    (.invoke main-method nil (into-array Object [(into-array String args)]))))
+
+(defn- parse-source
+  "Parse source code using Joern frontend, creates cpg.bin file."
+  [language input-path output-path]
+  (let [main-class (get frontend-main-classes language)
+        abs-input-path (.getCanonicalPath (java.io.File. input-path))]
+    (when-not main-class
+      (throw (ex-info (str "Unsupported language: " language) {:language language})))
+    (invoke-main main-class [abs-input-path "-o" output-path])))
+
+(defn- export-cpg
+  "Export CPG to GraphSON format."
+  [cpg-path output-dir]
+  (invoke-main "io.joern.joerncli.JoernExport"
+               [cpg-path
+                "-o" output-dir
+                "--repr" "all"
+                "--format" "graphson"]))
+
+(defn extract-go
+  "Extract a dependency graph from Go source code using Joern JAR."
+  [{:keys [root-path output-file]}]
+  (let [temp-dir (java.nio.file.Files/createTempDirectory
+                  "joern-"
+                  (into-array java.nio.file.attribute.FileAttribute []))
+        temp-path (.toString temp-dir)
+        cpg-path (str temp-path "/cpg.bin")
+        export-dir (str temp-path "/export")]
+    (try
+      (parse-source :go root-path cpg-path)
+      (export-cpg cpg-path export-dir)
+      (let [graphson-files (->> (java.io.File. export-dir)
+                                (.listFiles)
+                                (filter #(str/ends-with? (.getName %) ".json")))
+            graphson-file (first graphson-files)
+            data (json/read-str (slurp graphson-file) {:key-fn identity})
+            parsed (parse-graphson data)
+            graph (build-method-call-graph parsed)
+            dgml (graph->dgml graph)]
+        (sdgml/write-to-file output-file dgml))
+      (finally
+        (doseq [f (reverse (file-seq (java.io.File. temp-path)))]
+          (.delete f))))))
 
 (comment
   (def input-file "experiments/joern/test/resources/joern-cpg/out-go/export.json")
