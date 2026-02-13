@@ -2,7 +2,7 @@
   (:require
    [clojure.test :refer [deftest is]]
    [io.github.dundalek.stratify.test-utils :refer [is-same?]]
-   [stratify.main :as main]))
+   [stratify.main-jvm :as main]))
 
 (deftest extract
   (let [output-file "test/resources/gabotechs-dep-tree/layered-valid.json"]

@@ -1,0 +1,4 @@
+{:paths ["src" "resources"]
+ :deps {aysylu/loom {:mvn/version "1.0.2"}
+        org.babashka/json {:mvn/version "0.1.6"}
+        metosin/malli {:mvn/version "0.17.0"}}}

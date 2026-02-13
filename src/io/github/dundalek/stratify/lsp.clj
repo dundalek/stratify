@@ -4,7 +4,6 @@
    [babashka.process :refer [shell]]
    [clojure.data.xml :as xml]
    [clojure.java.io :as io]
-   [clojure.main :as clj-main]
    [clojure.string :as str]
    [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.internal :as internal]
@@ -132,7 +131,9 @@
 
             (recur)))
         (catch Exception e
-          (clj-main/report-error (ex-info "Error in server handler" {} e) :target "file"))))
+          (binding [*out* *err*]
+            (println "Error in server handler:")
+            (prn e)))))
 
     (future
       (io/copy server-err *err*))

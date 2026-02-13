@@ -11,7 +11,7 @@
    [io.github.dundalek.stratify.overarch :as overarch]
    [io.github.dundalek.stratify.pulumi :as pulumi]
    [io.github.dundalek.stratify.test-utils :as tu]
-   [stratify.main :as main]))
+   [stratify.main-jvm :as main]))
 
 (def catalog-file "doc/error-catalog.md")
 

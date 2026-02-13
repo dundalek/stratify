@@ -1,6 +1,11 @@
 (ns io.github.dundalek.stratify.kondo
   (:require
-   [clj-kondo.core :as clj-kondo]))
+   #?@(:bb [[babashka.pods :as pods]]
+       :clj [[clj-kondo.core :as clj-kondo]])))
+
+#?(:bb (pods/load-pod 'clj-kondo/clj-kondo "2024.05.24"))
+
+#?(:bb (require '[pod.borkdude.clj-kondo :as clj-kondo]))
 
 (defn- run-kondo [paths]
   (clj-kondo/run!

@@ -65,7 +65,7 @@ Code:
 
 Caused by:
 Execution error (IOException) at java.lang.ProcessImpl/forkAndExec (ProcessImpl.java:-2).
-error=2, No such file or directory
+Exec failed, error: 2 (No such file or directory) 
 
 Full report at:
 ...
@@ -82,7 +82,7 @@ Code:
 
 Caused by:
 Execution error (IOException) at java.lang.ProcessImpl/forkAndExec (ProcessImpl.java:-2).
-error=13, Permission denied
+Exec failed, error: 13 (Permission denied) 
 
 Full report at:
 ...

@@ -1,5 +1,7 @@
 (ns stratify.main
-  (:require [stratify.main-jvm :as main-jvm]))
+  (:require
+   #?@(:bb [[stratify.main-bb :as main-impl]]
+       :clj [[stratify.main-jvm :as main-impl]])))
 
 (defn -main [& args]
-  (apply main-jvm/-main args))
+  (apply main-impl/-main args))

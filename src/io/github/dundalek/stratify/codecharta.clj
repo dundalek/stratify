@@ -152,7 +152,7 @@
           (apply shell *ccsh-bin* "merge" "--leaf" "-f" "-o" output-prefix (map second files-to-merge))
           (catch Throwable t
             (if (and (instance? java.io.IOException t)
-                     (str/starts-with? (ex-message (ex-cause t)) "error=2,")) ; No such file or directory
+                     (re-find #"error[=: ]+2" (or (ex-message (ex-cause t)) ""))) ; No such file or directory
               (throw (ex-info (str "Failed to run `ccsh`.\n"
                                    "Please make sure to have CodeCharta CLI installed.\n"
                                    "Suggestion: `npm i -g codecharta-analysis`.")

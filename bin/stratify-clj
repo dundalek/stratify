@@ -1,7 +1,7 @@
 #!/usr/bin/env bb
 ;; -*- clojure -*-
 ;; vim: set filetype=clojure:
-(ns stratify-local
+(ns stratify
   (:require
    [babashka.classpath :as cp]
    [babashka.deps :as deps]
@@ -10,6 +10,8 @@
 
 (def project-path (-> (fs/real-path *file*) fs/parent fs/parent str))
 
+(System/setProperty "stratify.project-path" project-path)
+
 (let [bb-deps (edn/read-string (slurp (str project-path "/resources/io/github/dundalek/stratify/bb-deps.edn")))]
   (deps/add-deps (select-keys bb-deps [:deps]))
   (doseq [path (:paths bb-deps)]
@@ -17,8 +19,4 @@
 
 (require '[stratify.main-bb :as main-bb])
 
-(main-bb/delegate-to-jvm
- project-path
- *command-line-args*
- {:extra-deps {'stratify/studio {:local/root (str project-path "/packages/studio")}}
-  :extra-env {"STRATIFY_PORTAL_BUNDLE_PATH" (str project-path "/packages/portal/resources/portal-dev/main.js")}})
+(main-bb/delegate-to-jvm project-path *command-line-args*)
