@@ -1,7 +1,12 @@
 (ns io.github.dundalek.stratify.joern
   (:require
+   [babashka.json :as json]
+   [clojure.data.xml :as xml]
+   [clojure.string :as str]
    [clojure.walk :as walk]
-   [babashka.json :as json]))
+   [io.github.dundalek.stratify.dgml :as sdgml]
+   [io.github.dundalek.stratify.style :as style]
+   [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml]))
 
 (def graphson-int64-schema
   [:map
@@ -78,6 +83,119 @@
   (if (and (map? x) (#{"g:Int64" "g:Int32"} (get x "@type")))
     (get x "@value")
     x))
+
+(defn- extract-vertex-property [vertex-property]
+  (-> vertex-property
+      (get "@value")
+      (get "@value")
+      first
+      extract-value))
+
+(defn parse-graphson [data]
+  (let [{:strs [edges vertices]} (get data "@value")
+        vertices-by-id (->> vertices
+                            (map (fn [vertex]
+                                   (let [id (get-in vertex ["id" "@value"])
+                                         label (get vertex "label")
+                                         props (->> (get vertex "properties")
+                                                    (map (fn [[k v]]
+                                                           [(keyword k) (extract-vertex-property v)]))
+                                                    (into {}))]
+                                     [id (assoc props :id id :label label)])))
+                            (into {}))
+        edges-list (->> edges
+                        (map (fn [edge]
+                               {:id (get-in edge ["id" "@value"])
+                                :label (get edge "label")
+                                :source (get-in edge ["outV" "@value"])
+                                :target (get-in edge ["inV" "@value"])
+                                :source-label (get edge "outVLabel")
+                                :target-label (get edge "inVLabel")})))]
+    {:vertices vertices-by-id
+     :edges edges-list}))
+
+(defn- valid-method? [m]
+  (and (not (:IS_EXTERNAL m))
+       (some? (:FILENAME m))
+       (not= "<empty>" (:FILENAME m))
+       (not (str/ends-with? (str (:NAME m)) ".go"))))
+
+(defn build-method-call-graph [{:keys [vertices edges]}]
+  (let [all-methods (->> vertices
+                         vals
+                         (filter #(= "METHOD" (:label %))))
+        valid-methods (->> all-methods
+                           (filter valid-method?))
+        method-ids (->> valid-methods
+                        (map :id)
+                        set)
+        call-to-method (->> edges
+                            (filter #(and (= "CALL" (:label %))
+                                          (= "CALL" (:source-label %))
+                                          (= "METHOD" (:target-label %))))
+                            (map (fn [{:keys [source target]}]
+                                   [source target]))
+                            (into {}))
+        method-contains-call (->> edges
+                                  (filter #(and (= "CONTAINS" (:label %))
+                                                (= "METHOD" (:source-label %))
+                                                (= "CALL" (:target-label %))))
+                                  (map (fn [{:keys [source target]}]
+                                         [source target])))
+        method-call-edges (->> method-contains-call
+                               (keep (fn [[method-id call-id]]
+                                       (when-some [target-method-id (get call-to-method call-id)]
+                                         (when (and (contains? method-ids method-id)
+                                                    (contains? method-ids target-method-id))
+                                           [method-id target-method-id]))))
+                               distinct)]
+    {:methods (->> valid-methods
+                   (map (fn [m]
+                          {:id (:id m)
+                           :name (:NAME m)
+                           :full-name (:FULL_NAME m)
+                           :filename (:FILENAME m)})))
+     :call-edges method-call-edges}))
+
+(defn- graph->dgml [{:keys [methods call-edges]}]
+  (let [filenames (->> methods
+                       (map :filename)
+                       (filter some?)
+                       distinct)]
+    (xml/element ::dgml/DirectedGraph
+                 {:xmlns "http://schemas.microsoft.com/vs/2009/dgml"}
+                 (xml/element ::dgml/Nodes {}
+                              (concat
+                               (for [method methods]
+                                 (xml/element ::dgml/Node
+                                              (cond-> {:Id (str (:id method))
+                                                       :Label (:name method)
+                                                       :Category "Function"}
+                                                (:full-name method) (assoc :Name (:full-name method)))))
+                               (for [filename filenames]
+                                 (xml/element ::dgml/Node
+                                              {:Id filename
+                                               :Label filename
+                                               :Category "Namespace"
+                                               :Group "Expanded"}))))
+                 (xml/element ::dgml/Links {}
+                              (concat
+                               (for [[source target] call-edges]
+                                 (xml/element ::dgml/Link {:Source (str source) :Target (str target)}))
+                               (for [method methods
+                                     :let [filename (:filename method)]
+                                     :when filename]
+                                 (xml/element ::dgml/Link {:Source filename
+                                                           :Target (str (:id method))
+                                                           :Category "Contains"}))))
+                 (xml/element ::dgml/Styles {} style/styles))))
+
+(defn extract [{:keys [input-file output-file]}]
+  (let [data (json/read-str (slurp input-file) {:key-fn identity})
+        parsed (parse-graphson data)
+        graph (build-method-call-graph parsed)
+        dgml (graph->dgml graph)]
+    (sdgml/write-to-file output-file dgml)))
 
 (comment
   (def input-file "experiments/joern/test/resources/joern-cpg/out-go/export.json")

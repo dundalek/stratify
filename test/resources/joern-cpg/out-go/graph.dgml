@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
+  <Nodes>
+    <Node Id="111669149696" Label="TheWorld" Category="Function" Name="sample-go/greet.TheWorld"/>
+    <Node Id="111669149698" Label="main" Category="Function" Name="main.main"/>
+    <Node Id="greet/greet.go" Label="greet/greet.go" Category="Namespace" Group="Expanded"/>
+    <Node Id="main.go" Label="main.go" Category="Namespace" Group="Expanded"/>
+  </Nodes>
+  <Links>
+    <Link Source="111669149698" Target="111669149696"/>
+    <Link Source="greet/greet.go" Target="111669149696" Category="Contains"/>
+    <Link Source="main.go" Target="111669149698" Category="Contains"/>
+  </Links>
+  <Styles>
+    <Style TargetType="Node" GroupLabel="Namespace" ValueLabel="True">
+      <Condition Expression="HasCategory('Namespace')"/>
+      <Setter Property="Background" Value="#295B71"/>
+      <Setter Property="Stroke" Value="#34749A"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Function" ValueLabel="Public">
+      <Condition Expression="HasCategory('Function') and Access = 'Public'"/>
+      <Setter Property="Background" Value="#A75529"/>
+      <Setter Property="Stroke" Value="#C4632F"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Function" ValueLabel="Private">
+      <Condition Expression="HasCategory('Function') and  Access = 'Private'"/>
+      <Setter Property="Background" Value="#66A75529"/>
+      <Setter Property="Stroke" Value="#C4632F"/>
+      <Setter Property="StrokeDashArray" Value="3,6"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Macro" ValueLabel="Public">
+      <Condition Expression="HasCategory('Macro') and Access = 'Public'"/>
+      <Setter Property="Background" Value="#714164"/>
+      <Setter Property="Stroke" Value="#874381"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Macro" ValueLabel="Private">
+      <Condition Expression="HasCategory('Macro') and Access = 'Private'"/>
+      <Setter Property="Background" Value="#66714164"/>
+      <Setter Property="Stroke" Value="#874381"/>
+      <Setter Property="StrokeDashArray" Value="3,6"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Var" ValueLabel="Public">
+      <Condition Expression="HasCategory('Var') and Access = 'Public'"/>
+      <Setter Property="Background" Value="#3A6C5F"/>
+      <Setter Property="Stroke" Value="#2A8469"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Node" GroupLabel="Var" ValueLabel="Private">
+      <Condition Expression="HasCategory('Var') and Access = 'Private'"/>
+      <Setter Property="Background" Value="#663A6C5F"/>
+      <Setter Property="Stroke" Value="#2A8469"/>
+      <Setter Property="StrokeDashArray" Value="3,6"/>
+      <Setter Property="Foreground" Value="#FFFFFF"/>
+    </Style>
+    <Style TargetType="Link" GroupLabel="Link" ValueLabel="Private Reference">
+      <Condition Expression="Target.Access = 'Private'"/>
+      <Setter Property="StrokeDashArray" Value="4,2"/>
+    </Style>
+  </Styles>
+</DirectedGraph>
