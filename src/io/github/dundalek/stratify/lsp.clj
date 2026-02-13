@@ -10,7 +10,7 @@
    [io.github.dundalek.stratify.internal :as internal]
    [io.github.dundalek.stratify.kondo :as kondo]
    [io.github.dundalek.stratify.style :as style]
-   [jsonista.core :as j]
+   [babashka.json :as json]
    [loom.attr :as la]
    [loom.graph :as lg]
    [xmlns.http%3A%2F%2Fschemas.microsoft.com%2Fvs%2F2009%2Fdgml :as-alias dgml])
@@ -68,11 +68,11 @@
 
 (defn- read-json-message [in]
   (some-> (read-message in)
-          (j/read-value j/keyword-keys-object-mapper)))
+          (json/read-str {:key-fn keyword})))
 
 (defn server-message! [server payload]
   (prn "client->server:" payload)
-  (let [message (j/write-value-as-string payload)
+  (let [message (json/write-str payload)
         out ^OutputStreamWriter (::out server)]
     (locking out
       (let [content-length (count (.getBytes message "UTF-8"))]

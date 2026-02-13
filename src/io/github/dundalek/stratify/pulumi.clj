@@ -5,7 +5,7 @@
    [clojure.string :as str]
    [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.style :as style :refer [property-setter-elements theme]]
-   [jsonista.core :as j]
+   [babashka.json :as json]
    [loom.attr :as la]
    [loom.graph :as lg]
    [malli.core :as m]
@@ -63,7 +63,7 @@
 
 (defn- parse-resources-file [input-file]
   (let [input (try
-                (j/read-value (io/file input-file) j/keyword-keys-object-mapper)
+                (json/read-str (slurp input-file) {:key-fn keyword})
                 (catch Throwable t
                   (throw (ex-info "Failed to parse Pulumi file." {:code ::failed-to-parse} t))))
         resources (try
@@ -161,7 +161,7 @@
   (extract {:input-file "../sst/examples/aws-astro/.sst/report/state.json"
             :output-file "../../shared/sst-aws-astro.dgml"})
 
-  (def input (j/read-value (slurp "test/resources/pulumi/sample-export.json") j/keyword-keys-object-mapper))
+  (def input (json/read-str (slurp "test/resources/pulumi/sample-export.json") {:key-fn keyword}))
   (def resources (parse-resources input))
 
   (->> resources

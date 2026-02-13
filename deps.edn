@@ -7,7 +7,7 @@
         babashka/process {:mvn/version "0.5.22"}
         babashka/fs {:mvn/version "0.5.23"}
         metosin/malli {:mvn/version "0.17.0"}
-        metosin/jsonista {:mvn/version "0.3.12"}}
+        org.babashka/json {:mvn/version "0.1.6"}}
 
  :paths ["src" "resources"]
 

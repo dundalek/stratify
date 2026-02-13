@@ -1,7 +1,7 @@
 (ns io.github.dundalek.stratify.joern
   (:require
    [clojure.walk :as walk]
-   [jsonista.core :as j]))
+   [babashka.json :as json]))
 
 (def graphson-int64-schema
   [:map
@@ -81,7 +81,7 @@
 
 (comment
   (def input-file "experiments/joern/test/resources/joern-cpg/out-go/export.json")
-  (def data (j/read-value (slurp input-file) j/default-object-mapper))
+  (def data (json/read-str (slurp input-file) {:key-fn identity}))
 
   (keys data)
   (get data "@type")

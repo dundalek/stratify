@@ -7,7 +7,7 @@
    [io.github.dundalek.stratify.codecov :as codecov]
    [io.github.dundalek.stratify.kondo :as kondo]
    [io.github.dundalek.stratify.metrics :as metrics]
-   [jsonista.core :as j]
+   [babashka.json :as json]
    [loom.graph :as lg]))
 
 (def ^:dynamic *ccsh-bin* "ccsh")
@@ -106,10 +106,10 @@
                         (codecov/make-line-coverage-lookup {:coverage-file coverage-file
                                                             :strip-prefixes source-paths}))]
 
-    (j/write-value (io/file output-file)
-                   (->codecharta {:analysis (kondo/analysis repo-source-paths)
-                                  :transform-filename #(str/replace-first % repo-prefix "")
-                                  :line-coverage line-coverage}))))
+    (spit output-file
+          (json/write-str (->codecharta {:analysis (kondo/analysis repo-source-paths)
+                                          :transform-filename #(str/replace-first % repo-prefix "")
+                                          :line-coverage line-coverage})))))
 
 (defn extract [{:keys [repo-path source-paths output-prefix coverage-file]}]
   (fs/with-temp-dir [tmp-dir {}]
@@ -164,8 +164,8 @@
   (def analysis (kondo/analysis ["test/resources/code/clojure/nested/src"]))
   (def analysis (kondo/analysis ["src"]))
 
-  (j/write-value (io/file "metrics.cc.json")
-                 (->codecharta {:analysis analysis}))
+  (spit "metrics.cc.json"
+         (json/write-str (->codecharta {:analysis analysis})))
 
   (extract {:repo-path "."
             :source-paths ["src"]

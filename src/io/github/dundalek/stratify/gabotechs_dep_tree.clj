@@ -4,7 +4,7 @@
    [clojure.java.io :as io]
    [clojure.string :as str]
    [io.github.dundalek.stratify.kondo :as kondo]
-   [jsonista.core :as j]
+   [babashka.json :as json]
    [loom.graph :as lg]))
 
 (def max-node-size 10)
@@ -42,10 +42,11 @@
      ; :enabledGui false}))
 
 (defn extract [{:keys [source-paths output-file]}]
-  (let [data (->graph (kondo/analysis source-paths))]
+  (let [data (->graph (kondo/analysis source-paths))
+        json-str (json/write-str data)]
     (if (= output-file *out*)
-      (j/write-value output-file data (j/object-mapper {:close false}))
-      (j/write-value (io/writer output-file) data))))
+      (print json-str)
+      (spit output-file json-str))))
 
 (comment
   (extract {:source-paths ["src"]

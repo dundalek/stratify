@@ -297,7 +297,7 @@ Full report at:
 Error:
 Failed to load Pulumi resources.
 
-{:steps ["missing required key"], :deployment ["missing required key" "missing required key"]}
+{:deployment ["missing required key" "missing required key"], :steps ["missing required key"]}
 
 Code:
 :io.github.dundalek.stratify.pulumi/invalid-input

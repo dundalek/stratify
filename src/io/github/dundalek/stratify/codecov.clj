@@ -1,8 +1,7 @@
 (ns io.github.dundalek.stratify.codecov
   (:require
-   [clojure.java.io :as io]
+   [babashka.json :as json]
    [clojure.string :as str]
-   [jsonista.core :as json]
    [malli.core :as m]
    [malli.error :as me]
    [malli.transform :as mt])
@@ -44,7 +43,7 @@
 
 (defn load-coverage [filename]
   (let [input (try
-                (json/read-value (io/file filename) json/default-object-mapper)
+                (json/read-str (slurp filename) {:key-fn identity})
                 (catch Throwable t
                   (throw (ex-info "Failed to parse Codecov file." {:code ::failed-to-parse} t))))
         data (try
