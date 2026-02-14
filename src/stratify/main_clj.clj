@@ -24,7 +24,7 @@
     "python-joern" "python-scip"
     "ruby-scip"
     "rust-lsp"
-    "ts-scip" "ts-lsp"
+    "ts-joern" "ts-scip" "ts-lsp"
     "zig-lsp"})
 
 (def ^:private other-formats

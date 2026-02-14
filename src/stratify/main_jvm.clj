@@ -197,6 +197,13 @@
          {:root-path (first args)
           :output-file output-file}))
 
+      (= from "ts-joern")
+      (do
+        (add-deps "joern-javascript")
+        ((requiring-resolve `joern/extract-javascript)
+         {:root-path (first args)
+          :output-file output-file}))
+
       (= from "python-joern")
       (do
         (add-deps "joern-python")

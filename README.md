@@ -158,7 +158,7 @@ Options:
 | Python | scip | joern | |
 | Ruby | scip | | |
 | Rust | | lsp (rust-analyzer) | |
-| TypeScript | scip | lsp (typescript-language-server) | |
+| TypeScript | scip | joern, lsp (typescript-language-server) | |
 | Zig |  | lsp (zls) | |
 
 Granularity of extractions:
