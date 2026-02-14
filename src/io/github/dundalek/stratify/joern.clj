@@ -128,7 +128,13 @@
         (str/ends-with? name ".cpp")
         (str/ends-with? name ".h")
         (str/ends-with? name ".hpp")
-        (str/ends-with? name ".java"))))
+        (str/ends-with? name ".java")
+        (str/ends-with? name ".js")
+        (str/ends-with? name ".jsx")
+        (str/ends-with? name ".ts")
+        (str/ends-with? name ".tsx")
+        (str/ends-with? name ".mjs")
+        (str/ends-with? name ".cjs"))))
 
 (defn- synthetic-java-method?
   "Check if method is a synthetic Java method (constructor or static initializer)."
@@ -137,12 +143,18 @@
     (or (= name "<init>")
         (= name "<clinit>"))))
 
+(defn- synthetic-javascript-method?
+  "Check if method is a synthetic JavaScript method (program entry point)."
+  [m]
+  (= ":program" (:NAME m)))
+
 (defn- valid-method? [m]
   (and (not (:IS_EXTERNAL m))
        (some? (:FILENAME m))
        (not= "<empty>" (:FILENAME m))
        (not (synthetic-file-method? m))
        (not (synthetic-java-method? m))
+       (not (synthetic-javascript-method? m))
        (not= "<global>" (:NAME m))))
 
 (defn- find-calls-via-ast
@@ -256,7 +268,8 @@
 (def ^:private frontend-main-classes
   {:c "io.joern.c2cpg.Main"
    :go "io.joern.gosrc2cpg.Main"
-   :java "io.joern.javasrc2cpg.Main"})
+   :java "io.joern.javasrc2cpg.Main"
+   :javascript "io.joern.jssrc2cpg.Main"})
 
 (defn- invoke-main [class-name args]
   (let [clazz (Class/forName class-name)
@@ -320,6 +333,11 @@
   "Extract a dependency graph from Java source code using Joern JAR."
   [opts]
   (extract-lang :java opts))
+
+(defn extract-javascript
+  "Extract a dependency graph from JavaScript/TypeScript source code using Joern JAR."
+  [opts]
+  (extract-lang :javascript opts))
 
 (comment
   (def input-file "experiments/joern/test/resources/joern-cpg/out-go/export.json")

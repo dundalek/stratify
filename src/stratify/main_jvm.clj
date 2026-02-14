@@ -190,6 +190,13 @@
          {:root-path (first args)
           :output-file output-file}))
 
+      (= from "js-joern")
+      (do
+        (add-deps "joern-javascript")
+        ((requiring-resolve `joern/extract-javascript)
+         {:root-path (first args)
+          :output-file output-file}))
+
       :else (main-clj/print-help))))
 
 (defn main* [& args]

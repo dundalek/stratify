@@ -36,6 +36,7 @@
                                stratify/joern-go {:local/root "resources/io/github/dundalek/stratify/optional-deps/joern-go"}
                                stratify/joern-c {:local/root "resources/io/github/dundalek/stratify/optional-deps/joern-c"}
                                stratify/joern-java {:local/root "resources/io/github/dundalek/stratify/optional-deps/joern-java"}
+                               stratify/joern-javascript {:local/root "resources/io/github/dundalek/stratify/optional-deps/joern-javascript"}
 
                                stratify/studio {:local/root "packages/studio"}
 

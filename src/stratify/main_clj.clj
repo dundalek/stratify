@@ -19,6 +19,7 @@
     "clj"
     "go-joern" "go-lsp" "go-scip"
     "java-joern"
+    "js-joern"
     "lua-lsp" "lua-ts"
     "python-scip"
     "ruby-scip"

@@ -39,3 +39,9 @@
     (main/main* "-f" "java-joern" "-o" output-file root-path)
     (tu/is-same? output-file)))
 
+(deftest extract-javascript-test
+  (let [root-path "test/resources/code/javascript/greeting"
+        output-file "test/resources/joern-cpg/out-javascript/extracted.dgml"]
+    (main/main* "-f" "js-joern" "-o" output-file root-path)
+    (tu/is-same? output-file)))
+

@@ -1,5 +1,6 @@
 with import <nixpkgs> { };
 let
+  astgen = callPackage ./nix/astgen.nix { };
   goastgen = callPackage ./nix/goastgen.nix { };
   scip-clang = callPackage ./nix/scip-clang.nix { };
   scip-go = callPackage ./nix/scip-go.nix { };
@@ -46,9 +47,11 @@ scip-ruby
 
 # == for joern extraction
 
+astgen
 goastgen
 
 ];
 shellHook = ''
+  export ASTGEN_BIN=$(which astgen)
 '';
 }
