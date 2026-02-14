@@ -134,7 +134,8 @@
         (str/ends-with? name ".ts")
         (str/ends-with? name ".tsx")
         (str/ends-with? name ".mjs")
-        (str/ends-with? name ".cjs"))))
+        (str/ends-with? name ".cjs")
+        (str/ends-with? name ".py"))))
 
 (defn- synthetic-java-method?
   "Check if method is a synthetic Java method (constructor or static initializer)."
@@ -269,10 +270,12 @@
   {:c "io.joern.c2cpg.Main"
    :go "io.joern.gosrc2cpg.Main"
    :java "io.joern.javasrc2cpg.Main"
-   :javascript "io.joern.jssrc2cpg.Main"})
+   :javascript "io.joern.jssrc2cpg.Main"
+   :python "io.joern.pysrc2cpg.NewMain"})
 
 (defn- invoke-main [class-name args]
-  (let [clazz (Class/forName class-name)
+  (let [cl (.getContextClassLoader (Thread/currentThread))
+        clazz (Class/forName class-name true cl)
         main-method (.getMethod clazz "main" (into-array Class [(Class/forName "[Ljava.lang.String;")]))]
     (.invoke main-method nil (into-array Object [(into-array String args)]))))
 
@@ -338,6 +341,11 @@
   "Extract a dependency graph from JavaScript/TypeScript source code using Joern JAR."
   [opts]
   (extract-lang :javascript opts))
+
+(defn extract-python
+  "Extract a dependency graph from Python source code using Joern JAR."
+  [opts]
+  (extract-lang :python opts))
 
 (comment
   (def input-file "experiments/joern/test/resources/joern-cpg/out-go/export.json")

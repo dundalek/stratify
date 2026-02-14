@@ -197,6 +197,13 @@
          {:root-path (first args)
           :output-file output-file}))
 
+      (= from "python-joern")
+      (do
+        (add-deps "joern-python")
+        ((requiring-resolve `joern/extract-python)
+         {:root-path (first args)
+          :output-file output-file}))
+
       :else (main-clj/print-help))))
 
 (defn main* [& args]

@@ -21,7 +21,7 @@
     "java-joern"
     "js-joern"
     "lua-lsp" "lua-ts"
-    "python-scip"
+    "python-joern" "python-scip"
     "ruby-scip"
     "rust-lsp"
     "ts-scip" "ts-lsp"

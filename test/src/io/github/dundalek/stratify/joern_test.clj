@@ -45,3 +45,9 @@
     (main/main* "-f" "js-joern" "-o" output-file root-path)
     (tu/is-same? output-file)))
 
+(deftest extract-python-test
+  (let [root-path "test/resources/code/python/greeting"
+        output-file "test/resources/joern-cpg/out-python/extracted.dgml"]
+    (main/main* "-f" "python-joern" "-o" output-file root-path)
+    (tu/is-same? output-file)))
+
