@@ -127,13 +127,22 @@
         (str/ends-with? name ".c")
         (str/ends-with? name ".cpp")
         (str/ends-with? name ".h")
-        (str/ends-with? name ".hpp"))))
+        (str/ends-with? name ".hpp")
+        (str/ends-with? name ".java"))))
+
+(defn- synthetic-java-method?
+  "Check if method is a synthetic Java method (constructor or static initializer)."
+  [m]
+  (let [name (str (:NAME m))]
+    (or (= name "<init>")
+        (= name "<clinit>"))))
 
 (defn- valid-method? [m]
   (and (not (:IS_EXTERNAL m))
        (some? (:FILENAME m))
        (not= "<empty>" (:FILENAME m))
        (not (synthetic-file-method? m))
+       (not (synthetic-java-method? m))
        (not= "<global>" (:NAME m))))
 
 (defn- find-calls-via-ast
@@ -246,7 +255,8 @@
 
 (def ^:private frontend-main-classes
   {:c "io.joern.c2cpg.Main"
-   :go "io.joern.gosrc2cpg.Main"})
+   :go "io.joern.gosrc2cpg.Main"
+   :java "io.joern.javasrc2cpg.Main"})
 
 (defn- invoke-main [class-name args]
   (let [clazz (Class/forName class-name)
@@ -305,6 +315,11 @@
   "Extract a dependency graph from C/C++ source code using Joern JAR."
   [opts]
   (extract-lang :c opts))
+
+(defn extract-java
+  "Extract a dependency graph from Java source code using Joern JAR."
+  [opts]
+  (extract-lang :java opts))
 
 (comment
   (def input-file "experiments/joern/test/resources/joern-cpg/out-go/export.json")

@@ -183,6 +183,13 @@
          {:root-path (first args)
           :output-file output-file}))
 
+      (= from "java-joern")
+      (do
+        (add-deps "joern-java")
+        ((requiring-resolve `joern/extract-java)
+         {:root-path (first args)
+          :output-file output-file}))
+
       :else (main-clj/print-help))))
 
 (defn main* [& args]

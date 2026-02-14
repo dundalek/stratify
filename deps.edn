@@ -1,4 +1,7 @@
-{:deps {org.clojure/clojure {:mvn/version "1.12.0"}
+{;; Required for joern-java: javasrc2cpg depends on gradle-tooling-api which is not on Maven Central
+ :mvn/repos {"gradle-releases" {:url "https://repo.gradle.org/gradle/libs-releases"}}
+
+ :deps {org.clojure/clojure {:mvn/version "1.12.0"}
         clj-kondo/clj-kondo {:mvn/version "2024.05.24"}
         org.clojure/data.xml {:mvn/version "0.2.0-alpha9"}
         aysylu/loom {:mvn/version "1.0.2"}
@@ -32,6 +35,7 @@
                                stratify/treesitter {:local/root "resources/io/github/dundalek/stratify/optional-deps/treesitter"}
                                stratify/joern-go {:local/root "resources/io/github/dundalek/stratify/optional-deps/joern-go"}
                                stratify/joern-c {:local/root "resources/io/github/dundalek/stratify/optional-deps/joern-c"}
+                               stratify/joern-java {:local/root "resources/io/github/dundalek/stratify/optional-deps/joern-java"}
 
                                stratify/studio {:local/root "packages/studio"}
 

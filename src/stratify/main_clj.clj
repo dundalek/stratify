@@ -18,6 +18,7 @@
   #{"c-joern" "c-lsp"
     "clj"
     "go-joern" "go-lsp" "go-scip"
+    "java-joern"
     "lua-lsp" "lua-ts"
     "python-scip"
     "ruby-scip"

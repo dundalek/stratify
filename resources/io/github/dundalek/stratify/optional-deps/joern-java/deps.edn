@@ -1,0 +1,2 @@
+{:deps {io.joern/javasrc2cpg_3 {:mvn/version "4.0.481"}
+        io.joern/joern-cli_3 {:mvn/version "4.0.481"}}}
