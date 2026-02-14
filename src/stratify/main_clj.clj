@@ -15,7 +15,7 @@
   #{"c-lsp" "go-lsp" "lua-lsp" "rust-lsp" "ts-lsp" "zig-lsp"})
 
 (def ^:private language-extractors
-  #{"c-lsp"
+  #{"c-joern" "c-lsp"
     "clj"
     "go-joern" "go-lsp" "go-scip"
     "lua-lsp" "lua-ts"

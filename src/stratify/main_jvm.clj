@@ -169,6 +169,13 @@
        {:dir (first args)
         :output-file output-file})
 
+      (= from "c-joern")
+      (do
+        (add-deps "joern-c")
+        ((requiring-resolve `joern/extract-c)
+         {:root-path (first args)
+          :output-file output-file}))
+
       (= from "go-joern")
       (do
         (add-deps "joern-go")

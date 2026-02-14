@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DirectedGraph xmlns="http://schemas.microsoft.com/vs/2009/dgml">
   <Nodes>
-    <Node Id="107374182402" Label="main" Category="Function" Name="main.main"/>
-    <Node Id="107374182400" Label="TheWorld" Category="Function" Name="sample-go/greet.TheWorld"/>
-    <Node Id="main.go" Label="main.go" Category="Namespace" Group="Expanded"/>
-    <Node Id="greet/greet.go" Label="greet/greet.go" Category="Namespace" Group="Expanded"/>
+    <Node Id="107374182402" Label="main" Category="Function" Name="main"/>
+    <Node Id="107374182400" Label="greet" Category="Function" Name="greet"/>
+    <Node Id="main.c" Label="main.c" Category="Namespace" Group="Expanded"/>
+    <Node Id="greeting.c" Label="greeting.c" Category="Namespace" Group="Expanded"/>
   </Nodes>
   <Links>
     <Link Source="107374182402" Target="107374182400"/>
-    <Link Source="main.go" Target="107374182402" Category="Contains"/>
-    <Link Source="greet/greet.go" Target="107374182400" Category="Contains"/>
+    <Link Source="main.c" Target="107374182402" Category="Contains"/>
+    <Link Source="greeting.c" Target="107374182400" Category="Contains"/>
   </Links>
   <Styles>
     <Style TargetType="Node" GroupLabel="Namespace" ValueLabel="True">

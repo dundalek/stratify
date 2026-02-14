@@ -118,11 +118,37 @@
     {:vertices vertices-by-id
      :edges edges-list}))
 
+(defn- synthetic-file-method?
+  "Check if method is a synthetic file-level method created by Joern.
+   These have names ending with the source file extension."
+  [m]
+  (let [name (str (:NAME m))]
+    (or (str/ends-with? name ".go")
+        (str/ends-with? name ".c")
+        (str/ends-with? name ".cpp")
+        (str/ends-with? name ".h")
+        (str/ends-with? name ".hpp"))))
+
 (defn- valid-method? [m]
   (and (not (:IS_EXTERNAL m))
        (some? (:FILENAME m))
        (not= "<empty>" (:FILENAME m))
-       (not (str/ends-with? (str (:NAME m)) ".go"))))
+       (not (synthetic-file-method? m))
+       (not= "<global>" (:NAME m))))
+
+(defn- find-calls-via-ast
+  "Find all CALL vertices reachable from a node via AST edges."
+  [vertices edges node-id]
+  (let [ast-children (->> edges
+                          (filter #(and (= "AST" (:label %))
+                                        (= node-id (:source %))))
+                          (map :target))]
+    (concat
+     (for [child-id ast-children
+           :let [child (get vertices child-id)]
+           :when (= "CALL" (:label child))]
+       child)
+     (mapcat #(find-calls-via-ast vertices edges %) ast-children))))
 
 (defn build-method-call-graph [{:keys [vertices edges]}]
   (let [all-methods (->> vertices
@@ -133,6 +159,10 @@
         method-ids (->> valid-methods
                         (map :id)
                         set)
+        method-by-full-name (->> valid-methods
+                                 (map (fn [m] [(:FULL_NAME m) (:id m)]))
+                                 (into {}))
+        ;; Try CALL edges first (Go style)
         call-to-method (->> edges
                             (filter #(and (= "CALL" (:label %))
                                           (= "CALL" (:source-label %))
@@ -146,12 +176,23 @@
                                                 (= "CALL" (:target-label %))))
                                   (map (fn [{:keys [source target]}]
                                          [source target])))
-        method-call-edges (->> method-contains-call
-                               (keep (fn [[method-id call-id]]
-                                       (when-some [target-method-id (get call-to-method call-id)]
-                                         (when (and (contains? method-ids method-id)
-                                                    (contains? method-ids target-method-id))
-                                           [method-id target-method-id]))))
+        call-edges-via-contains (->> method-contains-call
+                                     (keep (fn [[method-id call-id]]
+                                             (when-some [target-method-id (get call-to-method call-id)]
+                                               (when (and (contains? method-ids method-id)
+                                                          (contains? method-ids target-method-id))
+                                                 [method-id target-method-id])))))
+        ;; Fallback to AST traversal (C style) - find calls via AST edges
+        call-edges-via-ast (when (empty? call-edges-via-contains)
+                             (for [method valid-methods
+                                   :let [method-id (:id method)
+                                         calls (find-calls-via-ast vertices edges method-id)]
+                                   call calls
+                                   :let [target-method-id (get method-by-full-name (:METHOD_FULL_NAME call))]
+                                   :when (and target-method-id
+                                              (contains? method-ids target-method-id))]
+                               [method-id target-method-id]))
+        method-call-edges (->> (or (seq call-edges-via-contains) call-edges-via-ast)
                                distinct)]
     {:methods (->> valid-methods
                    (map (fn [m]
@@ -204,7 +245,8 @@
 ;; JAR-based extraction (JVM only)
 
 (def ^:private frontend-main-classes
-  {:go "io.joern.gosrc2cpg.Main"})
+  {:c "io.joern.c2cpg.Main"
+   :go "io.joern.gosrc2cpg.Main"})
 
 (defn- invoke-main [class-name args]
   (let [clazz (Class/forName class-name)
@@ -229,9 +271,9 @@
                 "--repr" "all"
                 "--format" "graphson"]))
 
-(defn extract-go
-  "Extract a dependency graph from Go source code using Joern JAR."
-  [{:keys [root-path output-file]}]
+(defn- extract-lang
+  "Extract a dependency graph from source code using Joern JAR."
+  [language {:keys [root-path output-file]}]
   (let [temp-dir (java.nio.file.Files/createTempDirectory
                   "joern-"
                   (into-array java.nio.file.attribute.FileAttribute []))
@@ -239,7 +281,7 @@
         cpg-path (str temp-path "/cpg.bin")
         export-dir (str temp-path "/export")]
     (try
-      (parse-source :go root-path cpg-path)
+      (parse-source language root-path cpg-path)
       (export-cpg cpg-path export-dir)
       (let [graphson-files (->> (java.io.File. export-dir)
                                 (.listFiles)
@@ -253,6 +295,16 @@
       (finally
         (doseq [f (reverse (file-seq (java.io.File. temp-path)))]
           (.delete f))))))
+
+(defn extract-go
+  "Extract a dependency graph from Go source code using Joern JAR."
+  [opts]
+  (extract-lang :go opts))
+
+(defn extract-c
+  "Extract a dependency graph from C/C++ source code using Joern JAR."
+  [opts]
+  (extract-lang :c opts))
 
 (comment
   (def input-file "experiments/joern/test/resources/joern-cpg/out-go/export.json")

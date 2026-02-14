@@ -27,3 +27,9 @@
     (main/main* "-f" "go-joern" "-o" output-file root-path)
     (tu/is-same? output-file)))
 
+(deftest extract-c-test
+  (let [root-path "test/resources/code/c/greeting"
+        output-file "test/resources/joern-cpg/out-c/extracted.dgml"]
+    (main/main* "-f" "c-joern" "-o" output-file root-path)
+    (tu/is-same? output-file)))
+
