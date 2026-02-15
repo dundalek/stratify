@@ -149,20 +149,21 @@ Options:
 
 | Language | Namespace Dependencies | Function Dependencies | Test Coverage |
 |----------|----------|------------|----------|
-| C / C++ |  | joern, lsp (clangd) |  |
-| Clojure |  | clj-kondo | codecov (cloverage) |
+| C / C++ | ✓ | joern, lsp (clangd) |  |
+| Clojure | ✓ | clj-kondo | codecov (cloverage) |
 | Go | scip | joern, lsp (gopls) | |
-| Java |  | joern | |
+| Java | ✓ | joern | |
 | JavaScript / TypeScript | scip | joern, lsp (typescript-language-server) | |
 | Lua | treesitter | lsp (lua-language-server) | |
 | Python | scip | joern | |
-| Ruby | scip | | |
-| Rust | | lsp (rust-analyzer) | |
-| Zig |  | lsp (zls) | |
+| Ruby | scip | - | |
+| Rust | ✓ | lsp (rust-analyzer) | |
+| Zig | ✓ | lsp (zls) | |
 
 Granularity of extractions:
 
 - Namespace dependencies - Coarser-grained dependencies only between modules/files
+  - (✓) means namespace dependencies are provided by function dependencies implementation 
 - Function dependencies - Finer-grained including dependencies between functions/methods within modules/files
 
 ##### LSP-based extractors
@@ -191,6 +192,17 @@ For additional languages generate the index first, the use `-f scip` to extract 
 ```bash
 scip-python index # creates index.scip
 clojure -M:stratify -f scip -o graph.dgml index.scip
+```
+
+##### Joern-based extractors
+
+[Joern](https://github.com/joernio/joern) is a tool for code analysis which includes parsers for multiple languages.
+It is based on Code Property Graphs (CPG) model which can be used to extract function-level dependencies.
+
+For example to extract Java dependencies:
+
+```bash
+clojure -M:stratify -f java-joern -o graph.dgml src
 ```
 
 ### Using Visual Studio DGML Editor
