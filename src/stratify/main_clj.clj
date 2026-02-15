@@ -3,6 +3,7 @@
    Handles: from=clj, from=dgml, from=pulumi, to=dep-tree, LSP extractors, --studio with clj/dgml/lsp"
   (:require
    [babashka.cli :as cli]
+   [clojure.java.io :as io]
    [clojure.string :as str]
    [io.github.dundalek.stratify.dgml :as sdgml]
    [io.github.dundalek.stratify.gabotechs-dep-tree :as dep-tree]
@@ -10,6 +11,9 @@
    [io.github.dundalek.stratify.lsp :as lsp]
    [io.github.dundalek.stratify.pulumi :as pulumi]
    [io.github.dundalek.stratify.studio.main :as-alias studio]))
+
+(defn studio-available? []
+  (some? (io/resource "io/github/dundalek/stratify/studio/main.clj")))
 
 (def ^:private lsp-source-formats
   #{"c-lsp" "cpp-lsp" "go-lsp" "lua-lsp" "rust-lsp" "ts-lsp" "zig-lsp"})
@@ -47,7 +51,7 @@
        "                Language extractors: " (format-choice-list language-extractors) "\n"
        "                Other formats: " (format-choice-list other-formats)))
 
-(def cli-spec
+(def ^:private cli-spec-common
   {:out {:alias :o
          :ref "<file>"
          :desc "Output file, default \"-\" standard output"
@@ -74,10 +78,20 @@
              :desc "Calculate and serve namespace metrics report"}
    :metrics-delta {:coerce :boolean
                    :desc "Calculate and serve metrics delta report"}
-   :studio {:coerce :boolean
-            :desc "Open web-based visualizer"}
    :help {:alias :h
           :desc "Print this help message and exit"}})
+
+(def ^:private cli-spec-studio
+  {:studio {:coerce :boolean
+            :desc "Open web-based visualizer"}})
+
+(defn cli-spec
+  "Returns CLI spec. Without args, includes studio option for parsing.
+   With {:for-help true}, only includes studio if available (for help display)."
+  ([] (merge cli-spec-common cli-spec-studio))
+  ([{:keys [for-help]}]
+   (cond-> cli-spec-common
+     (or (not for-help) (studio-available?)) (merge cli-spec-studio))))
 
 (defn print-help []
   (println "Extract DGML graph from source code")
@@ -85,7 +99,7 @@
   (println "Usage: stratify <options> <src-paths>")
   (println)
   (println "Options:")
-  (println (cli/format-opts {:spec cli-spec})))
+  (println (cli/format-opts {:spec (cli-spec {:for-help true})})))
 
 (defn- open-studio [g]
   ((requiring-resolve `studio/open) g))
@@ -100,7 +114,7 @@
    "zig-lsp" lsp/extract-zig})
 
 (defn parse-args [args]
-  (cli/parse-args args {:spec cli-spec}))
+  (cli/parse-args args {:spec (cli-spec)}))
 
 (defn run
   "Returns ::unhandled if format not supported by this module."
@@ -111,6 +125,11 @@
       (let [{:keys [out from studio]} opts
             output-file (if (= out "-") *out* out)]
         (cond
+          (and studio (not (studio-available?)))
+          (binding [*out* *err*]
+            (println "Error: --studio requires local dependencies.")
+            (println "Run with bin/stratify-local instead."))
+
           (and studio (= from "dgml"))
           (let [g (sdgml/load-graph (first args))]
             (open-studio g))
