@@ -332,6 +332,11 @@
   [opts]
   (extract-lang :c opts))
 
+(defn extract-cpp
+  "Extract a dependency graph from C++ source code using Joern JAR."
+  [opts]
+  (extract-lang :c opts))
+
 (defn extract-java
   "Extract a dependency graph from Java source code using Joern JAR."
   [opts]

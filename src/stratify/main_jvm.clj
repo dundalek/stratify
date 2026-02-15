@@ -176,6 +176,13 @@
          {:root-path (first args)
           :output-file output-file}))
 
+      (= from "cpp-joern")
+      (do
+        (add-deps "joern-c")
+        ((requiring-resolve `joern/extract-cpp)
+         {:root-path (first args)
+          :output-file output-file}))
+
       (= from "go-joern")
       (do
         (add-deps "joern-go")

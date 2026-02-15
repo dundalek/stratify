@@ -44,6 +44,18 @@
                    "main.c#L3C4-L3C8" {:label "main", :parent "main.c"}}})
          (extract-relative-graph lsp/extract-c "test/resources/code/c/greeting"))))
 
+(deftest extract-cpp
+  (is (= (make-digraph
+          {:adj {"main.cpp#L3C4-L3C8" #{"greeting.cpp#L2C12-L2C17"
+                                         "greeting.hpp#L5C12-L5C17"}},
+           :attrs {"greeting.cpp" {:category "Namespace", :label "greeting.cpp", :parent nil},
+                   "greeting.cpp#L2C12-L2C17" {:label "greet", :parent "greeting.cpp"},
+                   "greeting.hpp" {:category "Namespace", :label "greeting.hpp", :parent nil},
+                   "greeting.hpp#L5C12-L5C17" {:label "greet", :parent "greeting.hpp"},
+                   "main.cpp" {:category "Namespace", :label "main.cpp", :parent nil},
+                   "main.cpp#L3C4-L3C8" {:label "main", :parent "main.cpp"}}})
+         (extract-relative-graph lsp/extract-cpp "test/resources/code/cpp/greeting"))))
+
 (deftest extract-lua
   (is (= (make-digraph
           {:adj {"lua/greeting.lua" #{"lua/greeting.lua#L0C6-L0C7"},

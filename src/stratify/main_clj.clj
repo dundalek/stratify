@@ -12,11 +12,12 @@
    [io.github.dundalek.stratify.studio.main :as-alias studio]))
 
 (def ^:private lsp-source-formats
-  #{"c-lsp" "go-lsp" "lua-lsp" "rust-lsp" "ts-lsp" "zig-lsp"})
+  #{"c-lsp" "cpp-lsp" "go-lsp" "lua-lsp" "rust-lsp" "ts-lsp" "zig-lsp"})
 
 (def ^:private language-extractors
   #{"c-joern" "c-lsp"
     "clj"
+    "cpp-joern" "cpp-lsp"
     "go-joern" "go-lsp" "go-scip"
     "java-joern"
     "js-joern"
@@ -91,6 +92,7 @@
 
 (def ^:private lsp-extractors
   {"c-lsp" lsp/extract-c
+   "cpp-lsp" lsp/extract-cpp
    "go-lsp" lsp/extract-go
    "lua-lsp" lsp/extract-lua
    "rust-lsp" lsp/extract-rust

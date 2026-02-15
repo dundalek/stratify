@@ -406,6 +406,21 @@
       (finally
         (server-stop! server)))))
 
+(defn extract-cpp [opts]
+  (let [opts (normalize-opts opts)
+        {:keys [root-path]} opts
+        server (start-server {:args ["clangd"]})]
+    (try
+      (server-initialize! server {:root-path root-path})
+      (extract-graph (merge {:source-paths ["."]
+                             :source-pattern "**.{cpp,hpp}"
+                             :open-documents? true
+                             :language-id "cpp"
+                             :server server}
+                            opts))
+      (finally
+        (server-stop! server)))))
+
 (defn extract-lua [opts]
   (let [opts (normalize-opts opts)
         {:keys [root-path]} opts

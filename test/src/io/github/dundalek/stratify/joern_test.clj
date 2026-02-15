@@ -33,6 +33,12 @@
     (main/main* "-f" "c-joern" "-o" output-file root-path)
     (tu/is-same? output-file)))
 
+(deftest extract-cpp-test
+  (let [root-path "test/resources/code/cpp/greeting"
+        output-file "test/resources/joern-cpg/out-cpp/extracted.dgml"]
+    (main/main* "-f" "cpp-joern" "-o" output-file root-path)
+    (tu/is-same? output-file)))
+
 (deftest extract-java-test
   (let [root-path "test/resources/code/java/greeting/src"
         output-file "test/resources/joern-cpg/out-java/extracted.dgml"]

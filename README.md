@@ -7,7 +7,7 @@ Gain big picture understanding to make better decisions how to grow your system.
 Features and sources:
 
 - Code maps - Visualize structure and dependencies of codebases, supports following sources:
-  - [Source code](#source-code-extraction) - C, Clojure, Go, Java, JavaScript, Lua, Python, Ruby, Rust, TypeScript, Zig
+  - [Source code](#source-code-extraction) - C/C++, Clojure, Go, Java, JavaScript/TypeScript, Lua, Python, Ruby, Rust, Zig
   - [Graphviz](#graphviz-visualization) - Interactive visualization of outputs produced by other tools  
     (e.g. Go, JavaSript/TypeScript dependencies or others)
   - [Architecture maps](#architecture-maps) - Explore C4 models
@@ -149,16 +149,15 @@ Options:
 
 | Language | Namespace Dependencies | Function Dependencies | Test Coverage |
 |----------|----------|------------|----------|
-| C |  | joern, lsp (clangd) |  |
+| C / C++ |  | joern, lsp (clangd) |  |
 | Clojure |  | clj-kondo | codecov (cloverage) |
 | Go | scip | joern, lsp (gopls) | |
 | Java |  | joern | |
-| JavaScript |  | joern | |
+| JavaScript / TypeScript | scip | joern, lsp (typescript-language-server) | |
 | Lua | treesitter | lsp (lua-language-server) | |
 | Python | scip | joern | |
 | Ruby | scip | | |
 | Rust | | lsp (rust-analyzer) | |
-| TypeScript | scip | joern, lsp (typescript-language-server) | |
 | Zig |  | lsp (zls) | |
 
 Granularity of extractions:
