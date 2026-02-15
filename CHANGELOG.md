@@ -1,6 +1,14 @@
 # Changelog
 
-## [master](https://github.com/dundalek/stratify/compare/v0.4.0...master) (unreleased)
+## [master](https://github.com/dundalek/stratify/compare/v0.5.0...master) (unreleased)
+
+## [0.5.0](https://github.com/dundalek/stratify/compare/v0.4.0...v0.5.0) (2026-02-15)
+
+New features - additional languge extractors:
+- LSP-based language extractors: C/C++, Go, Lua, Rust, TypeScript, Zig
+- SCIP-based extractors: JavaScript/TypeScript, Python, Ruby, Go
+- Joern-based extractors: C, Go, Java, JavaScript/TypeScript, Python
+- Lua treesitter extractor
 
 ## [0.4.0](https://github.com/dundalek/stratify/compare/v0.3.0...v0.4.0) (2025-03-18)
 
